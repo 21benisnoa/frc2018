@@ -1,0 +1,15 @@
+*~
+*.a
+*.bak
+*.class
+*.dll
+*.dylib
+*.exe
+*.jar
+*.o
+*.obj
+*.so
+*/build/*
+*/dist/*
+.deployables
+.git
