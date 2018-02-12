@@ -105,15 +105,15 @@ public class Robot extends IterativeRobot {
 		double x = tx.getDouble(0);
 		double y = ty.getDouble(0);
 		double area = ta.getDouble(0);
-		System.out.println(area);
+		System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
 		if (m_timer.get() > 0) {
 			if (m_timer.get() < 2) {
-				m_robotDrive.tankDrive(.5, .5);
+				m_robotDrive.tankDrive(.5, .5); //drives robot forwards for two seconds
 			}
 		}
 		if (m_timer.get() > 4) {
 			if (m_timer.get() < 4.05) {
-				m_robotDrive.tankDrive(.8, -.8);
+				m_robotDrive.tankDrive(.8, -.8); //turns the robot right
 			}
 		}
 		
@@ -121,20 +121,20 @@ public class Robot extends IterativeRobot {
 		if (Target == 1) {//Targeting Procedure
 			if(area >= 12.5) {
 				m_robotDrive.tankDrive(0, 0);
-				STAHP = 1;
+				STAHP = 1; //checks distance to target, if within distance, then stops robot
 				}
 			else if (area >= 12.5) {
 				STAHP = 0;
 			}
 			if(STAHP == 0) {
 				if(x < -10) {
-					m_robotDrive.tankDrive(-0.6, -0.1);
+					m_robotDrive.tankDrive(0.5, 0.6); //checks for target to the left, if so, turns robot left
 				}
 				else if(x > 10) {
-					m_robotDrive.tankDrive(-0.1, -0.6);
+					m_robotDrive.tankDrive(0.6, 0.5); //checks for target to the left, if so, turns robot
 				}
 				else {
-					m_robotDrive.tankDrive(-.6, -.6);
+					m_robotDrive.tankDrive(.6, .6);//default target chase speed
 				}
 			}
 		}
@@ -196,7 +196,7 @@ public class Robot extends IterativeRobot {
 
 
 			if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
-				m_robotArm.setSpeed(-m_stick.getRawAxis(2));	
+				m_robotArm.setSpeed(-m_stick.getRawAxis(2));//Trigger Controls	
 			}
 			if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
 				m_robotArm.setSpeed(m_stick.getRawAxis(3));
@@ -206,40 +206,39 @@ public class Robot extends IterativeRobot {
 			}
 			
 			
-			if (m_stick.getRawButton(1)) { //chase toggle
+			if (m_stick.getRawButton(1)) { //chase toggle ON
 				System.out.println("Button 1");
 				System.out.println("Entering Target Chase");
 				Target = 1;		
 			}
-			if(m_stick.getRawButton(2)) {
+			if(m_stick.getRawButton(2)) { //chase toggle OFF
 				System.out.println("Button 2");
 				System.out.println("Exiting Target Chase");
 				Target = 0;
 			}
 			if (Target == 1) {
-				int STAHP = 0;
 				System.out.println(area);
 				if(area >= 12.5) {
 					m_robotDrive.tankDrive(0, 0);
-					STAHP = 1;
+					STAHP = 1; //stops the robot
 				}
 				else if (area <= 12.5) {
 					STAHP = 0;
 				}
 				if(STAHP == 0) {
-					m_robotDrive.tankDrive(.6, .6);
+					m_robotDrive.tankDrive(.6, .6); //sets motors to .6 speed in target mod
 					if(x < -10) {
-						m_robotDrive.tankDrive(0.5, 0.6);
+						m_robotDrive.tankDrive(0.5, 0.6); // checks for Target being to the left, if so, turns robot left
 					}
 					else if(x > 10) {
-						m_robotDrive.tankDrive(0.6, 0.5);
+						m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
 					}
 				}
 			}
 		}
 	
 
-
+		//pneumatics code
 		//		if (m_stick.getRawButton(1)) {
 		//			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
 		//			System.out.println("Button A");
