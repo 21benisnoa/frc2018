@@ -2,6 +2,16 @@ package org.usfirst.frc.team5903.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
+/*
+ * FieldInfo: A class to demonstrate working with and aggregating information from the FRC Field Management System
+ *
+ * Methods: getFieldInfo()
+ * 			Returns a four-character string consisting of:
+ * 			- current Alliance color (R or B)
+ * 			- near Switch Alliance-color location (L or R)
+ * 			- Scale Alliance-color location (L or R)
+ * 			- far Switch Alliance-color location (L or R)
+ */
 public class FieldInfo {
 	DriverStation.Alliance color;
 
