@@ -36,11 +36,11 @@ public class Robot extends IterativeRobot {
 	//Creates the robot arm motor control.
 	private Joystick m_stick = new Joystick(0);
 	private Timer m_timer = new Timer();
-//	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,3,1);
+	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
 	int STAHP = 0;
 	int Target = 0;
 	String m_teamLoc;
-
+	
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -73,12 +73,10 @@ public class Robot extends IterativeRobot {
 		m_timer.start();
 
 		}
-
 	/**
 	 * This function is called periodically during autonomous.
 	 */
-	@Override
-	
+	@Override	
 	public void autonomousPeriodic() {
 //		System.out.println("I'm in auto Periodic");
 /*******  Original autonomous mode code
@@ -140,7 +138,6 @@ public class Robot extends IterativeRobot {
 		}
   //autonomous target follow code
 	}
-
 	/**
 	 * This function is called once each time the robot enters teleoperated mode.
 	 */
@@ -150,8 +147,6 @@ public class Robot extends IterativeRobot {
 		m_timer.start();
 		System.out.println("I'm in teleop");
 	}
-
-
 	/**
 	 * This function is called periodically during teleoperated mode.
 	 */
@@ -170,9 +165,7 @@ public class Robot extends IterativeRobot {
 		double min_aim_command = 0.05f;
 		double left_command = 0.0f;
 		double right_command = 0.0f;
-
 		System.out.println("teleop");
-
 			// Klann moved this from autonomousPeriodic to see if it works, and it does here!
 			if (m_stick.getRawButton(4)) {
 				System.out.println("Button Y");
@@ -206,13 +199,13 @@ public class Robot extends IterativeRobot {
 			}
 			
 			
-			if (m_stick.getRawButton(1)) { //chase toggle ON
-				System.out.println("Button 1");
+			if (m_stick.getRawButton(3)) { //chase toggle ON
+				System.out.println("Button 3");
 				System.out.println("Entering Target Chase");
 				Target = 1;		
 			}
-			if(m_stick.getRawButton(2)) { //chase toggle OFF
-				System.out.println("Button 2");
+			if(m_stick.getRawButton(4)) { //chase toggle OFF
+				System.out.println("Button 4");
 				System.out.println("Exiting Target Chase");
 				Target = 0;
 			}
@@ -234,25 +227,21 @@ public class Robot extends IterativeRobot {
 						m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
 					}
 				}
-			}
+			}		
+			//pneumatics code
+				if (m_stick.getRawButton(1)) {
+					m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+					System.out.println("Button A");
+				} else {
+					m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+				}
+				if (m_stick.getRawButton(2)) {
+					m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+					System.out.println("Button B");
+				}
+				if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
+					m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 		}
-	
-
-		//pneumatics code
-		//		if (m_stick.getRawButton(1)) {
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
-		//			System.out.println("Button A");
-		//		} else {
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-		//		}
-		//		if (m_stick.getRawButton(2)) {
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
-		//			System.out.println("Button B");
-		//		}
-		//		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-
-
 	/**
 	 * This function is called periodically during test mode.
 	 */
