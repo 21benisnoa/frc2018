@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 //import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Timer;
@@ -33,10 +34,11 @@ public class Robot extends IterativeRobot {
 			= new DifferentialDrive(new Spark(0), new Spark(1));
 	//SpeedController m_robotArm = new Spark(2);
 	private Spark m_robotArm = new Spark(2);
+	private Spark m_backMotor = new Spark(4);
 	//Creates the robot arm motor control.
 	private Joystick m_stick = new Joystick(0);
 	private Timer m_timer = new Timer();
-//	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,3,1);
+	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
 	int STAHP = 0;
 	int Target = 0;
 	String m_teamLoc;
@@ -58,7 +60,7 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// Get information from the Field Management System (FMS)
 		FieldInfo m_teamInfo = new FieldInfo();
-		m_teamLoc = m_teamInfo.getFieldInfo();
+//		m_teamLoc = m_teamInfo.getFieldInfo();
 		
 		System.out.println("I'm in autonomous: Alliance color: " + 
 				m_teamLoc.charAt(0) +
@@ -80,6 +82,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	
 	public void autonomousPeriodic() {
+		
 //		System.out.println("I'm in auto Periodic");
 /*******  Original autonomous mode code
 			if (m_timer.get()<6) {
@@ -108,15 +111,20 @@ public class Robot extends IterativeRobot {
 		System.out.println(area);
 		if (m_timer.get() > 0) {
 			if (m_timer.get() < 2) {
-				m_robotDrive.tankDrive(.5, .5);
+				m_robotDrive.tankDrive(1, 1);
 			}
 		}
-		if (m_timer.get() > 4) {
-			if (m_timer.get() < 4.05) {
-				m_robotDrive.tankDrive(.8, -.8);
+	}
+		/*if (m_timer.get() > 3) {
+			if (m_timer.get() < 4.9) {
+				m_robotDrive.tankDrive(.5, -.5);
 			}
 		}
-		
+		if (m_timer.get() > 5) {
+			if (m_timer.get() < 6) {
+				m_robotDrive.tankDrive
+			}
+		}
 		int Target = 0;
 		if (Target == 1) {//Targeting Procedure
 			if(area >= 12.5) {
@@ -192,11 +200,11 @@ public class Robot extends IterativeRobot {
 				m_robotDrive.tankDrive(left_command, right_command);
 			}
 
-			m_robotDrive.arcadeDrive( -(m_stick.getY()), m_stick.getX()); //get joystick axis
+			m_robotDrive.arcadeDrive( m_stick.getY(), m_stick.getX()); //get joystick axis
 
 
 			if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
-				m_robotArm.setSpeed(-m_stick.getRawAxis(2));	
+				m_robotArm.setSpeed(-(m_stick.getRawAxis(2)));	
 			}
 			if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
 				m_robotArm.setSpeed(m_stick.getRawAxis(3));
@@ -206,53 +214,64 @@ public class Robot extends IterativeRobot {
 			}
 			
 			
-			if (m_stick.getRawButton(1)) { //chase toggle
-				System.out.println("Button 1");
-				System.out.println("Entering Target Chase");
-				Target = 1;		
+			
+			if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
+				m_robotArm.setSpeed(-(m_stick.getRawAxis(2)));	
 			}
-			if(m_stick.getRawButton(2)) {
-				System.out.println("Button 2");
-				System.out.println("Exiting Target Chase");
-				Target = 0;
+			if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
+				m_robotArm.setSpeed(m_stick.getRawAxis(3));
+			} 
+			if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <=0) {
+				m_robotArm.setSpeed(0.0);
 			}
-			if (Target == 1) {
-				int STAHP = 0;
-				System.out.println(area);
-				if(area >= 12.5) {
-					m_robotDrive.tankDrive(0, 0);
-					STAHP = 1;
-				}
-				else if (area <= 12.5) {
-					STAHP = 0;
-				}
-				if(STAHP == 0) {
-					m_robotDrive.tankDrive(.6, .6);
-					if(x < -10) {
-						m_robotDrive.tankDrive(0.5, 0.6);
-					}
-					else if(x > 10) {
-						m_robotDrive.tankDrive(0.6, 0.5);
-					}
-				}
-			}
-		}
+			
+			
+//			if (m_stick.getRawButton(3)) { //chase toggle
+	//			System.out.println("Button 1");
+		//		System.out.println("Entering Target Chase");
+//				Target = 1;		
+	//		}
+		//	if(m_stick.getRawButton(4)) {
+//				System.out.println("Button 2");
+	//			System.out.println("Exiting Target Chase");
+		//		Target = 0;
+//			}
+	//		if (Target == 1) {
+		//		int STAHP = 0;
+//				System.out.println(area);
+	//			if(area >= 12.5) {
+		//			m_robotDrive.tankDrive(0, 0);
+			//		STAHP = 1;
+//				}
+	//			else if (area <= 12.5) {
+		//			STAHP = 0;
+			//	}
+//				if(STAHP == 0) {
+	//				m_robotDrive.tankDrive(.6, .6);
+		//			if(x < -10) {
+			//			m_robotDrive.tankDrive(0.5, 0.6);
+				//	}
+//					else if(x > 10) {
+	//					m_robotDrive.tankDrive(0.6, 0.5);
+		//			}
+			//	}
+//			}
 	
 
 
-		//		if (m_stick.getRawButton(1)) {
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
-		//			System.out.println("Button A");
-		//		} else {
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-		//		}
-		//		if (m_stick.getRawButton(2)) {
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
-		//			System.out.println("Button B");
-		//		}
-		//		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
-		//			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-
+				if (m_stick.getRawButton(1)) {
+					m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+					System.out.println("Button A");
+				} else {
+					m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+				}
+				if (m_stick.getRawButton(2)) {
+					m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+					System.out.println("Button B");
+				}
+				if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
+					m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+	}
 
 	/**
 	 * This function is called periodically during test mode.

@@ -13,11 +13,11 @@ import edu.wpi.first.wpilibj.DriverStation;
  * 			- far Switch Alliance-color location (L or R)
  */
 public class FieldInfo {
-	DriverStation.Alliance color;
-
-	public String getFieldInfo() {
+	/*DriverStation.Alliance color;
+	
+		public String displayinfo() {
 		String gameData;
-		String Teamloc;
+		String Teamloc; {
 		color = DriverStation.getInstance().getAlliance();
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 
@@ -29,41 +29,51 @@ public class FieldInfo {
 
 		Teamloc = Teamloc + gameData;
 
-		return Teamloc;
-	}
-
-//	public String processGameData(String TeamLoc) {
-//
-//		if (TeamLoc.length() > 1) {
-//			if (TeamLoc.charAt(1) == 'L') {
-//				//left code here, ally switch
-//			} else {
-//				//right code here, switch
-//				if (TeamLoc.length() > 2) {
-//					if (TeamLoc.charAt(2) == 'R') {
-//						//right code here, ally scale
-//					} else {
-//						if (TeamLoc.length() > 3) {
-//							if (TeamLoc.charAt(3) == 'L') {
-//								//left code here, scale
-//							} else {
-//								if (TeamLoc.length() > 3) {
-//									if (TeamLoc.charAt(3) == 'R') {
-//										//right code here, opposing switch
-//									} else {
-//										if (TeamLoc.length() >2){
-//											if (TeamLoc.charAt(2) == 'L') {
-//												//left code here, opposing switch
-//											}
-//										}
-//									}
-//								}
-//							}
-//						}
-//					}
-//				}
-//			}
-//		}
-//		return TeamLoc;
-//	}
+	return Teamloc;
+		}
+		public String getDisplayInfo() {
+			color = DriverStation.getInstance().getAlliance();
+			if (color == DriverStation.Alliance.Blue) {
+				System.out.println("Our color is blue");
+			} else {
+				System.out.println("Our color is not blue");
+			}
+			// TODO Auto-generated method stub
+			
+		}
+*/
+	//	public String processGameData(String TeamLoc) {
+	//
+	//		if (TeamLoc.length() > 1) {
+	//			if (TeamLoc.charAt(1) == 'L') {
+	//				//left code here, ally switch
+	//			} else {
+	//				//right code here, switch
+	//				if (TeamLoc.length() > 2) {
+	//					if (TeamLoc.charAt(2) == 'R') {
+	//						//right code here, ally scale
+	//					} else {
+	//						if (TeamLoc.length() > 3) {
+	//							if (TeamLoc.charAt(3) == 'L') {
+	//								//left code here, scale
+	//							} else {
+	//								if (TeamLoc.length() > 3) {
+	//									if (TeamLoc.charAt(3) == 'R') {
+	//										//right code here, opposing switch
+	//									} else {
+	//										if (TeamLoc.length() >2){
+	//											if (TeamLoc.charAt(2) == 'L') {
+	//												//left code here, opposing switch
+	//											}
+	//										}
+	//									}
+	//								}
+	//							}
+	//						}
+	//					}
+	//				}
+	//			}
+	//		}
+	//		return TeamLoc;
+	//	}
 }
