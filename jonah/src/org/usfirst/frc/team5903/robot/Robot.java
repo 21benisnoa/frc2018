@@ -43,7 +43,10 @@ public class Robot extends IterativeRobot {
 	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
 	private static final double kAngleSetpoint = 0.0;
 	private static final double kP = 0.005; // propotional turning constant
-
+	String Pathid;
+	private FieldCalculations m_FieldCalculations = new FieldCalculations(); //declares a Field Calculations object so the Pathid can be retrieved
+	private int Location;
+	
 	// gyro calibration constant, may need to be adjusted;
 	// gyro value of 360 is set to correspond to one full revolution
 	private static final double kVoltsPerDegreePerSecond = 0.0128;
@@ -84,6 +87,8 @@ public class Robot extends IterativeRobot {
 		m_timer.reset();
 		m_timer.start();
 
+
+
 	}
 	/**
 	 * This function is called periodically during autonomous.
@@ -117,45 +122,76 @@ public class Robot extends IterativeRobot {
 		double y = ty.getDouble(0);
 		double area = ta.getDouble(0);
 		double Gx = m_gyro.getAngle(); //gyro x
-	    System.out.println("Angle= " + Gx); //print gyro to console
+		System.out.println("Angle= " + Gx); //print gyro to console
 		System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
 		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
 		// Invert the direction of the turn if we are going backwards
-		
+
 		turningValue = Math.copySign(turningValue, m_stick.getY());
 		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
+		if (Location == 1) {
+			Pathid = m_FieldCalculations.Path; // Retrieves the Path id from Field Calculations
+			if (Pathid == "11") {//checks for pathid being 11
+			}
+			else if (Pathid == "14") {//checks for pathid being 14
+			}
+			else if (Pathid == "22") {//checks for pathid being 22
+			}
+			else if (Pathid == "23") {//checks for Pathid being 23
+			}
+		}
+		else if (Location == 2) {//middle position pathing
+
+		}
+		else if (Location == 3) {//right position pathing
+			if (Pathid == "11") {//checks for pathid being 11
+			}
+			else if (Pathid == "14") {//checks for pathid being 14
+			}
+			else if (Pathid == "22") {//checks for pathid being 22
+			}
+			else if (Pathid == "23") {//checks for Pathid being 23
+			}
+		}
+		
+		
+		
+		
+		
+		
+		
 		
 //		if (m_timer.get() > 0) {
 //			if (m_timer.get() < 2) {
 //				m_robotDrive.tankDrive(.5, .5); //drives robot forwards for two seconds
 //			}
 //		}
-		if (m_timer.get() > 0) {
-			if (m_gyro.getAngle() < 90){
+		//if (m_timer.get() > 0) {
+	//		if (m_gyro.getAngle() < 90){
 				m_robotDrive.tankDrive(.6, -.6); //turns the robot right
-			}
-		}
-		int Target = 0;
-		if (Target == 1) {//Targeting Procedure
-			if(area >= 12.5) {
-				m_robotDrive.tankDrive(0, 0);
-				STAHP = 1; //checks distance to target, if within distance, then stops robot
-			}
-			else if (area >= 12.5) {
-				STAHP = 0;
-			}
-			if(STAHP == 0) {
-				if(x < -10) {
-					m_robotDrive.tankDrive(0.5, 0.6); //checks for target to the left, if so, turns robot left
-				}
-				else if(x > 10) {
-					m_robotDrive.tankDrive(0.6, 0.5); //checks for target to the left, if so, turns robot
-				}
-				else {
-					m_robotDrive.tankDrive(.6, .6);//default target chase speed
-				}
-			}
-		}
+	//		}
+	//	}
+		//int Target = 0;
+		//if (Target == 1) {//Targeting Procedure
+//			if(area >= 12.5) {
+//				m_robotDrive.tankDrive(0, 0);
+//				STAHP = 1; //checks distance to target, if within distance, then stops robot
+//			}
+//			else if (area >= 12.5) {
+//				STAHP = 0;
+//			}
+//			if(STAHP == 0) {
+//				if(x < -10) {
+//					m_robotDrive.tankDrive(0.5, 0.6); //checks for target to the left, if so, turns robot left
+//				}
+//				else if(x > 10) {
+//					m_robotDrive.tankDrive(0.6, 0.5); //checks for target to the left, if so, turns robot
+//				}
+//				else {
+//					m_robotDrive.tankDrive(.6, .6);//default target chase speed
+//				}
+//			}
+//		}
 		//autonomous target follow code
 	}
 	/**
@@ -221,7 +257,7 @@ public class Robot extends IterativeRobot {
 		if (m_stick.getRawButton(5)) {//left bumper
 			m_backMotor.set(1);
 		}
-		else if (m_stick.getRawButton(6)) {
+		else if (m_stick.getRawButton(6)) {//right bumper
 			m_backMotor.set(-1);
 		}
 		else {
