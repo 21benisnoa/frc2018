@@ -23,6 +23,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTable;
 import org.usfirst.frc.team5903.robot.FieldInfo;
+import org.usfirst.frc.team5903.robot.ControlMethods;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -32,24 +33,19 @@ import org.usfirst.frc.team5903.robot.FieldInfo;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	private DifferentialDrive m_robotDrive
-	= new DifferentialDrive(new Spark(0), new Spark(1));
-	//SpeedController m_robotArm = new Spark(2);
-	private Spark m_robotArm = new Spark(2);
-	private Spark m_backMotor = new Spark(4);
-	//Creates the robot arm motor control.
-	private Joystick m_stick = new Joystick(0);
 	private Timer m_timer = new Timer();
-	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
 	private static final double kAngleSetpoint = 0.0;
 	private static final double kP = 0.005; // propotional turning constant
+	private int Location;
+	private FieldCalculations m_FieldCalculations = new FieldCalculations(); //declares a Field Calculations object so the Pathid can be retrieved
 
 	// gyro calibration constant, may need to be adjusted;
 	// gyro value of 360 is set to correspond to one full revolution
 	private static final double kVoltsPerDegreePerSecond = 0.0128;
 	private ADXRS450_Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-	int STAHP = 0;
-	int Target = 0;
+	private int STAHP = 0;
+	private int Target = 0;
+	private String Pathid;
 	String m_teamLoc;
 
 	/**
@@ -71,7 +67,8 @@ public class Robot extends IterativeRobot {
 		// Get information from the Field Management System (FMS)
 		FieldInfo m_teamInfo = new FieldInfo();
 		m_teamLoc = m_teamInfo.getFieldInfo();
-
+		Pathid = m_FieldCalculations.Path; // Retrieves the Path id from Field Calculations
+		
 		System.out.println("I'm in autonomous: Alliance color: " + 
 				m_teamLoc.charAt(0) +
 				" Plate Locations: Near switch: " +
@@ -125,17 +122,48 @@ public class Robot extends IterativeRobot {
 		turningValue = Math.copySign(turningValue, m_stick.getY());
 		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
 		
-//		if (m_timer.get() > 0) {
-//			if (m_timer.get() < 2) {
-//				m_robotDrive.tankDrive(.5, .5); //drives robot forwards for two seconds
-//			}
-//		}
-		if (m_timer.get() > 0) {
-			if (m_gyro.getAngle() < 90){
-				m_robotDrive.tankDrive(.6, -.6); //turns the robot right
+		
+		//BEGIN DRIVE CODE
+		
+		
+		if (Location == 1) {//LEFT POSITION CODE
+			if (Pathid == "11") {//checks for pathid being 11
+				
+			}
+			else if (Pathid == "14") {//checks for pathid being 14
+				
+			}
+			else if (Pathid == "22") {//checks for pathid being 22
+				
+			}
+			else if (Pathid == "23") {//checks for Pathid being 23
+				
 			}
 		}
-		int Target = 0;
+		
+		if (Location == 2) {//MIDDLE POSITION CODE
+			
+		}
+		
+		if (Location == 3) {//RIGHT POSITION CODE
+			if (Pathid == "11") {//checks for pathid being 11
+				
+			}
+			else if (Pathid == "14") {//checks for pathid being 14
+				
+			}
+			else if (Pathid == "22") {//checks for pathid being 22
+				
+			}
+			else if (Pathid == "23") {//checks for Pathid being 23
+				
+			}
+		}
+		
+		
+		
+		
+		/*		int Target = 0;
 		if (Target == 1) {//Targeting Procedure
 			if(area >= 12.5) {
 				m_robotDrive.tankDrive(0, 0);
@@ -155,7 +183,7 @@ public class Robot extends IterativeRobot {
 					m_robotDrive.tankDrive(.6, .6);//default target chase speed
 				}
 			}
-		}
+		}*/
 		//autonomous target follow code
 	}
 	/**
@@ -206,7 +234,7 @@ public class Robot extends IterativeRobot {
 		}
 		
 
-		m_robotDrive.arcadeDrive( m_stick.getY(), m_stick.getX()); //get joystick axis
+
 
 
 		if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
@@ -228,32 +256,31 @@ public class Robot extends IterativeRobot {
 			m_backMotor.set(0);
 		}
 
-		if (m_stick.getRawButton(3)) { //chase toggle ON
-			System.out.println("Button 3");
-			System.out.println("Entering Target Chase");
-			Target = 1;		
-		}
-		if(m_stick.getRawButton(4)) { //chase toggle OFF
-			System.out.println("Button 4");
-			System.out.println("Exiting Target Chase");
-			Target = 0;
-		}
-		if (Target == 1) {
-			System.out.println(area);
-			if(area >= 12.5) {
-				m_robotDrive.tankDrive(0, 0);
-				STAHP = 1; //stops the robot
-			}
-			else if (area <= 12.5) {
-				STAHP = 0;
-			}
-			if(STAHP == 0) {
-				m_robotDrive.tankDrive(.6, .6); //sets motors to .6 speed in target mod
-				if(x < -10) {
-					m_robotDrive.tankDrive(0.5, 0.6); // checks for Target being to the left, if so, turns robot left
-				}
-				else if(x > 10) {
-					m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
+//		if (m_stick.getRawButton(3)) { //chase toggle ON
+//			System.out.println("Button 3");
+//			System.out.println("Entering Target Chase");
+//			Target = 1;		
+//		}
+//		if(m_stick.getRawButton(4)) { //chase toggle OFF
+//			System.out.println("Button 4");
+//			System.out.println("Exiting Target Chase");
+//			Target = 0;
+//		}
+//		if (Target == 1) {
+//			System.out.println(area);
+//			if(area >= 12.5) {
+//				m_robotDrive.tankDrive(0, 0);
+//				STAHP = 1; //stops the robot
+//			}
+//			else if (area <= 12.5) {
+//				STAHP = 0;
+//			}
+//			if(STAHP == 0) {
+//				m_robotDrive.tankDrive(.6, .6); //sets motors to .6 speed in target mod
+//				if(x < -10) {
+//					m_robotDrive.tankDrive(0.5, 0.6); // checks for Target being to the left, if so, turns robot left
+//				else if(x > 10) {
+//					m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
 				}
 			}
 		}		
