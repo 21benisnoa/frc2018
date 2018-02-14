@@ -9,11 +9,13 @@ package org.usfirst.frc.team5903.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Spark;
 //import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -39,6 +41,13 @@ public class Robot extends IterativeRobot {
 	private Joystick m_stick = new Joystick(0);
 	private Timer m_timer = new Timer();
 	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
+	private static final double kAngleSetpoint = 0.0;
+	private static final double kP = 0.005; // propotional turning constant
+
+	// gyro calibration constant, may need to be adjusted;
+	// gyro value of 360 is set to correspond to one full revolution
+	private static final double kVoltsPerDegreePerSecond = 0.0128;
+	private ADXRS450_Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 	int STAHP = 0;
 	int Target = 0;
 	String m_teamLoc;
@@ -52,6 +61,7 @@ public class Robot extends IterativeRobot {
 		//Starts camera feeds
 		CameraServer.getInstance().startAutomaticCapture();
 		CameraServer.getInstance().startAutomaticCapture(1);
+		m_gyro.calibrate();//Calibrate gyro
 	}
 	/**
 	 * This function is run once each time the robot enters autonomous mode.
@@ -106,15 +116,23 @@ public class Robot extends IterativeRobot {
 		double x = tx.getDouble(0);
 		double y = ty.getDouble(0);
 		double area = ta.getDouble(0);
+		double Gx = m_gyro.getAngle(); //gyro x
+	    System.out.println("Angle= " + Gx); //print gyro to console
 		System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
+		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
+		// Invert the direction of the turn if we are going backwards
+		
+		turningValue = Math.copySign(turningValue, m_stick.getY());
+		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
+		
+//		if (m_timer.get() > 0) {
+//			if (m_timer.get() < 2) {
+//				m_robotDrive.tankDrive(.5, .5); //drives robot forwards for two seconds
+//			}
+//		}
 		if (m_timer.get() > 0) {
-			if (m_timer.get() < 2) {
-				m_robotDrive.tankDrive(.5, .5); //drives robot forwards for two seconds
-			}
-		}
-		if (m_timer.get() > 4) {
-			if (m_timer.get() < 4.05) {
-				m_robotDrive.tankDrive(.8, -.8); //turns the robot right
+			if (m_gyro.getAngle() < 90){
+				m_robotDrive.tankDrive(.6, -.6); //turns the robot right
 			}
 		}
 		int Target = 0;
@@ -186,6 +204,7 @@ public class Robot extends IterativeRobot {
 			right_command -= steering_adjust + distance_adjust;
 			m_robotDrive.tankDrive(left_command, right_command);
 		}
+		
 
 		m_robotDrive.arcadeDrive( m_stick.getY(), m_stick.getX()); //get joystick axis
 
@@ -199,7 +218,15 @@ public class Robot extends IterativeRobot {
 		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <=0) {
 			m_robotArm.setSpeed(0.0);
 		}
-
+		if (m_stick.getRawButton(5)) {//left bumper
+			m_backMotor.set(1);
+		}
+		else if (m_stick.getRawButton(6)) {
+			m_backMotor.set(-1);
+		}
+		else {
+			m_backMotor.set(0);
+		}
 
 		if (m_stick.getRawButton(3)) { //chase toggle ON
 			System.out.println("Button 3");
