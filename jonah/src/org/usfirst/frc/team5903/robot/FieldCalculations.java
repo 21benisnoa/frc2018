@@ -5,7 +5,7 @@ import org.usfirst.frc.team5903.robot.FieldInfo;
 public class FieldCalculations {
 	String Follow;
 	String m_teamLoc;
-	String Path;
+	public String Path;
 	String Switch;
 	String Scale;
 
