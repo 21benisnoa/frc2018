@@ -13,67 +13,64 @@ import edu.wpi.first.wpilibj.DriverStation;
  * 			- far Switch Alliance-color location (L or R)
  */
 public class FieldInfo {
-	/*DriverStation.Alliance color;
-	
-		public String displayinfo() {
-		String gameData;
-		String Teamloc; {
+
+	// Private class variables
+	private DriverStation.Alliance color; // This object holds our alliance color
+	private String gameData; // This string will hold the three-letter sequence of "L" and "R"	
+	private String Teamloc;  // This string will hold the combination of alliance color and gameData
+
+	// Public class methods
+	public String getFieldInfo() {
 		color = DriverStation.getInstance().getAlliance();
 		gameData = DriverStation.getInstance().getGameSpecificMessage();
 
-		if ( color == DriverStation.Alliance.Blue ) {
+		if (color == DriverStation.Alliance.Blue) {
+			System.out.println("Our color is blue");
 			Teamloc = "B";
 		} else {
+			System.out.println("Our color is red");
 			Teamloc = "R";
 		}
 
+		System.out.printf("Our locations: '%s'\n", gameData);
+
 		Teamloc = Teamloc + gameData;
 
-	return Teamloc;
-		}
-		public String getDisplayInfo() {
-			color = DriverStation.getInstance().getAlliance();
-			if (color == DriverStation.Alliance.Blue) {
-				System.out.println("Our color is blue");
-			} else {
-				System.out.println("Our color is not blue");
-			}
-			// TODO Auto-generated method stub
-			
-		}
-*/
-	//	public String processGameData(String TeamLoc) {
-	//
-	//		if (TeamLoc.length() > 1) {
-	//			if (TeamLoc.charAt(1) == 'L') {
-	//				//left code here, ally switch
-	//			} else {
-	//				//right code here, switch
-	//				if (TeamLoc.length() > 2) {
-	//					if (TeamLoc.charAt(2) == 'R') {
-	//						//right code here, ally scale
-	//					} else {
-	//						if (TeamLoc.length() > 3) {
-	//							if (TeamLoc.charAt(3) == 'L') {
-	//								//left code here, scale
-	//							} else {
-	//								if (TeamLoc.length() > 3) {
-	//									if (TeamLoc.charAt(3) == 'R') {
-	//										//right code here, opposing switch
-	//									} else {
-	//										if (TeamLoc.length() >2){
-	//											if (TeamLoc.charAt(2) == 'L') {
-	//												//left code here, opposing switch
-	//											}
-	//										}
-	//									}
-	//								}
-	//							}
-	//						}
-	//					}
-	//				}
-	//			}
-	//		}
-	//		return TeamLoc;
-	//	}
+		System.out.printf("Teamloc is: '%s'\n", Teamloc);
+		return Teamloc;
+	}
 }
+
+//	public String processGameData(String TeamLoc) {
+//
+//			if (TeamLoc.length() > 1) {
+//				if (TeamLoc.charAt(1) == 'L') {
+//					//left code here, ally switch
+//				} else {
+//					//right code here, switch
+//					if (TeamLoc.length() > 2) {
+//						if (TeamLoc.charAt(2) == 'R') {
+//							//right code here, ally scale
+//						} else {
+//							if (TeamLoc.length() > 3) {
+//								if (TeamLoc.charAt(3) == 'L') {
+//									//left code here, scale
+//								} else {
+//									if (TeamLoc.length() > 3) {
+//										if (TeamLoc.charAt(3) == 'R') {
+//											//right code here, opposing switch
+//										} else {
+//											if (TeamLoc.length() >2){
+//												if (TeamLoc.charAt(2) == 'L') {
+//													//left code here, opposing switch
+//												}
+//											}
+//										}
+//									}
+//								}
+//							}
+//						}
+//					}
+//				}
+//			}
+//}

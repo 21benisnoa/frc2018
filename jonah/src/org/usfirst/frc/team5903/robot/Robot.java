@@ -31,7 +31,7 @@ import org.usfirst.frc.team5903.robot.FieldInfo;
  */
 public class Robot extends IterativeRobot {
 	private DifferentialDrive m_robotDrive
-			= new DifferentialDrive(new Spark(0), new Spark(1));
+	= new DifferentialDrive(new Spark(0), new Spark(1));
 	//SpeedController m_robotArm = new Spark(2);
 	private Spark m_robotArm = new Spark(2);
 	private Spark m_backMotor = new Spark(4);
@@ -42,7 +42,7 @@ public class Robot extends IterativeRobot {
 	int STAHP = 0;
 	int Target = 0;
 	String m_teamLoc;
-	
+
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -60,8 +60,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		// Get information from the Field Management System (FMS)
 		FieldInfo m_teamInfo = new FieldInfo();
-//		m_teamLoc = m_teamInfo.getFieldInfo();
-		
+		m_teamLoc = m_teamInfo.getFieldInfo();
+
 		System.out.println("I'm in autonomous: Alliance color: " + 
 				m_teamLoc.charAt(0) +
 				" Plate Locations: Near switch: " +
@@ -70,19 +70,19 @@ public class Robot extends IterativeRobot {
 				m_teamLoc.charAt(2) +
 				" Far switch: " +
 				m_teamLoc.charAt(3));
-		
+
 		m_timer.reset();
 		m_timer.start();
 
-		}
+	}
 	/**
 	 * This function is called periodically during autonomous.
 	 */
 	@Override	
 	public void autonomousPeriodic() {
-		
-//		System.out.println("I'm in auto Periodic");
-/*******  Original autonomous mode code
+
+		//		System.out.println("I'm in auto Periodic");
+		/*******  Original autonomous mode code
 			if (m_timer.get()<6) {
 				m_robotDrive.tankDrive(-.6, -.6);
 			} else if (m_timer.get()<9){
@@ -97,7 +97,7 @@ public class Robot extends IterativeRobot {
 			} else {
 				m_robotArm.stopMotor();
 			}
-*******/
+		 *******/
 		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 		NetworkTableEntry tx = table.getEntry("tx");
 		NetworkTableEntry ty = table.getEntry("ty");
@@ -122,7 +122,7 @@ public class Robot extends IterativeRobot {
 			if(area >= 12.5) {
 				m_robotDrive.tankDrive(0, 0);
 				STAHP = 1; //checks distance to target, if within distance, then stops robot
-				}
+			}
 			else if (area >= 12.5) {
 				STAHP = 0;
 			}
@@ -138,7 +138,7 @@ public class Robot extends IterativeRobot {
 				}
 			}
 		}
-  //autonomous target follow code
+		//autonomous target follow code
 	}
 	/**
 	 * This function is called once each time the robot enters teleoperated mode.
@@ -168,81 +168,81 @@ public class Robot extends IterativeRobot {
 		double left_command = 0.0f;
 		double right_command = 0.0f;
 		System.out.println("teleop");
-			// Klann moved this from autonomousPeriodic to see if it works, and it does here!
-			if (m_stick.getRawButton(4)) {
-				System.out.println("Button Y");
-				double heading_error = -x;
-				double distance_error = -y;
-				double steering_adjust = 0.0f;
-				if (x > 1.0) {
-					steering_adjust = KpAim*heading_error - min_aim_command;
-				} else if (x < 1.0) {
-					steering_adjust = KpAim*heading_error + min_aim_command;
-				}
-
-				double distance_adjust = KpDistance * distance_error;
-
-				left_command += steering_adjust + distance_adjust;
-				right_command -= steering_adjust + distance_adjust;
-				m_robotDrive.tankDrive(left_command, right_command);
+		// Klann moved this from autonomousPeriodic to see if it works, and it does here!
+		if (m_stick.getRawButton(4)) {
+			System.out.println("Button Y");
+			double heading_error = -x;
+			double distance_error = -y;
+			double steering_adjust = 0.0f;
+			if (x > 1.0) {
+				steering_adjust = KpAim*heading_error - min_aim_command;
+			} else if (x < 1.0) {
+				steering_adjust = KpAim*heading_error + min_aim_command;
 			}
 
-			m_robotDrive.arcadeDrive( m_stick.getY(), m_stick.getX()); //get joystick axis
+			double distance_adjust = KpDistance * distance_error;
+
+			left_command += steering_adjust + distance_adjust;
+			right_command -= steering_adjust + distance_adjust;
+			m_robotDrive.tankDrive(left_command, right_command);
+		}
+
+		m_robotDrive.arcadeDrive( m_stick.getY(), m_stick.getX()); //get joystick axis
 
 
-			if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
-				m_robotArm.setSpeed(-m_stick.getRawAxis(2));//Trigger Controls	
+		if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
+			m_robotArm.setSpeed(-m_stick.getRawAxis(2));//Trigger Controls	
+		}
+		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
+			m_robotArm.setSpeed(m_stick.getRawAxis(3));
+		} 
+		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <=0) {
+			m_robotArm.setSpeed(0.0);
+		}
+
+
+		if (m_stick.getRawButton(3)) { //chase toggle ON
+			System.out.println("Button 3");
+			System.out.println("Entering Target Chase");
+			Target = 1;		
+		}
+		if(m_stick.getRawButton(4)) { //chase toggle OFF
+			System.out.println("Button 4");
+			System.out.println("Exiting Target Chase");
+			Target = 0;
+		}
+		if (Target == 1) {
+			System.out.println(area);
+			if(area >= 12.5) {
+				m_robotDrive.tankDrive(0, 0);
+				STAHP = 1; //stops the robot
 			}
-			if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
-				m_robotArm.setSpeed(m_stick.getRawAxis(3));
-			} 
-			if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <=0) {
-				m_robotArm.setSpeed(0.0);
+			else if (area <= 12.5) {
+				STAHP = 0;
 			}
-			
-			
-			if (m_stick.getRawButton(3)) { //chase toggle ON
-				System.out.println("Button 3");
-				System.out.println("Entering Target Chase");
-				Target = 1;		
+			if(STAHP == 0) {
+				m_robotDrive.tankDrive(.6, .6); //sets motors to .6 speed in target mod
+				if(x < -10) {
+					m_robotDrive.tankDrive(0.5, 0.6); // checks for Target being to the left, if so, turns robot left
+				}
+				else if(x > 10) {
+					m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
+				}
 			}
-			if(m_stick.getRawButton(4)) { //chase toggle OFF
-				System.out.println("Button 4");
-				System.out.println("Exiting Target Chase");
-				Target = 0;
-			}
-			if (Target == 1) {
-				System.out.println(area);
-				if(area >= 12.5) {
-					m_robotDrive.tankDrive(0, 0);
-					STAHP = 1; //stops the robot
-				}
-				else if (area <= 12.5) {
-					STAHP = 0;
-				}
-				if(STAHP == 0) {
-					m_robotDrive.tankDrive(.6, .6); //sets motors to .6 speed in target mod
-					if(x < -10) {
-						m_robotDrive.tankDrive(0.5, 0.6); // checks for Target being to the left, if so, turns robot left
-					}
-					else if(x > 10) {
-						m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
-					}
-				}
-			}		
-			//pneumatics code
-				if (m_stick.getRawButton(1)) {
-					m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
-					System.out.println("Button A");
-				} else {
-					m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-				}
-				if (m_stick.getRawButton(2)) {
-					m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
-					System.out.println("Button B");
-				}
-				if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
-					m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+		}		
+		//pneumatics code
+		if (m_stick.getRawButton(1)) {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+			System.out.println("Button A");
+		} else {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+		}
+		if (m_stick.getRawButton(2)) {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+			System.out.println("Button B");
+		}
+		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
+			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 	}
 	/**
 	 * This function is called periodically during test mode.
