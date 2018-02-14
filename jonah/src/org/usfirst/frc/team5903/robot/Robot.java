@@ -39,7 +39,7 @@ public class Robot extends IterativeRobot {
 	private int Location;
 	private FieldCalculations m_FieldCalculations = new FieldCalculations(); //declares a Field Calculations object so the Pathid can be retrieved
 	private ControlMethods m_ControlMethods = new ControlMethods(); //declares a ControlMethods object so methods can be called
-	
+
 	// gyro calibration constant, may need to be adjusted;
 	// gyro value of 360 is set to correspond to one full revolution
 	private static final double kVoltsPerDegreePerSecond = 0.0128;
@@ -69,7 +69,7 @@ public class Robot extends IterativeRobot {
 		FieldInfo m_teamInfo = new FieldInfo();
 		m_teamLoc = m_teamInfo.getFieldInfo();
 		Pathid = m_FieldCalculations.Path; // Retrieves the Path id from Field Calculations
-		
+
 		System.out.println("I'm in autonomous: Alliance color: " + 
 				m_teamLoc.charAt(0) +
 				" Plate Locations: Near switch: " +
@@ -168,9 +168,6 @@ public class Robot extends IterativeRobot {
 			}
 		}
 
-
-
-
 		/*		int Target = 0;
 		if (Target == 1) {//Targeting Procedure
 			if(area >= 12.5) {
@@ -245,48 +242,32 @@ public class Robot extends IterativeRobot {
 		m_ControlMethods.Clawcontrol();//Claw control call
 
 
-
-
-		
-		
-		if (m_stick.getRawButton(5)) {//left bumper
-			m_backMotor.set(1);
-		}
-		else if (m_stick.getRawButton(6)) {
-			m_backMotor.set(-1);
-		}
-		else {
-			m_backMotor.set(0);
-		}
-
-//		if (m_stick.getRawButton(3)) { //chase toggle ON
-//			System.out.println("Button 3");
-//			System.out.println("Entering Target Chase");
-//			Target = 1;		
-//		}
-//		if(m_stick.getRawButton(4)) { //chase toggle OFF
-//			System.out.println("Button 4");
-//			System.out.println("Exiting Target Chase");
-//			Target = 0;
-//		}
-//		if (Target == 1) {
-//			System.out.println(area);
-//			if(area >= 12.5) {
-//				m_robotDrive.tankDrive(0, 0);
-//				STAHP = 1; //stops the robot
-//			}
-//			else if (area <= 12.5) {
-//				STAHP = 0;
-//			}
-//			if(STAHP == 0) {
-//				m_robotDrive.tankDrive(.6, .6); //sets motors to .6 speed in target mod
-//				if(x < -10) {
-//					m_robotDrive.tankDrive(0.5, 0.6); // checks for Target being to the left, if so, turns robot left
-//				else if(x > 10) {
-//					m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
-				}
-			}
-		}		
+		//		if (m_stick.getRawButton(3)) { //chase toggle ON
+		//			System.out.println("Button 3");
+		//			System.out.println("Entering Target Chase");
+		//			Target = 1;		
+		//		}
+		//		if(m_stick.getRawButton(4)) { //chase toggle OFF
+		//			System.out.println("Button 4");
+		//			System.out.println("Exiting Target Chase");
+		//			Target = 0;
+		//		}
+		//		if (Target == 1) {
+		//			System.out.println(area);
+		//			if(area >= 12.5) {
+		//				m_robotDrive.tankDrive(0, 0);
+		//				STAHP = 1; //stops the robot
+		//			}
+		//			else if (area <= 12.5) {
+		//				STAHP = 0;
+		//			}
+		//			if(STAHP == 0) {
+		//				m_robotDrive.tankDrive(.6, .6); //sets motors to .6 speed in target mod
+		//				if(x < -10) {
+		//					m_robotDrive.tankDrive(0.5, 0.6); // checks for Target being to the left, if so, turns robot left
+		//				else if(x > 10) {
+		//					m_robotDrive.tankDrive(0.6, 0.5); //checks for Target being to the right, if so, turns robot right
+	}		
 	/**
 	 * This function is called periodically during test mode.
 	 */
