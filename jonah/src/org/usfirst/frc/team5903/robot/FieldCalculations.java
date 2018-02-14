@@ -3,26 +3,21 @@ package org.usfirst.frc.team5903.robot;
 import org.usfirst.frc.team5903.robot.FieldInfo;
 
 public class FieldCalculations {
-	int Robotposition;
-	String Alliancecolours;
 	String Follow;
 	String m_teamLoc;
 	String Path;
 	String Switch;
 	String Scale;
-	
-	public String Getcolours() {
-		// Get information from the Field Management System (FMS)
-		FieldInfo m_teamInfo = new FieldInfo();
-		m_teamLoc = m_teamInfo.getFieldInfo();
-		return m_teamLoc;
-	}
+
 	public String Pathid() {
 		char Charswitch;
 		char Charscale;
+		// Get information from the Field Management System (FMS)
+		FieldInfo m_teamInfo = new FieldInfo();
+		m_teamLoc = m_teamInfo.getFieldInfo();
 		Charswitch = m_teamLoc.charAt(1);
 		Charscale = m_teamLoc.charAt(2);
-		String Switch = String.valueOf(Charswitch); //convert Charswitch to Switch, because chars and strings dont like eachother
+		String Switch = String.valueOf(Charswitch); //convert Charswitch to Switch, because chars and strings dont like each other
 		String Scale = String.valueOf(Charscale); //above but with Scale
 		if (Switch == "L") { //check for switch being L
 			if (Scale == "L") { //check scale being L
@@ -41,18 +36,5 @@ public class FieldCalculations {
 			}
 		}
 		return Path;
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	public String Leftactions() {
-		String leftActions;
-			
-		return leftActions;
 	}
 }
