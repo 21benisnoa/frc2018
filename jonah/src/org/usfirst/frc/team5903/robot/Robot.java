@@ -240,20 +240,13 @@ public class Robot extends IterativeRobot {
 			right_command -= steering_adjust + distance_adjust;
 			m_robotDrive.tankDrive(left_command, right_command);
 		}
-		
+		m_ControlMethods.Joystickcontrol();//joystick control call
+		m_ControlMethods.Triggercontrol();//trigger control call
+		m_ControlMethods.Clawcontrol();//Claw control call
 
 
 
 
-		if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
-			m_robotArm.setSpeed(-m_stick.getRawAxis(2));//Trigger Controls	
-		}
-		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
-			m_robotArm.setSpeed(m_stick.getRawAxis(3));
-		} 
-		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <=0) {
-			m_robotArm.setSpeed(0.0);
-		}
 		
 		
 		if (m_stick.getRawButton(5)) {//left bumper
@@ -294,20 +287,6 @@ public class Robot extends IterativeRobot {
 				}
 			}
 		}		
-		//pneumatics code
-		if (m_stick.getRawButton(1)) {
-			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
-			System.out.println("Button A");
-		} else {
-			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-		}
-		if (m_stick.getRawButton(2)) {
-			m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
-			System.out.println("Button B");
-		}
-		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
-			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-	}
 	/**
 	 * This function is called periodically during test mode.
 	 */

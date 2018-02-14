@@ -43,28 +43,43 @@ private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
 	public void Stoparm() {//declares the Stoparm method
 		m_robotArm.setSpeed(0);
 	}
-	public void Grab() {//declares the Grab method
-		m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+	public void Clawcontrol() {//declares the Clawcontrol method
+		if (m_stick.getRawButton(1)) {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+			System.out.println("Button A");
+		} else {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+		}
+		if (m_stick.getRawButton(2)) {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+			System.out.println("Button B");
+		}
+		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
+			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 	}
-	public void Release() {//declares the Release method
-		m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
-	}
-	public void Stopclaw() {//declares the stop claw method
-		m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-	}
-	public void Backmotorforwards() {
-		m_backMotor.set(.5);
-	}
-	public void Backmotorbackwards() {
-		m_backMotor.set(-.5);
-	}
-	public void Backmotorstop() {
-		m_backMotor.set(0);
+	public void Climbcontrol() {
+		if (m_stick.getRawButton(5)) {//left bumper
+			m_backMotor.set(.5);
+		}
+		else if (m_stick.getRawButton(6)) {//right bumper
+			m_backMotor.set(-.5);
+		}
+		else {
+			m_backMotor.set(0);
+		}
 	}
 	public void Joystickcontrol() {
 		m_robotDrive.arcadeDrive( m_stick.getY(), m_stick.getX()); //get joystick axis and set the motors to that speed
 	}
 	public void Triggercontrol() {
-		
+		if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3)<= 0) {
+			m_robotArm.setSpeed(-m_stick.getRawAxis(2));//Trigger Controls	
+		}
+		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
+			m_robotArm.setSpeed(m_stick.getRawAxis(3));
+		} 
+		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <=0) {
+			m_robotArm.setSpeed(0.0);
+		}
 	}
 }
