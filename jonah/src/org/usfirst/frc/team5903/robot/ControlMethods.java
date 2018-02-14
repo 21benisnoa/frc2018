@@ -64,4 +64,7 @@ private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
 	public void Joystickcontrol() {
 		m_robotDrive.arcadeDrive( m_stick.getY(), m_stick.getX()); //get joystick axis and set the motors to that speed
 	}
+	public void Triggercontrol() {
+		
+	}
 }

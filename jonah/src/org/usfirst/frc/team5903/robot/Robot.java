@@ -38,7 +38,8 @@ public class Robot extends IterativeRobot {
 	private static final double kP = 0.005; // propotional turning constant
 	private int Location;
 	private FieldCalculations m_FieldCalculations = new FieldCalculations(); //declares a Field Calculations object so the Pathid can be retrieved
-
+	private ControlMethods m_ControlMethods = new ControlMethods(); //declares a ControlMethods object so methods can be called
+	
 	// gyro calibration constant, may need to be adjusted;
 	// gyro value of 360 is set to correspond to one full revolution
 	private static final double kVoltsPerDegreePerSecond = 0.0128;
@@ -114,55 +115,62 @@ public class Robot extends IterativeRobot {
 		double y = ty.getDouble(0);
 		double area = ta.getDouble(0);
 		double Gx = m_gyro.getAngle(); //gyro x
-	    System.out.println("Angle= " + Gx); //print gyro to console
+		System.out.println("Angle= " + Gx); //print gyro to console
 		System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
 		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
 		// Invert the direction of the turn if we are going backwards
-		
+
 		turningValue = Math.copySign(turningValue, m_stick.getY());
 		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
-		
-		
+
+
 		//BEGIN DRIVE CODE
-		
-		
+
+
 		if (Location == 1) {//LEFT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
-				
+				if (m_timer.get() > 0) {
+					if (m_timer.get() <4 ) {
+						m_ControlMethods.Forwards();
+					}
+					else {
+						m_ControlMethods.Stop();
+					}
+				}
 			}
 			else if (Pathid == "14") {//checks for pathid being 14
-				
+
 			}
 			else if (Pathid == "22") {//checks for pathid being 22
-				
+
 			}
 			else if (Pathid == "23") {//checks for Pathid being 23
-				
+
 			}
 		}
-		
+
 		if (Location == 2) {//MIDDLE POSITION CODE
-			
+
 		}
-		
+
 		if (Location == 3) {//RIGHT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
-				
+
 			}
 			else if (Pathid == "14") {//checks for pathid being 14
-				
+
 			}
 			else if (Pathid == "22") {//checks for pathid being 22
-				
+
 			}
 			else if (Pathid == "23") {//checks for Pathid being 23
-				
+
 			}
 		}
-		
-		
-		
-		
+
+
+
+
 		/*		int Target = 0;
 		if (Target == 1) {//Targeting Procedure
 			if(area >= 12.5) {
@@ -246,6 +254,8 @@ public class Robot extends IterativeRobot {
 		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <=0) {
 			m_robotArm.setSpeed(0.0);
 		}
+		
+		
 		if (m_stick.getRawButton(5)) {//left bumper
 			m_backMotor.set(1);
 		}
