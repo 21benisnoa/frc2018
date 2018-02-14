@@ -120,8 +120,8 @@ public class Robot extends IterativeRobot {
 		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
 		// Invert the direction of the turn if we are going backwards
 
-		turningValue = Math.copySign(turningValue, m_stick.getY());
-		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
+//		turningValue = Math.copySign(turningValue, m_stick.getY());
+//		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
 
 
 		//BEGIN DRIVE CODE
@@ -220,7 +220,7 @@ public class Robot extends IterativeRobot {
 		double right_command = 0.0f;
 		System.out.println("teleop");
 		// Klann moved this from autonomousPeriodic to see if it works, and it does here!
-		if (m_stick.getRawButton(4)) {
+/*		if (m_stick.getRawButton(4)) {
 			System.out.println("Button Y");
 			double heading_error = -x;
 			double distance_error = -y;
@@ -237,6 +237,7 @@ public class Robot extends IterativeRobot {
 			right_command -= steering_adjust + distance_adjust;
 			m_robotDrive.tankDrive(left_command, right_command);
 		}
+	*/
 		m_ControlMethods.Joystickcontrol();//joystick control call
 		m_ControlMethods.Triggercontrol();//trigger control call
 		m_ControlMethods.Clawcontrol();//Claw control call
