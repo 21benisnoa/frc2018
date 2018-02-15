@@ -41,7 +41,7 @@ public class Robot extends IterativeRobot {
 	private Timer m_timer = new Timer();
 	private static final double kAngleSetpoint = 0.0;
 	private static final double kP = 0.005; // propotional turning constant
-	private int Location;
+	private double Location;
 	private FieldCalculations m_FieldCalculations = new FieldCalculations(); //declares a Field Calculations object so the Pathid can be retrieved
 	private ControlMethods m_ControlMethods = new ControlMethods(); //declares a ControlMethods object so methods can be called
 
@@ -69,6 +69,7 @@ public class Robot extends IterativeRobot {
 		CameraServer.getInstance().startAutomaticCapture(1);
 		m_gyro.calibrate();//Calibrate gyro
 		
+		
 		autoChooser = new SendableChooser(); // dklann: added for SmartDashboard functionality
 		//autoChooser.addDefault("Default program", new team5903AutoOne()); // dklann: added for SmartDashboard functionality
 		//autoChooser.addObject("Alternative program", new OtherConstructor()); // dklann: added for SmartDashboard functionality
@@ -93,6 +94,8 @@ public class Robot extends IterativeRobot {
 				m_teamLoc.charAt(2) +
 				" Far switch: " +
 				m_teamLoc.charAt(3));
+		
+				Location = SmartDashboard.getNumber("positon", 0.0);
 
 		m_timer.reset();
 		m_timer.start();
@@ -147,42 +150,37 @@ public class Robot extends IterativeRobot {
 
 		if (Location == 1) {//LEFT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
-				if (m_timer.get() > 0) {
-					if (m_timer.get() <4 ) {
-						m_ControlMethods.Forwards();
-					}
-					else {
-						m_ControlMethods.Stop();
-					}
-				}
+				System.out.println("location 1, pathid 11");
+
 			}
 			else if (Pathid == "14") {//checks for pathid being 14
-
+				System.out.println("location 1, pathid 14");
 			}
 			else if (Pathid == "22") {//checks for pathid being 22
-
+				System.out.println("location 1, pathid 22");
 			}
 			else if (Pathid == "23") {//checks for Pathid being 23
+				System.out.println("location 1, pathid 23");
 
 			}
 		}
 
 		if (Location == 2) {//MIDDLE POSITION CODE
-
+			System.out.println("location 2");
 		}
 
 		if (Location == 3) {//RIGHT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
-
+				System.out.println("location 3, pathid 11");
 			}
 			else if (Pathid == "14") {//checks for pathid being 14
-
+				System.out.println("location 3, pathid 14");
 			}
 			else if (Pathid == "22") {//checks for pathid being 22
-
+				System.out.println("location 3, pathid 22");
 			}
 			else if (Pathid == "23") {//checks for Pathid being 23
-
+				System.out.println("location 3, pathid 23");
 			}
 		}
 
