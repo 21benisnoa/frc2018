@@ -93,6 +93,8 @@ public class Robot extends IterativeRobot {
 				m_teamLoc.charAt(2) +
 				" Far switch: " +
 				m_teamLoc.charAt(3));
+		
+				Location = SmartDashboard.getNumber(position, 0.0);
 
 		m_timer.reset();
 		m_timer.start();
