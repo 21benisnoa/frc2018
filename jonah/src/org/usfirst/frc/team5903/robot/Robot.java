@@ -53,6 +53,11 @@ public class Robot extends IterativeRobot {
 	private int Target = 0;
 	private String Pathid;
 	String m_teamLoc;
+	private enum StartingPosition {
+		  LEFT, MIDDLE, RIGHT
+		}
+	private final SendableChooser<StartingPosition> positionChooser = new SendableChooser<>();
+
 	
 	Command autonomousCommand; // dklann: added for SmartDashboard functionality
 	SendableChooser autoChooser; // dklann: added for SmartDashboard functionality
@@ -73,6 +78,9 @@ public class Robot extends IterativeRobot {
 		//autoChooser.addDefault("Default program", new team5903AutoOne()); // dklann: added for SmartDashboard functionality
 		//autoChooser.addObject("Alternative program", new OtherConstructor()); // dklann: added for SmartDashboard functionality
 		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser); // dklann: added for SmartDashboard functionality
+		  positionChooser.addObject("Starting on the left", StartingPosition.LEFT);
+		  positionChooser.addObject("Starting in the middle", StartingPosition.MIDDLE);
+		  positionChooser.addObject("Starting on the right", StartingPosition.RIGHT);
 	}
 	/**
 	 * This function is run once each time the robot enters autonomous mode.
