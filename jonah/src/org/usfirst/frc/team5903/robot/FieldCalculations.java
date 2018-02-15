@@ -17,6 +17,7 @@ public class FieldCalculations {
 		m_teamLoc = m_teamInfo.getFieldInfo();
 		Charswitch = m_teamLoc.charAt(1);
 		Charscale = m_teamLoc.charAt(2);
+		Charscale = m_teamLoc.charAt(4);
 		String Switch = String.valueOf(Charswitch); //convert Charswitch to Switch, because chars and strings dont like each other
 		String Scale = String.valueOf(Charscale); //above but with Scale
 			if (Switch == "L") { //check for switch being L

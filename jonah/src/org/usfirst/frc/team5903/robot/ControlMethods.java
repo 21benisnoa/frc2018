@@ -1,11 +1,10 @@
 package org.usfirst.frc.team5903.robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
-
 public class ControlMethods {
 
 private DifferentialDrive m_robotDrive = new DifferentialDrive(new Spark(0), new Spark(1));
@@ -15,6 +14,7 @@ private Spark m_backMotor = new Spark(4);
 //Creates the robot arm motor control.
 private Joystick m_stick = new Joystick(0);
 private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
+
 
 
 //Each method performs an action and is called to do that action as needed.

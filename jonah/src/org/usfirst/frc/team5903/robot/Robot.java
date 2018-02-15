@@ -9,16 +9,20 @@ package org.usfirst.frc.team5903.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Spark;
 //import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTable;
@@ -33,6 +37,7 @@ import org.usfirst.frc.team5903.robot.ControlMethods;
  * directory.
  */
 public class Robot extends IterativeRobot {
+	private Preferences m_prefs; // dklann: added for SmartDashboard functionality
 	private Timer m_timer = new Timer();
 	private static final double kAngleSetpoint = 0.0;
 	private static final double kP = 0.005; // propotional turning constant
@@ -48,6 +53,10 @@ public class Robot extends IterativeRobot {
 	private int Target = 0;
 	private String Pathid;
 	String m_teamLoc;
+	
+	Command autonomousCommand; // dklann: added for SmartDashboard functionality
+	SendableChooser autoChooser; // dklann: added for SmartDashboard functionality
+	
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -59,12 +68,18 @@ public class Robot extends IterativeRobot {
 		CameraServer.getInstance().startAutomaticCapture();
 		CameraServer.getInstance().startAutomaticCapture(1);
 		m_gyro.calibrate();//Calibrate gyro
+		
+		autoChooser = new SendableChooser(); // dklann: added for SmartDashboard functionality
+		//autoChooser.addDefault("Default program", new team5903AutoOne()); // dklann: added for SmartDashboard functionality
+		//autoChooser.addObject("Alternative program", new OtherConstructor()); // dklann: added for SmartDashboard functionality
+		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser); // dklann: added for SmartDashboard functionality
 	}
 	/**
 	 * This function is run once each time the robot enters autonomous mode.
 	 */
 	@Override
 	public void autonomousInit() {
+
 		// Get information from the Field Management System (FMS)
 		FieldInfo m_teamInfo = new FieldInfo();
 		m_teamLoc = m_teamInfo.getFieldInfo();
@@ -81,6 +96,9 @@ public class Robot extends IterativeRobot {
 
 		m_timer.reset();
 		m_timer.start();
+
+		// autonomousCommand = (Command) autoChooser.getSelected(); // dklann: added for SmartDashboard functionality
+		// autonomousCommand.start(); // dklann: added for SmartDashboard functionality
 
 	}
 	/**
@@ -241,7 +259,7 @@ public class Robot extends IterativeRobot {
 		m_ControlMethods.Joystickcontrol();//joystick control call
 		m_ControlMethods.Triggercontrol();//trigger control call
 		m_ControlMethods.Clawcontrol();//Claw control call
-
+		m_ControlMethods.Climbcontrol();
 
 		//		if (m_stick.getRawButton(3)) { //chase toggle ON
 		//			System.out.println("Button 3");
