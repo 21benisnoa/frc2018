@@ -82,4 +82,13 @@ private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0,0,1);
 			m_robotArm.setSpeed(0.0);
 		}
 	}
+	public void Openclaw() {
+		m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+	}
+	public void Closeclaw() {
+		m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+	}
+	public void Stopclaw() {
+		m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+	}
 }
