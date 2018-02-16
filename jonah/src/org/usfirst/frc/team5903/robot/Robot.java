@@ -176,16 +176,75 @@ public class Robot extends IterativeRobot {
 		if (Location == "Left") {//LEFT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
 				System.out.println("location 1, pathid 11");
-				
+				if (m_timer.get() > 0) {
+					if (m_timer.get() < 4) {
+						m_ControlMethods.Forwards();
+					}
+				}
+				else if (m_timer.get() > 4) {
+					if (m_timer.get() < 4.3) {
+						m_ControlMethods.Right();
+					}
+				}
+				else if (m_timer.get() > 4.3) {
+					if (m_timer.get() < 7) {
+						m_ControlMethods.Forwards();
+					}
+				}
 			}
 			else if (Pathid == "14") {//checks for pathid being 14
 				System.out.println("location 1, pathid 14");
+				if (m_timer.get() > 0) {
+					if (m_timer.get() < 4) {
+						m_ControlMethods.Forwards();
+					}
+				}
+				else if (m_timer.get() > 4) {
+					if (m_timer.get() < 4.3) {
+						m_ControlMethods.Right();
+					}
+				}
+				else if (m_timer.get() > 4.3) {
+					if (m_timer.get() < 7) {
+						m_ControlMethods.Forwards();
+					}
+				}
 			}
 			else if (Pathid == "22") {//checks for pathid being 22
 				System.out.println("location 1, pathid 22");
+				if (m_timer.get() > 0) {
+					if (m_timer.get() < 4) {
+						m_ControlMethods.Forwards();
+					}
+				}
+				else if (m_timer.get() > 4) {
+					if (m_timer.get() < 4.3) {
+						m_ControlMethods.Right();
+					}
+				}
+				else if (m_timer.get() > 4.3) {
+					if (m_timer.get() < 7) {
+						m_ControlMethods.Forwards();
+					}
+				}
 			}
 			else if (Pathid == "23") {//checks for Pathid being 23
 				System.out.println("location 1, pathid 23");
+				if (m_timer.get() > 0) {
+					if (m_timer.get() < 4) {
+						m_ControlMethods.Forwards();
+					}
+				}
+				else if (m_timer.get() > 4) {
+					if (m_timer.get() < 4.3) {
+						m_ControlMethods.Right();
+					}
+				}
+				else if (m_timer.get() > 4.3) {
+					if (m_timer.get() < 7) {
+						m_ControlMethods.Forwards();
+					}
+				}
 
 			}
 		}
