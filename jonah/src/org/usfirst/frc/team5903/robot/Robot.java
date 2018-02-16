@@ -92,11 +92,10 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousInit() {
-
 		// Get information from the Field Management System (FMS)
 		FieldInfo m_teamInfo = new FieldInfo();
 		m_teamLoc = m_teamInfo.getFieldInfo();
-		Pathid = m_FieldCalculations.Path; // Retrieves the Path id from Field Calculations
+		Pathid = m_FieldCalculations.Pathid(); // Retrieves the Path id from Field Calculations
 	
 		try {
 			dashData = (String) positionChooser.getSelected();
@@ -159,11 +158,12 @@ public class Robot extends IterativeRobot {
 		double y = ty.getDouble(0);
 		double area = ta.getDouble(0);
 		double Gx = m_gyro.getAngle(); //gyro x
-		System.out.println("Angle= " + Gx); //print gyro to console
-		System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
+		//System.out.println("Angle= " + Gx); //print gyro to console
+		//System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
 		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
 		
-		String Location = dashData.toString();
+		//String Location = dashData.toString();
+		String Location = "Left";
 	
 		// Invert the direction of the turn if we are going backwards
 
@@ -176,7 +176,7 @@ public class Robot extends IterativeRobot {
 		if (Location == "Left") {//LEFT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
 				System.out.println("location 1, pathid 11");
-
+				
 			}
 			else if (Pathid == "14") {//checks for pathid being 14
 				System.out.println("location 1, pathid 14");
