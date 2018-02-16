@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Sendable;
 import edu.wpi.first.wpilibj.Spark;
 //import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
@@ -40,8 +41,8 @@ public class Robot extends IterativeRobot {
 	private Preferences m_prefs; // dklann: added for SmartDashboard functionality
 	private Timer m_timer = new Timer();
 	private static final double kAngleSetpoint = 0.0;
-	private static final double kP = 0.005; // propotional turning constant
-	private double Location;
+	private static final double kP = 0.005; // proportional turning constant
+	private String Location;
 	private FieldCalculations m_FieldCalculations = new FieldCalculations(); //declares a Field Calculations object so the Pathid can be retrieved
 	private ControlMethods m_ControlMethods = new ControlMethods(); //declares a ControlMethods object so methods can be called
 
@@ -53,10 +54,11 @@ public class Robot extends IterativeRobot {
 	private int Target = 0;
 	private String Pathid;
 	String m_teamLoc;
-	
-	Command autonomousCommand; // dklann: added for SmartDashboard functionality
-	SendableChooser autoChooser; // dklann: added for SmartDashboard functionality
-	
+
+	private SmartDashboard m_dash = new SmartDashboard();
+	//private final SendableChooser<String> positionChooser = new SendableChooser<>();
+	public SendableChooser positionChooser = new SendableChooser();
+	private String dashData;
 
 	/**
 	 * This function is run when the robot is first started up and should be
@@ -65,15 +67,25 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void robotInit() {
 		//Starts camera feeds
-		CameraServer.getInstance().startAutomaticCapture();
-		CameraServer.getInstance().startAutomaticCapture(1);
-		m_gyro.calibrate();//Calibrate gyro
+		//CameraServer.getInstance().startAutomaticCapture();
+		//CameraServer.getInstance().startAutomaticCapture(1);
+		m_gyro.calibrate(); //Calibrate gyro
+
+		try
+		{
+			
+			positionChooser.addDefault("Failsafe: Drive straight", "Failsafe");
+			positionChooser.addObject("Starting on the Left", "Left");
+			positionChooser.addObject("Starting in the Middle", "Middle");
+			positionChooser.addObject("Starting on the Right", "Right");
+
+			SmartDashboard.putData("StartingPosition", positionChooser);
+		}
+		catch (Exception e)
+		{
+			System.out.printf("StartingPosition is %s\n", e.toString());
+		}
 		
-		
-		autoChooser = new SendableChooser(); // dklann: added for SmartDashboard functionality
-		//autoChooser.addDefault("Default program", new team5903AutoOne()); // dklann: added for SmartDashboard functionality
-		//autoChooser.addObject("Alternative program", new OtherConstructor()); // dklann: added for SmartDashboard functionality
-		SmartDashboard.putData("Autonomous Mode Chooser", autoChooser); // dklann: added for SmartDashboard functionality
 	}
 	/**
 	 * This function is run once each time the robot enters autonomous mode.
@@ -85,6 +97,14 @@ public class Robot extends IterativeRobot {
 		FieldInfo m_teamInfo = new FieldInfo();
 		m_teamLoc = m_teamInfo.getFieldInfo();
 		Pathid = m_FieldCalculations.Path; // Retrieves the Path id from Field Calculations
+	
+		try {
+			dashData = (String) positionChooser.getSelected();
+			System.out.printf("dashData is: %s\n", dashData.toString());
+		}
+		catch (Exception e) {
+			System.out.printf("Exception encountered %s\n", e.toString());
+		}
 
 		System.out.println("I'm in autonomous: Alliance color: " + 
 				m_teamLoc.charAt(0) +
@@ -95,7 +115,9 @@ public class Robot extends IterativeRobot {
 				" Far switch: " +
 				m_teamLoc.charAt(3));
 		
-				Location = SmartDashboard.getNumber("positon", 0.0);
+				//will be one of: "Left" "Middle" "Right" or null
+				String StartingPosition = (String) positionChooser.getSelected();
+				Location = StartingPosition;
 
 		m_timer.reset();
 		m_timer.start();
@@ -127,6 +149,7 @@ public class Robot extends IterativeRobot {
 				m_robotArm.stopMotor();
 			}
 		 *******/
+	
 		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 		NetworkTableEntry tx = table.getEntry("tx");
 		NetworkTableEntry ty = table.getEntry("ty");
@@ -139,16 +162,18 @@ public class Robot extends IterativeRobot {
 		System.out.println("Angle= " + Gx); //print gyro to console
 		System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
 		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
+		
+		String Location = dashData.toString();
+	
 		// Invert the direction of the turn if we are going backwards
 
 //		turningValue = Math.copySign(turningValue, m_stick.getY());
 //		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
 
-
 		//BEGIN DRIVE CODE
 
 
-		if (Location == 1) {//LEFT POSITION CODE
+		if (Location == "Left") {//LEFT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
 				System.out.println("location 1, pathid 11");
 
@@ -165,11 +190,11 @@ public class Robot extends IterativeRobot {
 			}
 		}
 
-		if (Location == 2) {//MIDDLE POSITION CODE
+		if (Location == "Middle") {//MIDDLE POSITION CODE
 			System.out.println("location 2");
 		}
 
-		if (Location == 3) {//RIGHT POSITION CODE
+		if (Location == "Right") {//RIGHT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
 				System.out.println("location 3, pathid 11");
 			}
