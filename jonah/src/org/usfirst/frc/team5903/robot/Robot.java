@@ -73,7 +73,7 @@ public class Robot extends IterativeRobot {
 
 		try
 		{
-			
+
 			positionChooser.addDefault("Failsafe: Drive straight", "Failsafe");
 			positionChooser.addObject("Starting on the Left", "Left");
 			positionChooser.addObject("Starting in the Middle", "Middle");
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 		{
 			System.out.printf("StartingPosition is %s\n", e.toString());
 		}
-		
+
 	}
 	/**
 	 * This function is run once each time the robot enters autonomous mode.
@@ -96,7 +96,7 @@ public class Robot extends IterativeRobot {
 		FieldInfo m_teamInfo = new FieldInfo();
 		m_teamLoc = m_teamInfo.getFieldInfo();
 		Pathid = m_FieldCalculations.Pathid(); // Retrieves the Path id from Field Calculations
-	
+
 		try {
 			dashData = (String) positionChooser.getSelected();
 			System.out.printf("dashData is: %s\n", dashData.toString());
@@ -113,10 +113,10 @@ public class Robot extends IterativeRobot {
 				m_teamLoc.charAt(2) +
 				" Far switch: " +
 				m_teamLoc.charAt(3));
-		
-				//will be one of: "Left" "Middle" "Right" or null
-				String StartingPosition = (String) positionChooser.getSelected();
-				Location = StartingPosition;
+
+		//will be one of: "Left" "Middle" "Right" or null
+		String StartingPosition = (String) positionChooser.getSelected();
+		Location = StartingPosition;
 
 		m_timer.reset();
 		m_timer.start();
@@ -148,7 +148,7 @@ public class Robot extends IterativeRobot {
 				m_robotArm.stopMotor();
 			}
 		 *******/
-	
+
 		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 		NetworkTableEntry tx = table.getEntry("tx");
 		NetworkTableEntry ty = table.getEntry("ty");
@@ -161,14 +161,14 @@ public class Robot extends IterativeRobot {
 		//System.out.println("Angle= " + Gx); //print gyro to console
 		//System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
 		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
-		
+
 		//String Location = dashData.toString();
 		String Location = "Left";
-	
+
 		// Invert the direction of the turn if we are going backwards
 
-//		turningValue = Math.copySign(turningValue, m_stick.getY());
-//		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
+		//		turningValue = Math.copySign(turningValue, m_stick.getY());
+		//		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
 
 		//BEGIN DRIVE CODE
 
@@ -251,7 +251,7 @@ public class Robot extends IterativeRobot {
 					}
 				}
 			}//END PATHID 11 CODE
-			
+
 			else if (Pathid == "14") {//checks for pathid being 14
 				System.out.println("location 1, pathid 14");
 				if (m_timer.get() > 0) {
@@ -346,22 +346,80 @@ public class Robot extends IterativeRobot {
 			}//END PATHID 14 CODE
 			else if (Pathid == "22") {//checks for pathid being 22
 				System.out.println("location 1, pathid 22");
-				if (m_timer.get() > 0) {
-					if (m_timer.get() < 4) {
-						m_ControlMethods.Forwards();
-					}
-				}
-				else if (m_timer.get() > 4) {
-					if (m_timer.get() < 4.3) {
-						m_ControlMethods.Right();
-					}
-				}
-				else if (m_timer.get() > 4.3) {
-					if (m_timer.get() < 7) {
-						m_ControlMethods.Forwards();
-					}
+				if (m_timer.get() < 4) {//moves robot forwards and grips cube
+					m_ControlMethods.Forwards();
+					m_ControlMethods.Closeclaw();
 				}
 			}
+			else if (m_timer.get() > 4) {//turns robot right
+				if (m_timer.get() < 4.3) {
+					m_ControlMethods.Right();
+				}
+			}
+			else if (m_timer.get() > 4.3) {//moves robot forwards
+				if (m_timer.get() < 8) {
+					m_ControlMethods.Forwards();
+				}
+			}
+			else if (m_timer.get() > 6) {//turns robot right
+				if (m_timer.get() < 8.3) {
+					m_ControlMethods.Right();
+				}
+			}
+			else if (m_timer.get() > 8.3) { //moves robot forwards to switch and raises arm
+				if (m_timer.get() < 9) {
+					m_ControlMethods.Forwards();
+					m_ControlMethods.Raisearm();
+				}
+			}
+			else if (m_timer.get() > 9) {// stops robot at switch and opens claw
+				if (m_timer.get() < 9.5) {
+					m_ControlMethods.Openclaw();
+					m_ControlMethods.Stop();
+					m_ControlMethods.Stoparm();
+				}
+			}
+			else if (m_timer.get() > 9.5) {//stops claw pneumatics and puts robot in reverse
+				if (m_timer.get() < 10) {
+					m_ControlMethods.Stopclaw();
+					m_ControlMethods.Backwards();
+				}
+			}
+			else if (m_timer.get() > 10) {//stops robot
+				if (m_timer.get() < 11) {
+					m_ControlMethods.Stop();
+					m_ControlMethods.Lowerarm();
+				}
+			}
+			else if (m_timer.get() > 11) {//stops arm and grabs cube
+				if (m_timer.get() <  11.3) {
+					m_ControlMethods.Stoparm();
+					m_ControlMethods.Closeclaw();
+				}
+			}
+			else if (m_timer.get() > 11.3) {// puts robot in reverse and starts raising arm
+				if (m_timer.get() < 12) {
+					m_ControlMethods.Raisearm();
+					m_ControlMethods.Backwards();
+				}
+			}
+			else if (m_timer.get() > 14) {//stops robot and arm
+				if (m_timer.get() < 14.2) {
+					m_ControlMethods.Stop();
+					m_ControlMethods.Stoparm();
+				}
+			}
+			else if (m_timer.get() > 14.2) {//opens claw
+				if (m_timer.get() < 14.4) {
+					m_ControlMethods.Openclaw();
+				}
+			}
+			else if (m_timer.get() > 14.4) {//stops claw
+				if (m_timer.get() < 14.6) {
+					m_ControlMethods.Stopclaw();
+				}
+			}//END PATHID 22 CODE
+			
 			else if (Pathid == "23") {//checks for Pathid being 23
 				System.out.println("location 1, pathid 23");
 				if (m_timer.get() > 0) {
@@ -454,7 +512,7 @@ public class Robot extends IterativeRobot {
 		double right_command = 0.0f;
 		System.out.println("teleop");
 		// Klann moved this from autonomousPeriodic to see if it works, and it does here!
-/*		if (m_stick.getRawButton(4)) {
+		/*		if (m_stick.getRawButton(4)) {
 			System.out.println("Button Y");
 			double heading_error = -x;
 			double distance_error = -y;
@@ -471,7 +529,7 @@ public class Robot extends IterativeRobot {
 			right_command -= steering_adjust + distance_adjust;
 			m_robotDrive.tankDrive(left_command, right_command);
 		}
-	*/
+		 */
 		m_ControlMethods.Joystickcontrol();//joystick control call
 		m_ControlMethods.Triggercontrol();//trigger control call
 		m_ControlMethods.Clawcontrol();//Claw control call
