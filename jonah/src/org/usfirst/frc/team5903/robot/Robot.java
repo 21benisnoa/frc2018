@@ -422,24 +422,95 @@ public class Robot extends IterativeRobot {
 			
 			else if (Pathid == "23") {//checks for Pathid being 23
 				System.out.println("location 1, pathid 23");
-				if (m_timer.get() > 0) {
-					if (m_timer.get() < 4) {
-						m_ControlMethods.Forwards();
-					}
+				if (m_timer.get() < 4) {//moves robot forwards and grips cube
+					m_ControlMethods.Forwards();
+					m_ControlMethods.Closeclaw();
 				}
-				else if (m_timer.get() > 4) {
-					if (m_timer.get() < 4.3) {
-						m_ControlMethods.Right();
-					}
-				}
-				else if (m_timer.get() > 4.3) {
-					if (m_timer.get() < 7) {
-						m_ControlMethods.Forwards();
-					}
-				}
-
 			}
-		}
+			else if (m_timer.get() > 4) {//turns robot right
+				if (m_timer.get() < 4.3) {
+					m_ControlMethods.Right();
+				}
+			}
+			else if (m_timer.get() > 4.3) {//moves robot forwards
+				if (m_timer.get() < 8) {
+					m_ControlMethods.Forwards();
+				}
+			}
+			else if (m_timer.get() > 6) {//turns robot right
+				if (m_timer.get() < 8.3) {
+					m_ControlMethods.Right();
+				}
+			}
+			else if (m_timer.get() > 8.3) { //moves robot forwards to switch and raises arm
+				if (m_timer.get() < 9) {
+					m_ControlMethods.Forwards();
+					m_ControlMethods.Raisearm();
+				}
+			}
+			else if (m_timer.get() > 9) {// stops robot at switch and opens claw
+				if (m_timer.get() < 9.5) {
+					m_ControlMethods.Openclaw();
+					m_ControlMethods.Stop();
+					m_ControlMethods.Stoparm();
+				}
+			}
+			else if (m_timer.get() > 9.5) {//stops claw pneumatics and puts robot in reverse
+				if (m_timer.get() < 10) {
+					m_ControlMethods.Stopclaw();
+					m_ControlMethods.Backwards();
+				}
+			}
+			else if (m_timer.get() > 10) {//stops robot
+				if (m_timer.get() < 11) {
+					m_ControlMethods.Stop();
+					m_ControlMethods.Lowerarm();
+				}
+			}
+			else if (m_timer.get() > 11) {//stops arm and grabs cube
+				if (m_timer.get() <  11.3) {
+					m_ControlMethods.Stoparm();
+					m_ControlMethods.Closeclaw();
+				}
+			}
+			else if (m_timer.get() > 11.3) {// puts robot in reverse and starts raising arm
+				if (m_timer.get() < 12) {
+					m_ControlMethods.Raisearm();
+					m_ControlMethods.Backwards();
+				}
+			}
+			else if (m_timer.get() > 12) {//turns robot left
+				if (m_timer.get() < 12.5) {
+					m_ControlMethods.Left();
+				}
+			}
+			else if (m_timer.get() > 12.5) {//moves robot backwards
+				if (m_timer.get() < 12.7) {
+					m_ControlMethods.Backwards();
+				}
+			}
+			else if (m_timer.get() > 14) {//stops arm and turns robot right
+				if (m_timer.get() < 14.5) {
+					m_ControlMethods.Stoparm();
+					m_ControlMethods.Right();
+				}
+			else if (m_timer.get() > 16) {//stops robot and arm
+				if (m_timer.get() < 16.2) {
+					m_ControlMethods.Stop();
+					m_ControlMethods.Stoparm();
+				}
+			}
+			else if (m_timer.get() > 16.2) {//opens claw
+				if (m_timer.get() < 16.4) {
+					m_ControlMethods.Openclaw();
+				}
+			}
+			else if (m_timer.get() > 16.4) {//stops claw
+				if (m_timer.get() < 16.6) {
+					m_ControlMethods.Stopclaw();
+				}
+			}
+		}//END PATHID 23 CODE
 
 		if (Location == "Middle") {//MIDDLE POSITION CODE
 			System.out.println("location 2");
