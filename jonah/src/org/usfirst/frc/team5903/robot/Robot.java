@@ -514,6 +514,64 @@ public class Robot extends IterativeRobot {
 
 		if (Location == "Middle") {//MIDDLE POSITION CODE
 			System.out.println("location 2");
+			if (m_timer.get() > 0) {//moves robot forwards and gribs cube
+				if (m_timer.get() < 3) {
+					m_ControlMethods.Forwards();
+					m_ControlMethods.Closeclaw();
+				}
+			}
+			else if (m_timer.get() > 3) {//turns robot left
+				if (m_timer.get() < 3.4) {
+					m_ControlMethods.Left();
+				}
+			}
+			else if (m_timer.get() > 3.4) {//moves robot forwards
+				if (m_timer.get() < 5.4) {
+					m_ControlMethods.Forwards();
+				}
+			}
+			else if (m_timer.get() > 5.4) {//turns robot right
+				if (m_timer.get() < 5.8) {
+					m_ControlMethods.Right();
+				}
+			}
+			else if (m_timer.get() > 5.8) {//moves robot forwards
+				if (m_timer.get() < 8) {
+					m_ControlMethods.Forwards();
+				}
+			}
+			else if (m_timer.get() > 8) {//turns robot right
+				if (m_timer.get() < 8.4) {
+					m_ControlMethods.Right();
+				}
+			}
+			else if (m_timer.get() > 8.4) {//moves robot forwards
+				if (m_timer.get() < 10) {
+					m_ControlMethods.Forwards();
+				}
+			}
+			else if (m_timer.get() > 10) {//turns robot right to face switch
+				if (m_timer.get() < 10.4) {
+					m_ControlMethods.Right();
+				}
+			}
+			else if (m_timer.get() > 10.4) {//moves robot forwards to switch and raises arm
+				if (m_timer.get() < 11) {
+					m_ControlMethods.Forwards();
+					m_ControlMethods.Raisearm();
+				}
+			}
+			else if (m_timer.get() > 11) {//opens claw and stops arm
+				if (m_timer.get() < 11.2) {
+					m_ControlMethods.Openclaw();
+					m_ControlMethods.Stoparm();
+				}
+			}
+			else if (m_timer.get() > 11.2) {//stops claw
+				if (m_timer.get() < 11.4) {
+					m_ControlMethods.Stopclaw();
+				}
+			}
 		}
 
 		if (Location == "Right") {//RIGHT POSITION CODE
