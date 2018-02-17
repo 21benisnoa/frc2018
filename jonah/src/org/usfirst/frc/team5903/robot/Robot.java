@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.networktables.NetworkTable;
 import org.usfirst.frc.team5903.robot.FieldInfo;
 import org.usfirst.frc.team5903.robot.ControlMethods;
@@ -66,9 +67,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void robotInit() {
+		UsbCamera cam1;
+		UsbCamera cam2;
 		//Starts camera feeds
-		//CameraServer.getInstance().startAutomaticCapture();
-		//CameraServer.getInstance().startAutomaticCapture(1);
+		cam1 = CameraServer.getInstance().startAutomaticCapture(0);
+		cam2 = CameraServer.getInstance().startAutomaticCapture(1);
 		m_gyro.calibrate(); //Calibrate gyro
 
 		try
@@ -116,7 +119,8 @@ public class Robot extends IterativeRobot {
 
 		//will be one of: "Left" "Middle" "Right" or null
 		String StartingPosition = (String) positionChooser.getSelected();
-		Location = StartingPosition;
+		// TODO: Location = StartingPosition;
+		Location = "Left";
 
 		m_timer.reset();
 		m_timer.start();
@@ -161,9 +165,6 @@ public class Robot extends IterativeRobot {
 		//System.out.println("Angle= " + Gx); //print gyro to console
 		//System.out.println(area); //prints area of limelight view target occupies to console, also used to tell robot to stop
 		double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
-
-		//String Location = dashData.toString();
-		String Location = "Left";
 
 		// Invert the direction of the turn if we are going backwards
 
@@ -572,7 +573,7 @@ public class Robot extends IterativeRobot {
 						m_ControlMethods.Stopclaw();
 					}
 				}
-			}
+			}//END MIDDLE POSITION CODE
 
 			if (Location == "Right") {//RIGHT POSITION CODE
 				if (Pathid == "11") {//checks for pathid being 11
@@ -662,7 +663,7 @@ public class Robot extends IterativeRobot {
 		m_ControlMethods.Joystickcontrol();//joystick control call
 		m_ControlMethods.Triggercontrol();//trigger control call
 		m_ControlMethods.Clawcontrol();//Claw control call
-		m_ControlMethods.Climbcontrol();
+		m_ControlMethods.Climbcontrol();//Climb control call
 
 		//		if (m_stick.getRawButton(3)) { //chase toggle ON
 		//			System.out.println("Button 3");
