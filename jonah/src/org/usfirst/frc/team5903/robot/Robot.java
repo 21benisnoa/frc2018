@@ -419,7 +419,7 @@ public class Robot extends IterativeRobot {
 					m_ControlMethods.Stopclaw();
 				}
 			}//END PATHID 22 CODE
-			
+
 			else if (Pathid == "23") {//checks for Pathid being 23
 				System.out.println("location 1, pathid 23");
 				if (m_timer.get() < 4) {//moves robot forwards and grips cube
@@ -494,101 +494,101 @@ public class Robot extends IterativeRobot {
 					m_ControlMethods.Stoparm();
 					m_ControlMethods.Right();
 				}
-			else if (m_timer.get() > 16) {//stops robot and arm
-				if (m_timer.get() < 16.2) {
-					m_ControlMethods.Stop();
-					m_ControlMethods.Stoparm();
+				else if (m_timer.get() > 16) {//stops robot and arm
+					if (m_timer.get() < 16.2) {
+						m_ControlMethods.Stop();
+						m_ControlMethods.Stoparm();
+					}
 				}
-			}
-			else if (m_timer.get() > 16.2) {//opens claw
-				if (m_timer.get() < 16.4) {
-					m_ControlMethods.Openclaw();
+				else if (m_timer.get() > 16.2) {//opens claw
+					if (m_timer.get() < 16.4) {
+						m_ControlMethods.Openclaw();
+					}
 				}
-			}
-			else if (m_timer.get() > 16.4) {//stops claw
-				if (m_timer.get() < 16.6) {
-					m_ControlMethods.Stopclaw();
+				else if (m_timer.get() > 16.4) {//stops claw
+					if (m_timer.get() < 16.6) {
+						m_ControlMethods.Stopclaw();
+					}
 				}
-			}
-		}//END PATHID 23 CODE
+			}//END PATHID 23 CODE
 
-		if (Location == "Middle") {//MIDDLE POSITION CODE
-			System.out.println("location 2");
-			if (m_timer.get() > 0) {//moves robot forwards and gribs cube
-				if (m_timer.get() < 3) {
-					m_ControlMethods.Forwards();
-					m_ControlMethods.Closeclaw();
+			if (Location == "Middle") {//MIDDLE POSITION CODE
+				System.out.println("location 2");
+				if (m_timer.get() > 0) {//moves robot forwards and gribs cube
+					if (m_timer.get() < 3) {
+						m_ControlMethods.Forwards();
+						m_ControlMethods.Closeclaw();
+					}
+				}
+				else if (m_timer.get() > 3) {//turns robot left
+					if (m_timer.get() < 3.4) {
+						m_ControlMethods.Left();
+					}
+				}
+				else if (m_timer.get() > 3.4) {//moves robot forwards
+					if (m_timer.get() < 5.4) {
+						m_ControlMethods.Forwards();
+					}
+				}
+				else if (m_timer.get() > 5.4) {//turns robot right
+					if (m_timer.get() < 5.8) {
+						m_ControlMethods.Right();
+					}
+				}
+				else if (m_timer.get() > 5.8) {//moves robot forwards
+					if (m_timer.get() < 8) {
+						m_ControlMethods.Forwards();
+					}
+				}
+				else if (m_timer.get() > 8) {//turns robot right
+					if (m_timer.get() < 8.4) {
+						m_ControlMethods.Right();
+					}
+				}
+				else if (m_timer.get() > 8.4) {//moves robot forwards
+					if (m_timer.get() < 10) {
+						m_ControlMethods.Forwards();
+					}
+				}
+				else if (m_timer.get() > 10) {//turns robot right to face switch
+					if (m_timer.get() < 10.4) {
+						m_ControlMethods.Right();
+					}
+				}
+				else if (m_timer.get() > 10.4) {//moves robot forwards to switch and raises arm
+					if (m_timer.get() < 11) {
+						m_ControlMethods.Forwards();
+						m_ControlMethods.Raisearm();
+					}
+				}
+				else if (m_timer.get() > 11) {//opens claw and stops arm
+					if (m_timer.get() < 11.2) {
+						m_ControlMethods.Openclaw();
+						m_ControlMethods.Stoparm();
+					}
+				}
+				else if (m_timer.get() > 11.2) {//stops claw
+					if (m_timer.get() < 11.4) {
+						m_ControlMethods.Stopclaw();
+					}
 				}
 			}
-			else if (m_timer.get() > 3) {//turns robot left
-				if (m_timer.get() < 3.4) {
-					m_ControlMethods.Left();
+
+			if (Location == "Right") {//RIGHT POSITION CODE
+				if (Pathid == "11") {//checks for pathid being 11
+					System.out.println("location 3, pathid 11");
 				}
-			}
-			else if (m_timer.get() > 3.4) {//moves robot forwards
-				if (m_timer.get() < 5.4) {
-					m_ControlMethods.Forwards();
+				else if (Pathid == "14") {//checks for pathid being 14
+					System.out.println("location 3, pathid 14");
 				}
-			}
-			else if (m_timer.get() > 5.4) {//turns robot right
-				if (m_timer.get() < 5.8) {
-					m_ControlMethods.Right();
+				else if (Pathid == "22") {//checks for pathid being 22
+					System.out.println("location 3, pathid 22");
 				}
-			}
-			else if (m_timer.get() > 5.8) {//moves robot forwards
-				if (m_timer.get() < 8) {
-					m_ControlMethods.Forwards();
-				}
-			}
-			else if (m_timer.get() > 8) {//turns robot right
-				if (m_timer.get() < 8.4) {
-					m_ControlMethods.Right();
-				}
-			}
-			else if (m_timer.get() > 8.4) {//moves robot forwards
-				if (m_timer.get() < 10) {
-					m_ControlMethods.Forwards();
-				}
-			}
-			else if (m_timer.get() > 10) {//turns robot right to face switch
-				if (m_timer.get() < 10.4) {
-					m_ControlMethods.Right();
-				}
-			}
-			else if (m_timer.get() > 10.4) {//moves robot forwards to switch and raises arm
-				if (m_timer.get() < 11) {
-					m_ControlMethods.Forwards();
-					m_ControlMethods.Raisearm();
-				}
-			}
-			else if (m_timer.get() > 11) {//opens claw and stops arm
-				if (m_timer.get() < 11.2) {
-					m_ControlMethods.Openclaw();
-					m_ControlMethods.Stoparm();
-				}
-			}
-			else if (m_timer.get() > 11.2) {//stops claw
-				if (m_timer.get() < 11.4) {
-					m_ControlMethods.Stopclaw();
+				else if (Pathid == "23") {//checks for Pathid being 23
+					System.out.println("location 3, pathid 23");
 				}
 			}
 		}
-
-		if (Location == "Right") {//RIGHT POSITION CODE
-			if (Pathid == "11") {//checks for pathid being 11
-				System.out.println("location 3, pathid 11");
-			}
-			else if (Pathid == "14") {//checks for pathid being 14
-				System.out.println("location 3, pathid 14");
-			}
-			else if (Pathid == "22") {//checks for pathid being 22
-				System.out.println("location 3, pathid 22");
-			}
-			else if (Pathid == "23") {//checks for Pathid being 23
-				System.out.println("location 3, pathid 23");
-			}
-		}
-
 		/*		int Target = 0;
 		if (Target == 1) {//Targeting Procedure
 			if(area >= 12.5) {
