@@ -3,7 +3,7 @@ package org.usfirst.frc.team5903.robot;
 import org.usfirst.frc.team5903.robot.FieldInfo;
 
 public class FieldCalculations {
-	String Follow;
+/*	String Follow;
 	String m_teamLoc;
 	public String Path;
 
@@ -36,6 +36,5 @@ public class FieldCalculations {
 			}
 		}
 		return Path;
-	}
-
+	}*/
 }

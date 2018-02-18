@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 public class FieldInfo {
 
 	// Private class variables
-	private DriverStation.Alliance color; // This object holds our alliance color
+	/*private DriverStation.Alliance color; // This object holds our alliance color
 	private String gameData; // This string will hold the three-letter sequence of "L" and "R"	
 	private String Teamloc;  // This string will hold the combination of alliance color and gameData
 
@@ -72,5 +72,5 @@ public class FieldInfo {
 //						}
 //					}
 //				}
-//			}
-//}
+//			}*/
+}

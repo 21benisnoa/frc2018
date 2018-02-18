@@ -93,12 +93,15 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is run once each time the robot enters autonomous mode.
 	 */
-	@Override
+@Override
+
 	public void autonomousInit() {
+	try
+	{
 		// Get information from the Field Management System (FMS)
 		FieldInfo m_teamInfo = new FieldInfo();
-		m_teamLoc = m_teamInfo.getFieldInfo();
-		Pathid = m_FieldCalculations.Pathid(); // Retrieves the Path id from Field Calculations
+//		m_teamLoc = m_teamInfo.getFieldInfo();
+//		Pathid = m_FieldCalculations.Pathid(); // Retrieves the Path id from Field Calculations
 
 		try {
 			dashData = (String) positionChooser.getSelected();
@@ -124,6 +127,10 @@ public class Robot extends IterativeRobot {
 
 		m_timer.reset();
 		m_timer.start();
+	}
+	catch(Exception e) {
+		System.out.println(e.toString());
+	}
 
 		// autonomousCommand = (Command) autoChooser.getSelected(); // dklann: added for SmartDashboard functionality
 		// autonomousCommand.start(); // dklann: added for SmartDashboard functionality
@@ -134,7 +141,24 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override	
 	public void autonomousPeriodic() {
-
+		try {
+		if (m_timer.get() > 0) { 
+			if(m_timer.get() < 3) {
+				m_ControlMethods.Forwards();
+				m_ControlMethods.Raisearm();
+				m_ControlMethods.Closeclaw();
+			}
+		}
+		else if (m_timer.get() > 3){
+			m_ControlMethods.Stop();
+			m_ControlMethods.Stoparm();
+			m_ControlMethods.Stopclaw();
+		} else {
+			m_ControlMethods.Stop();
+			m_ControlMethods.Stoparm();
+			m_ControlMethods.Stopclaw();
+		}
+		
 		//		System.out.println("I'm in auto Periodic");
 		/*******  Original autonomous mode code
 			if (m_timer.get()<6) {
@@ -172,23 +196,37 @@ public class Robot extends IterativeRobot {
 		//		m_robotDrive.arcadeDrive(m_stick.getY(), turningValue);
 
 		//BEGIN DRIVE CODE
-
-
-		if (Location == "Left") {//LEFT POSITION CODE
+	/*	if (m_timer.get() > 0) { 
+			
+			if(m_timer.get() < 3) {
+				m_ControlMethods.Forwards();
+				m_ControlMethods.Raisearm();
+				m_ControlMethods.Closeclaw();
+			}
+		}
+		else if (m_timer.get() > 3) 
+			m_ControlMethods.Stop();
+			m_ControlMethods.Stoparm();
+			m_ControlMethods.Stopclaw();
+		}
+		*/
+	/*	if (Location == "Left") {//LEFT POSITION CODE
 			if (Pathid == "11") {//checks for pathid being 11
 				System.out.println("location 1, pathid 11");
 				if (m_timer.get() > 0) {
 					if (m_timer.get() < 4) {//moves robot forwards and grips cube
 						m_ControlMethods.Forwards();
 						m_ControlMethods.Closeclaw();
+						m_ControlMethods.Raisearm();
 					}
 				}
 				else if (m_timer.get() > 4) {//turns robot right
 					if (m_timer.get() < 4.3) {
-						m_ControlMethods.Right();
+						m_ControlMethods.Stop();
+						m_ControlMethods.Stoparm();
 					}
 				}
-				else if (m_timer.get() > 4.3) {//moves robot forwards
+				/*else if (m_timer.get() > 4.3) {//moves robot forwards
 					if (m_timer.get() < 6) {
 						m_ControlMethods.Forwards();
 					}
@@ -250,23 +288,25 @@ public class Robot extends IterativeRobot {
 					if (m_timer.get() < 12.6) {
 						m_ControlMethods.Stopclaw();
 					}
-				}
-			}//END PATHID 11 CODE
+				}*/
+			//END PATHID 11 CODE
 
-			else if (Pathid == "14") {//checks for pathid being 14
+/*			else if (Pathid == "14") {//checks for pathid being 14
 				System.out.println("location 1, pathid 14");
 				if (m_timer.get() > 0) {
 					if (m_timer.get() < 4) {//moves robot forwards and grips cube
 						m_ControlMethods.Forwards();
 						m_ControlMethods.Closeclaw();
+						m_ControlMethods.Raisearm();
 					}
 				}
 				else if (m_timer.get() > 4) {//turns robot right
 					if (m_timer.get() < 4.3) {
-						m_ControlMethods.Right();
+						m_ControlMethods.Stop();
+						m_ControlMethods.Stoparm();
 					}
-				}
-				else if (m_timer.get() > 4.3) {//moves robot forwards
+				}*?
+				/*else if (m_timer.get() > 4.3) {//moves robot forwards
 					if (m_timer.get() < 6) {
 						m_ControlMethods.Forwards();
 					}
@@ -350,11 +390,13 @@ public class Robot extends IterativeRobot {
 				if (m_timer.get() < 4) {//moves robot forwards and grips cube
 					m_ControlMethods.Forwards();
 					m_ControlMethods.Closeclaw();
+					m_ControlMethods.Raisearm();
 				}
 			}
 			else if (m_timer.get() > 4) {//turns robot right
 				if (m_timer.get() < 4.3) {
-					m_ControlMethods.Right();
+					m_ControlMethods.Stop();
+					m_ControlMethods.Stoparm();
 				}
 			}
 			else if (m_timer.get() > 4.3) {//moves robot forwards
@@ -418,21 +460,23 @@ public class Robot extends IterativeRobot {
 			else if (m_timer.get() > 14.4) {//stops claw
 				if (m_timer.get() < 14.6) {
 					m_ControlMethods.Stopclaw();
-				}
-			}//END PATHID 22 CODE
+				}*/
+			//}END PATHID 22 CODE
 
-			else if (Pathid == "23") {//checks for Pathid being 23
-				System.out.println("location 1, pathid 23");
-				if (m_timer.get() < 4) {//moves robot forwards and grips cube
-					m_ControlMethods.Forwards();
-					m_ControlMethods.Closeclaw();
-				}
-			}
-			else if (m_timer.get() > 4) {//turns robot right
-				if (m_timer.get() < 4.3) {
-					m_ControlMethods.Right();
-				}
-			}
+			// if (Pathid == "23") {//checks for Pathid being 23
+			//	System.out.println("location 1, pathid 23");
+			//	if (m_timer.get() < 4) {//moves robot forwards and grips cube
+				//	m_ControlMethods.Forwards();
+					//m_ControlMethods.Closeclaw();
+				//	m_ControlMethods.Raisearm();
+//				}
+//			}
+//			else if (m_timer.get() > 4) {//turns robot right
+//				if (m_timer.get() < 4.3) {
+//					m_ControlMethods.Stop();
+//					m_ControlMethods.Stoparm();
+//				}
+		/*	}
 			else if (m_timer.get() > 4.3) {//moves robot forwards
 				if (m_timer.get() < 8) {
 					m_ControlMethods.Forwards();
@@ -495,25 +539,26 @@ public class Robot extends IterativeRobot {
 					m_ControlMethods.Stoparm();
 					m_ControlMethods.Right();
 				}
-				else if (m_timer.get() > 16) {//stops robot and arm
-					if (m_timer.get() < 16.2) {
-						m_ControlMethods.Stop();
-						m_ControlMethods.Stoparm();
-					}
+			}
+			else if (m_timer.get() > 16) {//stops robot and arm
+				if (m_timer.get() < 16.2) {
+					m_ControlMethods.Stop();
+					m_ControlMethods.Stoparm();
 				}
-				else if (m_timer.get() > 16.2) {//opens claw
-					if (m_timer.get() < 16.4) {
-						m_ControlMethods.Openclaw();
-					}
+			}
+			else if (m_timer.get() > 16.2) {//opens claw
+				if (m_timer.get() < 16.4) {
+					m_ControlMethods.Openclaw();
 				}
-				else if (m_timer.get() > 16.4) {//stops claw
-					if (m_timer.get() < 16.6) {
-						m_ControlMethods.Stopclaw();
-					}
+			}
+			else if (m_timer.get() > 16.4) {//stops claw
+				if (m_timer.get() < 16.6) {
+					m_ControlMethods.Stopclaw();
 				}
-			}//END PATHID 23 CODE
+			}*/
+			//END PATHID 23 CODE
 
-			if (Location == "Middle") {//MIDDLE POSITION CODE
+		/*	if (Location == "Middle") {//MIDDLE POSITION CODE
 				System.out.println("location 2");
 				if (m_timer.get() > 0) {//moves robot forwards and gribs cube
 					if (m_timer.get() < 3) {
@@ -589,7 +634,7 @@ public class Robot extends IterativeRobot {
 					System.out.println("location 3, pathid 23");
 				}
 			}
-		}
+		}*/
 		/*		int Target = 0;
 		if (Target == 1) {//Targeting Procedure
 			if(area >= 12.5) {
@@ -612,11 +657,16 @@ public class Robot extends IterativeRobot {
 			}
 		}*/
 		//autonomous target follow code
+		}
+		catch(Exception e) {
+			System.out.println(e.toString());
+		}
 	}
 	/**
 	 * This function is called once each time the robot enters teleoperated mode.
 	 */
 	@Override
+
 	public void teleopInit() {
 		m_timer.reset();
 		m_timer.start();
