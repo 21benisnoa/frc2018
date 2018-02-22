@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -81,6 +82,12 @@ public class Robot extends IterativeRobot {
 			positionChooser.addObject("Starting on the Left", "Left");
 			positionChooser.addObject("Starting in the Middle", "Middle");
 			positionChooser.addObject("Starting on the Right", "Right");
+
+			Compressor c = new Compressor(0);
+
+			c.setClosedLoopControl(true);
+			// c.setClosedLoopControl(false);
+
 
 			SmartDashboard.putData("StartingPosition", positionChooser);
 		}
