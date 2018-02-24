@@ -30,13 +30,13 @@ public class ControlMethods {
 	}
 
 	public void Right(double speed) {// declares the Right method
-		if (speed > 0.0 && speed < 1.0) {
+		if (speed >= 0.0 && speed <= 1.0) {
 			m_robotDrive.tankDrive(speed, -speed);
 		}
 	}
 
 	public void Left(double speed) {// declares the Left method
-		if (speed > 0.0 && speed < 1.0) {
+		if (speed >= 0.0 && speed <= 1.0) {
 			m_robotDrive.tankDrive(-speed, speed);
 		}
 	}
