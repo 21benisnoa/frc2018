@@ -22,11 +22,15 @@ public class ControlMethods {
 	// Each method performs an action and is called to do that action as needed.
 
 	public void Forwards(double speed) {// Declares the Forwards method
-		m_robotDrive.tankDrive(speed, speed);
+		if (speed > 0.0 && speed <= 1.0) {
+			m_robotDrive.tankDrive(speed, speed);
+		}
 	}
 
 	public void Backwards(double speed) {// declares the Backwards method
-		m_robotDrive.tankDrive(-speed, -speed);
+		if (speed > 0.0 && speed <= 1.0) {
+			m_robotDrive.tankDrive(-speed, -speed);
+		}
 	}
 
 	public void Right(double speed) {// declares the Right method
