@@ -26,29 +26,25 @@ import edu.wpi.first.wpilibj.Timer;
  * directory.
  */
 public class Robot extends IterativeRobot {
-	private Preferences m_prefs; // dklann: added for SmartDashboard functionality
 	private Timer m_timer = new Timer();
-	private static final double kAngleSetpoint = 0.0;
-	private static final double kP = 0.005; // proportional turning constant
-	private String Location;
-	private FieldCalculations m_FieldCalculations = new FieldCalculations(); // declares a Field Calculations object so
-	// the Pathid can be retrieved
-	private ControlMethods m_ControlMethods = new ControlMethods(); // declares a ControlMethods object so methods can
-	// be called
+	private FieldCalculations m_FieldCalculations = new FieldCalculations(); // declares a Field Calculations object so the Pathid can be retrieved
+	private ControlMethods m_ControlMethods = new ControlMethods(); // declares a ControlMethods object so methods can be called
 	FieldInfo m_teamInfo = new FieldInfo();
 
-	// gyro calibration constant, may need to be adjusted;
 	// gyro value of 360 is set to correspond to one full revolution
-	private ADXRS450_Gyro m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
-	String m_teamLoc;
-	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
-	NetworkTableEntry tx = table.getEntry("tx");
-	NetworkTableEntry ty = table.getEntry("ty");
-	NetworkTableEntry ta = table.getEntry("ta");
-	NetworkTableEntry ts = table.getEntry("ts");
-	double x = tx.getDouble(0);
-	double y = ty.getDouble(0);
-	double area = ta.getDouble(0);
+	private ADXRS450_Gyro m_gyro;
+	private String m_teamLoc;
+
+	// LimeLight camera access and manipulation: these will be retrieved in teleopInit() and used in teleopPeriodic().
+	private NetworkTable llTable;
+	private NetworkTableEntry tv;
+	private NetworkTableEntry tx;
+	private NetworkTableEntry ty;
+	private NetworkTableEntry ta;
+	private NetworkTableEntry ts;
+	private double x;
+	private double y;
+	private double area;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -58,9 +54,14 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		UsbCamera cam1;
 		UsbCamera cam2;
+		m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+
 		// Starts camera feeds
 		cam1 = CameraServer.getInstance().startAutomaticCapture(0);
 		cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+
+		// This seems to take about 5 seconds.
+		// Do it here so we do not pause during competition.
 		m_gyro.calibrate();
 	}
 
@@ -68,10 +69,7 @@ public class Robot extends IterativeRobot {
 	 * This function is run once each time the robot enters autonomous mode.
 	 */
 	@Override
-
 	public void autonomousInit() {
-		m_timer.reset();
-		m_timer.start();
 		// Get information from the Field Management System (FMS)
 
 		m_teamLoc = m_teamInfo.getFieldInfo();
@@ -80,10 +78,9 @@ public class Robot extends IterativeRobot {
 				+ " Plate Locations: Near switch: " + m_teamLoc.charAt(1) + " Scale: " + m_teamLoc.charAt(2)
 				+ " Far switch: " + m_teamLoc.charAt(3));
 
-		// will be one of: "Left" "Middle" "Right" or null
-		// String StartingPosition = (String) positionChooser.getSelected();
-		// TODO: Location = StartingPosition;
-		Location = "Left";
+		// Let's go!
+		m_timer.reset();
+		m_timer.start();
 	}
 
 	/**
@@ -108,6 +105,17 @@ public class Robot extends IterativeRobot {
 	@Override
 
 	public void teleopInit() {
+		llTable = NetworkTableInstance.getDefault().getTable("limelight");
+		tv = llTable.getEntry("tv"); // Whether the limelight has any valid targets (0 or 1)
+		tx = llTable.getEntry("tx"); // Horizontal Offset From Crosshair To Target (-27 degrees to 27 degrees)
+		ty = llTable.getEntry("ty"); // Vertical Offset From Crosshair To Target (-20.5 degrees to 20.5 degrees)
+		ta = llTable.getEntry("ta"); // Target Area (0% of image to 100% of image)
+		ts = llTable.getEntry("ts"); // Skew or rotation (-90 degrees to 0 degrees)
+
+		// According to http://docs.limelightvision.io/en/latest/networktables_api.html
+		// "camMode" set to 1 enables "Driver Camera (Increases exposure, disables vision processing)"
+		llTable.getEntry("camMode").setNumber(1);
+
 		System.out.println("I'm in teleop");
 	}
 
@@ -116,7 +124,19 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+		x = tx.getDouble(0);
+		y = ty.getDouble(0);
+		area = ta.getDouble(0);
+
+		// Flash the LEDs if we have a target in our sight.
+		if (llTable.getEntry("tv").getDouble(0) == 1) {
+			// From http://docs.limelightvision.io/en/latest/networktables_api.html
+			// "ledMode" 2 causes the LEDs to blink
+			llTable.getEntry("ledMode").setNumber(2);
+		} else {
+			// "ledMode" 0 causes the LEDs to stay on steady
+			llTable.getEntry("ledMode").setNumber(0);
+		}
 
 		m_ControlMethods.Joystickcontrol();
 		m_ControlMethods.Triggercontrol();
