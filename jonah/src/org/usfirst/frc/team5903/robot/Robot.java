@@ -14,9 +14,10 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -27,15 +28,18 @@ import edu.wpi.first.wpilibj.Timer;
  */
 public class Robot extends IterativeRobot {
 	private Timer m_timer = new Timer();
-	private FieldCalculations m_FieldCalculations = new FieldCalculations(); // declares a Field Calculations object so the Pathid can be retrieved
-	private ControlMethods m_ControlMethods = new ControlMethods(); // declares a ControlMethods object so methods can be called
+	private FieldCalculations m_FieldCalculations = new FieldCalculations(); // declares a Field Calculations object so
+																				// the Pathid can be retrieved
+	private ControlMethods m_ControlMethods = new ControlMethods(); // declares a ControlMethods object so methods can
+																	// be called
 	FieldInfo m_teamInfo = new FieldInfo();
 
 	// gyro value of 360 is set to correspond to one full revolution
 	private ADXRS450_Gyro m_gyro;
 	private String m_teamLoc;
 
-	// LimeLight camera access and manipulation: these will be retrieved in teleopInit() and used in teleopPeriodic().
+	// LimeLight camera access and manipulation: these will be retrieved in
+	// teleopInit() and used in teleopPeriodic().
 	private NetworkTable llTable;
 	private NetworkTableEntry tv;
 	private NetworkTableEntry tx;
@@ -46,6 +50,10 @@ public class Robot extends IterativeRobot {
 	private double y;
 	private double area;
 
+	// For getting Dashboard autonomous choice
+	private String mode = "1"; // default autonomous mode
+	private SendableChooser<String> chooser;
+
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
@@ -55,6 +63,13 @@ public class Robot extends IterativeRobot {
 		UsbCamera cam1;
 		UsbCamera cam2;
 		m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
+
+		// Set dashboard options for autonomous mode.
+		chooser = new SendableChooser();
+		chooser.addObject("Left", "1");
+		chooser.addObject("Middle", "2");
+		chooser.addObject("Right", "3");
+		SmartDashboard.putData("Autonomous Selector", chooser);
 
 		// Starts camera feeds
 		cam1 = CameraServer.getInstance().startAutomaticCapture(0);
@@ -71,6 +86,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// Get information from the Field Management System (FMS)
+		mode = "M";
 
 		m_teamLoc = m_teamInfo.getFieldInfo();
 		// Pathid = m_FieldCalculations.Pathid(); // Retrieves the Path id from Field
@@ -91,12 +107,23 @@ public class Robot extends IterativeRobot {
 		// double Gx = m_gyro.getAngle(); // gyro x
 		// System.out.println("Angle= " + Gx); // print gyro to console
 		// double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
-		if (m_timer.get() < 6.0) {
-			m_ControlMethods.Forwards(.5);
-		} else if (m_timer.get() >= 6.0) {
+		if (m_timer.get() < 3.0) {
+			m_ControlMethods.Forwards(.6);
+		} else if (m_timer.get() >= 3.0) {
 			m_ControlMethods.Stop();
 		}
 		// BEGIN DRIVE CODE
+		switch (mode.charAt(0)) {
+		// 1 is Left
+		case 1:
+			;
+			// 2 is Middle
+		case 2:
+			;
+			// 3 is Right
+		case 3:
+			;
+		}
 	}
 
 	/**
@@ -113,7 +140,8 @@ public class Robot extends IterativeRobot {
 		ts = llTable.getEntry("ts"); // Skew or rotation (-90 degrees to 0 degrees)
 
 		// According to http://docs.limelightvision.io/en/latest/networktables_api.html
-		// "camMode" set to 1 enables "Driver Camera (Increases exposure, disables vision processing)"
+		// "camMode" set to 1 enables "Driver Camera (Increases exposure, disables
+		// vision processing)"
 		llTable.getEntry("camMode").setNumber(1);
 
 		System.out.println("I'm in teleop");
