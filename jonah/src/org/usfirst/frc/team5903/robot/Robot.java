@@ -51,8 +51,7 @@ public class Robot extends IterativeRobot {
 	private double area;
 
 	// For getting Dashboard autonomous choice
-	private String m_autoSelected; // is named with m_ because just naming it mode gave an error in the switch
-									// statement
+	private String m_autoSelected; // formerly the mode variable
 	private SendableChooser<String> chooser = new SendableChooser<>();
 	private static final String kDefault = "Default";
 	private static final String kLeft = "Auto mode for left position";
