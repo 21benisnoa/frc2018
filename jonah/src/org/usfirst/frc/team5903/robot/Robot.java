@@ -51,8 +51,13 @@ public class Robot extends IterativeRobot {
 	private double area;
 
 	// For getting Dashboard autonomous choice
-	private String mode = "1"; // default autonomous mode
-	private SendableChooser<String> chooser;
+	private String m_autoSelected; // is named with m_ because just naming it mode gave an error in the switch
+									// statement
+	private SendableChooser<String> chooser = new SendableChooser<>();
+	private static final String kDefault = "Default";
+	private static final String kLeft = "Auto mode for left position";
+	private static final String kMiddle = "Auto mode for middle position";
+	private static final String kRight = "Auto mode for right position";
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -65,10 +70,10 @@ public class Robot extends IterativeRobot {
 		m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 
 		// Set dashboard options for autonomous mode.
-		chooser = new SendableChooser();
-		chooser.addObject("Left", "1");
-		chooser.addObject("Middle", "2");
-		chooser.addObject("Right", "3");
+		chooser.addDefault("Default", "kDefault");
+		chooser.addObject("Left", "kLeft");
+		chooser.addObject("Middle", "kMiddle");
+		chooser.addObject("Right", "kRight");
 		SmartDashboard.putData("Autonomous Selector", chooser);
 
 		// Starts camera feeds
@@ -86,14 +91,14 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		// Get information from the Field Management System (FMS)
-		mode = "M";
 
 		m_teamLoc = m_teamInfo.getFieldInfo();
 		// Pathid = m_FieldCalculations.Pathid(); // Retrieves the Path id from Field
 		System.out.println("I'm in autonomous: Alliance color: " + m_teamLoc.charAt(0)
 				+ " Plate Locations: Near switch: " + m_teamLoc.charAt(1) + " Scale: " + m_teamLoc.charAt(2)
 				+ " Far switch: " + m_teamLoc.charAt(3));
-
+		m_autoSelected = chooser.getSelected();
+		System.out.println("autonomous init: auto selected is: " + m_autoSelected);
 		// Let's go!
 		m_timer.reset();
 		m_timer.start();
@@ -107,22 +112,25 @@ public class Robot extends IterativeRobot {
 		// double Gx = m_gyro.getAngle(); // gyro x
 		// System.out.println("Angle= " + Gx); // print gyro to console
 		// double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
-		if (m_timer.get() < 3.0) {
-			m_ControlMethods.Forwards(.6);
-		} else if (m_timer.get() >= 3.0) {
-			m_ControlMethods.Stop();
-		}
+
 		// BEGIN DRIVE CODE
-		switch (mode.charAt(0)) {
+		switch (m_autoSelected) {
 		// 1 is Left
-		case 1:
-			;
-			// 2 is Middle
-		case 2:
-			;
-			// 3 is Right
-		case 3:
-			;
+		case kLeft:
+			System.out.println("Position 1 selected, we are left side.");
+			break;
+		// 2 is Middle
+		case kMiddle:
+			System.out.println("Position 2 selected, we are in the middle.");
+			break;
+		// 3 is Right
+		case kRight:
+			System.out.println("Position 1 selected, we are right side.");
+			break;
+		case kDefault:
+		default:
+			System.out.println("you messed up somewhere.");
+			break;
 		}
 	}
 
