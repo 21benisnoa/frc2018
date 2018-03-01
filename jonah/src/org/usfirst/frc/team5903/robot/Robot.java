@@ -69,10 +69,10 @@ public class Robot extends IterativeRobot {
 		m_gyro = new ADXRS450_Gyro(SPI.Port.kOnboardCS0);
 
 		// Set dashboard options for autonomous mode.
-		chooser.addDefault("Default", "kDefault");
-		chooser.addObject("Left", "kLeft");
-		chooser.addObject("Middle", "kMiddle");
-		chooser.addObject("Right", "kRight");
+		chooser.addDefault("Default", kDefault);
+		chooser.addObject("Left", kLeft);
+		chooser.addObject("Middle", kMiddle);
+		chooser.addObject("Right", kRight);
 		SmartDashboard.putData("Autonomous Selector", chooser);
 
 		// Starts camera feeds
