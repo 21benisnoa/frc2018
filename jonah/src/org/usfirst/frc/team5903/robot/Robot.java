@@ -49,6 +49,9 @@ public class Robot extends IterativeRobot {
 	private double x;
 	private double y;
 	private double area;
+	private int HasLoc = 0;// This variable is here to be set to 1 when the location is retrieved from the
+							// smartdashboard, so autonomous doesn't run the wrong location code for a
+							// second.
 
 	// For getting Dashboard autonomous choice
 	private String m_autoSelected; // formerly the mode variable
@@ -101,6 +104,8 @@ public class Robot extends IterativeRobot {
 		// Let's go!
 		m_timer.reset();
 		m_timer.start();
+		HasLoc = 1; // sets HasLoc to one because we have retrieved the location from the
+					// smartdashboard by now.
 	}
 
 	/**
@@ -113,23 +118,26 @@ public class Robot extends IterativeRobot {
 		// double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
 
 		// BEGIN DRIVE CODE
-		switch (m_autoSelected) {
-		// 1 is Left
-		case kLeft:
-			System.out.println("Position 1 selected, we are left side.");
-			break;
-		// 2 is Middle
-		case kMiddle:
-			System.out.println("Position 2 selected, we are in the middle.");
-			break;
-		// 3 is Right
-		case kRight:
-			System.out.println("Position 1 selected, we are right side.");
-			break;
-		case kDefault:
-		default:
-			System.out.println("you messed up somewhere.");
-			break;
+		if (HasLoc == 1) {
+			switch (m_autoSelected) {
+			// 1 is Left
+			case kLeft:
+				System.out.println("Position 1 selected, we are left side.");
+				m_ControlMethods.Forwards(.6);
+				break;
+			// 2 is Middle
+			case kMiddle:
+				System.out.println("Position 2 selected, we are in the middle.");
+				break;
+			// 3 is Right
+			case kRight:
+				System.out.println("Position 1 selected, we are right side.");
+				break;
+			case kDefault:
+			default:
+				System.out.println("you messed up somewhere.");
+				break;
+			}
 		}
 	}
 
