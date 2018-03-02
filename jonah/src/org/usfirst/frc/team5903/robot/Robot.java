@@ -107,7 +107,7 @@ public class Robot extends IterativeRobot {
 		m_timer.start();
 		HasLoc = 1; // sets HasLoc to one because we have retrieved the location from the
 		// smartdashboard by now.
-		Pathid = m_FieldCalculations.Path;
+		Pathid = m_FieldCalculations.Pathid();
 	}
 
 	/**
@@ -115,6 +115,7 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
+		System.out.println(Pathid);
 		// double Gx = m_gyro.getAngle(); // gyro x
 		// System.out.println("Angle= " + Gx); // print gyro to console
 		// double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
@@ -128,18 +129,20 @@ public class Robot extends IterativeRobot {
 				if (Pathid == "11") {
 					System.out.println("location 1, pathid 11");
 					if (m_timer.get() > 0) {
-						if (m_timer.get() < 4) { // moves robot forward and grips cube
+						if (m_timer.get() < 1) { // moves robot forward and grips cube
 							m_ControlMethods.Forwards(1);
 							m_ControlMethods.Closeclaw();
 							m_ControlMethods.Raisearm();
 						}
-					} else if (m_timer.get() > 4) { // turns robot right
-						if (m_timer.get() < 4.3) {
+					} else if (m_timer.get() > 2) { // turns robot right
+						if (m_timer.get() < 2.3) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
+							m_ControlMethods.Right(1);
+							System.out.println(x);
 						}
 					} else if (m_timer.get() > 4.3) { // moves robot forward
-						if (m_timer.get() < 6) {
+						if (m_timer.get() < 5) {
 							m_ControlMethods.Forwards(1);
 						}
 					} else if (m_timer.get() > 6) { // turns robot right

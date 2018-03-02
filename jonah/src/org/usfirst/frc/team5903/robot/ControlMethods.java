@@ -87,7 +87,8 @@ public class ControlMethods {
 	}
 
 	public void Joystickcontrol() {
-		m_robotDrive.arcadeDrive(m_stick.getY(), m_stick.getX()); // get joystick axis and set the motors to that speed
+		m_robotDrive.arcadeDrive(-(m_stick.getY()), m_stick.getX()); // get joystick axis and set the motors to that
+																		// speed
 	}
 
 	public void Triggercontrol() {
