@@ -115,304 +115,277 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void autonomousPeriodic() {
-		System.out.println(Pathid);
+		// System.out.println(Pathid);
 		// double Gx = m_gyro.getAngle(); // gyro x
 		// System.out.println("Angle= " + Gx); // print gyro to console
 		// double turningValue = (kAngleSetpoint - m_gyro.getAngle()) * kP;
+		double current_timer = m_timer.get();
 
 		// BEGIN DRIVE CODE
 		if (HasLoc == 1) {
 			switch (m_autoSelected) {
 			// 1 is Left
 			case kLeft:
-				System.out.println("Position 1 selected, we are left side.");
+				// System.out.println("Position 1 selected, we are left side.");
 				if (Pathid == "11") {
-					System.out.println("location 1, pathid 11");
-					if (m_timer.get() > 0) {
-						if (m_timer.get() < 1) { // moves robot forward and grips cube
-							m_ControlMethods.Forwards(1);
-							m_ControlMethods.Closeclaw();
-							m_ControlMethods.Raisearm();
-						}
-					} else if (m_timer.get() > 2) { // turns robot right
-						if (m_timer.get() < 2.3) {
-							m_ControlMethods.Stop();
-							m_ControlMethods.Stoparm();
-							m_ControlMethods.Right(1);
-							System.out.println(x);
-						}
-					} else if (m_timer.get() > 4.3) { // moves robot forward
-						if (m_timer.get() < 5) {
-							m_ControlMethods.Forwards(1);
-						}
-					} else if (m_timer.get() > 6) { // turns robot right
-						if (m_timer.get() < 6.3) {
-							m_ControlMethods.Right(1);
-						}
-					} else if (m_timer.get() > 6.3) { // moves robot forward to switch and raises arm
-						if (m_timer.get() < 7) {
-							m_ControlMethods.Forwards(1);
-							m_ControlMethods.Raisearm();
-						}
-					} else if (m_timer.get() > 7) { // stops robot at switch and opens claw
-						if (m_timer.get() < 7.5) {
-							m_ControlMethods.Openclaw();
-							m_ControlMethods.Stop();
-							m_ControlMethods.Stoparm();
-						}
-					} else if (m_timer.get() > 7.5) { // stops claw pneumatics and puts robot in reverse
-						if (m_timer.get() < 8) {
-							m_ControlMethods.Stopclaw();
-							m_ControlMethods.Backwards(-1);
-						}
-					} else if (m_timer.get() > 8) { // stops robot
-						if (m_timer.get() < 9) {
-							m_ControlMethods.Stop();
-							m_ControlMethods.Lowerarm();
-						}
-					} else if (m_timer.get() > 9) { // stops arm and grabs cube
-						if (m_timer.get() < 9.3) {
-							m_ControlMethods.Stoparm();
-							m_ControlMethods.Closeclaw();
-						}
-					} else if (m_timer.get() > 9.3) { // puts robot in reverse and starts raising arm
-						if (m_timer.get() < 10) {
-							m_ControlMethods.Raisearm();
-							m_ControlMethods.Backwards(-1);
-						}
-					} else if (m_timer.get() > 12) { // stops robot and arm
-						if (m_timer.get() < 12.2) {
-							m_ControlMethods.Stop();
-							m_ControlMethods.Stoparm();
-						}
-					} else if (m_timer.get() > 12.2) { // opens claw
-						if (m_timer.get() < 12.4) {
-							m_ControlMethods.Openclaw();
-						}
-					} else if (m_timer.get() > 12.4) { // stops claw
-						if (m_timer.get() < 12.6) {
-							m_ControlMethods.Stopclaw();
-						}
+					// System.out.println("location 1, pathid 11");
+					if (current_timer > 0 && current_timer < 3.7) { // moves robot forward and grips cube
+						m_ControlMethods.Forwards(.75);
+						m_ControlMethods.Closeclaw();
+						m_ControlMethods.Raisearm();
+					} else if (current_timer > 3.7 && current_timer < 4.1) { // turns robot right
+						m_ControlMethods.Stoparm();
+						m_ControlMethods.Right(.7);
+					} else if (current_timer > 4.1 && current_timer < 4.9) { // moves robot forward
+						m_ControlMethods.Forwards(.7);
+					} else if (current_timer > 4.9 && current_timer < 5.5) { // turns robot right
+						m_ControlMethods.Right(.7);
+					} else if (current_timer > 5.5 && current_timer < 6.0) { // move forward to switch and raise arm
+						m_ControlMethods.Forwards(.75);
+						m_ControlMethods.Raisearm();
+					} else if (current_timer > 6.0 && current_timer < 6.3) { // stop robot at switch and open claw
+						m_ControlMethods.Openclaw();
+						m_ControlMethods.Stop();
+						m_ControlMethods.Stoparm();
+					} else if (current_timer > 6.3 && current_timer < 6.7) { // stop claw pneumatics and reverse
+						m_ControlMethods.Stopclaw();
+						m_ControlMethods.Backwards(.75);
+					} else if (current_timer > 6.7 && current_timer < 6.9) { // stop robot
+						m_ControlMethods.Stop();
+						m_ControlMethods.Lowerarm();
+					} else if (current_timer > 6.9 && current_timer < 7.1) { // stop arm and grabs cube
+						m_ControlMethods.Stoparm();
+						m_ControlMethods.Closeclaw();
+					} else if (current_timer > 7.1 && current_timer < 7.6) { // reverse robot and raise arm
+						m_ControlMethods.Raisearm();
+						m_ControlMethods.Backwards(.75);
+					} else if (current_timer > 7.6 && current_timer < 7.9) { // stop robot and arm
+						m_ControlMethods.Stop();
+						m_ControlMethods.Stoparm();
+					} else if (current_timer > 7.9 && current_timer < 8.2) { // opens claw
+						m_ControlMethods.Openclaw();
+					} else if (current_timer > 8.2 && current_timer < 8.9) { // stops claw
+						m_ControlMethods.Stopclaw();
 					}
 				} // END PATHID 11 CODE
 				else if (Pathid == "14") {
 					System.out.println("location 1, pathid 14");
-					if (m_timer.get() > 0) {
-						if (m_timer.get() < 4) { // moves robot forward and grips cube
+					if (current_timer > 0) {
+						if (current_timer < 4) { // moves robot forward and grips cube
 							m_ControlMethods.Forwards(1);
 							m_ControlMethods.Closeclaw();
 							m_ControlMethods.Raisearm();
 						}
-					} else if (m_timer.get() > 4) { // turns robot right
-						if (m_timer.get() < 4.3) {
+					} else if (current_timer > 4) { // turns robot right
+						if (current_timer < 4.3) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 4.3) { // moves robot forward
-						if (m_timer.get() < 6) {
+					} else if (current_timer > 4.3) { // moves robot forward
+						if (current_timer < 6) {
 							m_ControlMethods.Forwards(1);
 						}
-					} else if (m_timer.get() > 6) { // turns robot right
-						if (m_timer.get() < 6.3) {
+					} else if (current_timer > 6) { // turns robot right
+						if (current_timer < 6.3) {
 							m_ControlMethods.Right(1);
 						}
-					} else if (m_timer.get() > 6.3) { // moves robot forward to switch and raises arm
-						if (m_timer.get() < 7) {
+					} else if (current_timer > 6.3) { // moves robot forward to switch and raises arm
+						if (current_timer < 7) {
 							m_ControlMethods.Forwards(1);
 							m_ControlMethods.Raisearm();
 						}
-					} else if (m_timer.get() > 7) { // stops robot at switch and opens claw
-						if (m_timer.get() < 7.5) {
+					} else if (current_timer > 7) { // stops robot at switch and opens claw
+						if (current_timer < 7.5) {
 							m_ControlMethods.Openclaw();
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 7.5) { // stops claw pneumatics and puts robot in reverse
-						if (m_timer.get() < 8) {
+					} else if (current_timer > 7.5) { // stops claw pneumatics and puts robot in reverse
+						if (current_timer < 8) {
 							m_ControlMethods.Stopclaw();
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 8) { // stops robot
-						if (m_timer.get() < 9) {
+					} else if (current_timer > 8) { // stops robot
+						if (current_timer < 9) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Lowerarm();
 						}
-					} else if (m_timer.get() > 9) { // stops arm and grabs cube
-						if (m_timer.get() < 9.3) {
+					} else if (current_timer > 9) { // stops arm and grabs cube
+						if (current_timer < 9.3) {
 							m_ControlMethods.Stoparm();
 							m_ControlMethods.Closeclaw();
 						}
-					} else if (m_timer.get() > 9.3) { // puts robot in reverse and starts raising arm
-						if (m_timer.get() < 10) {
+					} else if (current_timer > 9.3) { // puts robot in reverse and starts raising arm
+						if (current_timer < 10) {
 							m_ControlMethods.Raisearm();
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 10) { // turns robot left
-						if (m_timer.get() < 10.5) {
+					} else if (current_timer > 10) { // turns robot left
+						if (current_timer < 10.5) {
 							m_ControlMethods.Left(1);
 						}
-					} else if (m_timer.get() > 10.5) { // moves robot forward
-						if (m_timer.get() < 10.7) {
+					} else if (current_timer > 10.5) { // moves robot forward
+						if (current_timer < 10.7) {
 							m_ControlMethods.Forwards(1);
 						}
-					} else if (m_timer.get() > 12) { // stops arm and turns robot right
-						if (m_timer.get() < 12.5) {
+					} else if (current_timer > 12) { // stops arm and turns robot right
+						if (current_timer < 12.5) {
 							m_ControlMethods.Stoparm();
 							m_ControlMethods.Right(1);
 						}
-					} else if (m_timer.get() > 12.5) { // moves robot backwards
-						if (m_timer.get() < 13.4) {
+					} else if (current_timer > 12.5) { // moves robot backwards
+						if (current_timer < 13.4) {
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 13.4) { // opens claw
-						if (m_timer.get() < 13.6) {
+					} else if (current_timer > 13.4) { // opens claw
+						if (current_timer < 13.6) {
 							m_ControlMethods.Openclaw();
 						}
-					} else if (m_timer.get() > 13.6) { // stops claw
-						if (m_timer.get() < 13.8) {
+					} else if (current_timer > 13.6) { // stops claw
+						if (current_timer < 13.8) {
 							m_ControlMethods.Stopclaw();
 						}
 					}
 				} // END PATHID 14 CODE
 				else if (Pathid == "22") {
 					System.out.println("location 1, pathid 22");
-					if (m_timer.get() < 4) { // moves robot forward and grips cube
+					if (current_timer < 4) { // moves robot forward and grips cube
 						m_ControlMethods.Forwards(1);
 						m_ControlMethods.Closeclaw();
 						m_ControlMethods.Raisearm();
-					} else if (m_timer.get() > 4) { // turns robot right
-						if (m_timer.get() < 4.3) {
+					} else if (current_timer > 4) { // turns robot right
+						if (current_timer < 4.3) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 4.3) { // moves robot forward
-						if (m_timer.get() < 8) {
+					} else if (current_timer > 4.3) { // moves robot forward
+						if (current_timer < 8) {
 							m_ControlMethods.Forwards(1);
 						}
-					} else if (m_timer.get() > 6) { // turns robot right
-						if (m_timer.get() < 8.3) {
+					} else if (current_timer > 6) { // turns robot right
+						if (current_timer < 8.3) {
 							m_ControlMethods.Right(1);
 						}
-					} else if (m_timer.get() > 8.3) { // moves robot forward to switch and raises arm
-						if (m_timer.get() < 9) {
+					} else if (current_timer > 8.3) { // moves robot forward to switch and raises arm
+						if (current_timer < 9) {
 							m_ControlMethods.Forwards(1);
 							m_ControlMethods.Raisearm();
 						}
-					} else if (m_timer.get() > 9) { // stops robot at switch and opens claw
-						if (m_timer.get() < 9.5) {
+					} else if (current_timer > 9) { // stops robot at switch and opens claw
+						if (current_timer < 9.5) {
 							m_ControlMethods.Openclaw();
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 9.5) { // stops claw pneumatics and puts robot in reverse
-						if (m_timer.get() < 10) {
+					} else if (current_timer > 9.5) { // stops claw pneumatics and puts robot in reverse
+						if (current_timer < 10) {
 							m_ControlMethods.Stopclaw();
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 10) { // stops robot
-						if (m_timer.get() < 11) {
+					} else if (current_timer > 10) { // stops robot
+						if (current_timer < 11) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Lowerarm();
 						}
-					} else if (m_timer.get() > 11) { // stops arm and grabs cube
-						if (m_timer.get() < 11.3) {
+					} else if (current_timer > 11) { // stops arm and grabs cube
+						if (current_timer < 11.3) {
 							m_ControlMethods.Stoparm();
 							m_ControlMethods.Closeclaw();
 						}
-					} else if (m_timer.get() > 11.3) { // puts robot in reverse and starts raising arm
-						if (m_timer.get() < 12) {
+					} else if (current_timer > 11.3) { // puts robot in reverse and starts raising arm
+						if (current_timer < 12) {
 							m_ControlMethods.Raisearm();
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 14) { // stops robot and arm
-						if (m_timer.get() < 14.2) {
+					} else if (current_timer > 14) { // stops robot and arm
+						if (current_timer < 14.2) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 14.2) { // opens claw
-						if (m_timer.get() < 14.4) {
+					} else if (current_timer > 14.2) { // opens claw
+						if (current_timer < 14.4) {
 							m_ControlMethods.Openclaw();
 						}
-					} else if (m_timer.get() > 14.4) { // stops claw
-						if (m_timer.get() < 14.6) {
+					} else if (current_timer > 14.4) { // stops claw
+						if (current_timer < 14.6) {
 							m_ControlMethods.Stopclaw();
 						}
 					}
 				} // END PATHID 22 CODE
 				else if (Pathid == "23") {
 					System.out.println("location 1, pathid 23");
-					if (m_timer.get() < 4) { // moves robot forward and grips cube
+					if (current_timer < 4) { // moves robot forward and grips cube
 						m_ControlMethods.Forwards(1);
 						m_ControlMethods.Closeclaw();
 						m_ControlMethods.Raisearm();
-					} else if (m_timer.get() > 4) { // turns robot right
-						if (m_timer.get() < 4.3) {
+					} else if (current_timer > 4) { // turns robot right
+						if (current_timer < 4.3) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 4.3) { // moves robot forward
-						if (m_timer.get() < 8) {
+					} else if (current_timer > 4.3) { // moves robot forward
+						if (current_timer < 8) {
 							m_ControlMethods.Forwards(1);
 						}
-					} else if (m_timer.get() > 6) { // turns robot right
-						if (m_timer.get() < 8.3) {
+					} else if (current_timer > 6) { // turns robot right
+						if (current_timer < 8.3) {
 							m_ControlMethods.Right(1);
 						}
-					} else if (m_timer.get() > 8.3) { // moves robot forward to switch and raises arm
-						if (m_timer.get() < 9) {
+					} else if (current_timer > 8.3) { // moves robot forward to switch and raises arm
+						if (current_timer < 9) {
 							m_ControlMethods.Forwards(1);
 							m_ControlMethods.Raisearm();
 						}
-					} else if (m_timer.get() > 9) { // stops robot at switch and opens claw
-						if (m_timer.get() < 9.5) {
+					} else if (current_timer > 9) { // stops robot at switch and opens claw
+						if (current_timer < 9.5) {
 							m_ControlMethods.Openclaw();
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 9.5) { // stops claw pneumatics and puts robot in reverse
-						if (m_timer.get() < 10) {
+					} else if (current_timer > 9.5) { // stops claw pneumatics and puts robot in reverse
+						if (current_timer < 10) {
 							m_ControlMethods.Stopclaw();
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 10) { // stops robot
-						if (m_timer.get() < 11) {
+					} else if (current_timer > 10) { // stops robot
+						if (current_timer < 11) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Lowerarm();
 						}
-					} else if (m_timer.get() > 11) { // stops arm and grabs cube
-						if (m_timer.get() < 11.3) {
+					} else if (current_timer > 11) { // stops arm and grabs cube
+						if (current_timer < 11.3) {
 							m_ControlMethods.Stoparm();
 							m_ControlMethods.Closeclaw();
 						}
-					} else if (m_timer.get() > 11.3) { // puts robot in reverse and starts raising arm
-						if (m_timer.get() < 12) {
+					} else if (current_timer > 11.3) { // puts robot in reverse and starts raising arm
+						if (current_timer < 12) {
 							m_ControlMethods.Raisearm();
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 12) { // turns robot left
-						if (m_timer.get() < 12.5) {
+					} else if (current_timer > 12) { // turns robot left
+						if (current_timer < 12.5) {
 							m_ControlMethods.Left(1);
 						}
-					} else if (m_timer.get() > 12.5) { // moves robot backwards
-						if (m_timer.get() < 12.7) {
+					} else if (current_timer > 12.5) { // moves robot backwards
+						if (current_timer < 12.7) {
 							m_ControlMethods.Backwards(-1);
 						}
-					} else if (m_timer.get() > 14) { // stops arm and turns robot right
-						if (m_timer.get() < 14.5) {
+					} else if (current_timer > 14) { // stops arm and turns robot right
+						if (current_timer < 14.5) {
 							m_ControlMethods.Stoparm();
 							m_ControlMethods.Right(1);
 						}
-					} else if (m_timer.get() > 16) { // stops robot and arm
-						if (m_timer.get() < 16.2) {
+					} else if (current_timer > 16) { // stops robot and arm
+						if (current_timer < 16.2) {
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
 						}
-					} else if (m_timer.get() > 16.2) { // opens claw
-						if (m_timer.get() < 16.4) {
+					} else if (current_timer > 16.2) { // opens claw
+						if (current_timer < 16.4) {
 							m_ControlMethods.Openclaw();
 						}
-					} else if (m_timer.get() > 16.4) { // stops claw
-						if (m_timer.get() < 16.6) {
+					} else if (current_timer > 16.4) { // stops claw
+						if (current_timer < 16.6) {
 							m_ControlMethods.Stopclaw();
 						}
 					}
