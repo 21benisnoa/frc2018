@@ -1,6 +1,6 @@
 package org.usfirst.frc.team5903.robot;
 
-//import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -17,7 +17,7 @@ public class ControlMethods {
 	private Spark m_backMotor = new Spark(4);
 	// Creates the robot arm motor control.
 	private Joystick m_stick = new Joystick(0);
-	// private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0, 0, 1);
+	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0, 0, 1);
 
 	// Each method performs an action and is called to do that action as needed.
 
@@ -62,16 +62,18 @@ public class ControlMethods {
 	}
 
 	public void Clawcontrol() {// declares the Clawcontrol method
-		/*
-		 * if (m_stick.getRawButton(1)) {
-		 * m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
-		 * System.out.println("Button A"); } else {
-		 * m_doublesolenoid.set(DoubleSolenoid.Value.kOff); } if
-		 * (m_stick.getRawButton(2)) {
-		 * m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
-		 * System.out.println("Button B"); } if (m_stick.getRawButton(1) &&
-		 * m_stick.getRawButton(2)) m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-		 */
+		if (m_stick.getRawButton(1)) {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+			System.out.println("Button A");
+		} else {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+		}
+		if (m_stick.getRawButton(2)) {
+			m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+			System.out.println("Button B");
+		}
+		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
+			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 	}
 
 	public void Climbcontrol() {
@@ -102,14 +104,14 @@ public class ControlMethods {
 	}
 
 	public void Openclaw() {
-		// m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public void Closeclaw() {
-		// m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void Stopclaw() {
-		// m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 	}
 }
