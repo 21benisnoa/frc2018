@@ -61,6 +61,7 @@ public class Robot extends IterativeRobot {
 	private static final String kMiddle = "Auto mode for middle position";
 	private static final String kRight = "Auto mode for right position";
 	private String Pathid;
+	private double lastTimerValue;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
@@ -100,14 +101,14 @@ public class Robot extends IterativeRobot {
 		System.out.println("I'm in autonomous: Alliance color: " + m_teamLoc.charAt(0)
 				+ " Plate Locations: Near switch: " + m_teamLoc.charAt(1) + " Scale: " + m_teamLoc.charAt(2)
 				+ " Far switch: " + m_teamLoc.charAt(3));
-		m_autoSelected = chooser.getSelected();
+		m_autoSelected = chooser.getSelected(); // Get our field position from the Shuffleboard Network Tables
 		System.out.println("autonomous init: auto selected is: " + m_autoSelected);
-		// Let's go!
-		m_timer.reset();
-		m_timer.start();
 		HasLoc = 1; // sets HasLoc to one because we have retrieved the location from the
 		// smartdashboard by now.
 		Pathid = m_FieldCalculations.Pathid();
+		// Let's go!
+		m_timer.reset();
+		m_timer.start();
 	}
 
 	/**
@@ -133,39 +134,73 @@ public class Robot extends IterativeRobot {
 						m_ControlMethods.Forwards(.75);
 						m_ControlMethods.Closeclaw();
 						m_ControlMethods.Raisearm();
-					} else if (current_timer > 3.7 && current_timer < 4.1) { // turns robot right
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.4) { // turn right past
+																									// switch
 						m_ControlMethods.Stoparm();
 						m_ControlMethods.Right(.7);
-					} else if (current_timer > 4.1 && current_timer < 4.9) { // moves robot forward
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.5) { // move robot forward
 						m_ControlMethods.Forwards(.7);
-					} else if (current_timer > 4.9 && current_timer < 5.5) { // turns robot right
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.6) { // turn robot right
 						m_ControlMethods.Right(.7);
-					} else if (current_timer > 5.5 && current_timer < 6.0) { // move forward to switch and raise arm
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.5) { // move forward to
+																									// switch and raise
+																									// arm
 						m_ControlMethods.Forwards(.75);
 						m_ControlMethods.Raisearm();
-					} else if (current_timer > 6.0 && current_timer < 6.3) { // stop robot at switch and open claw
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.3) { // stop robot at
+																									// switch and open
+																									// claw
 						m_ControlMethods.Openclaw();
 						m_ControlMethods.Stop();
 						m_ControlMethods.Stoparm();
-					} else if (current_timer > 6.3 && current_timer < 6.7) { // stop claw pneumatics and reverse
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.4) { // stop claw
+																									// pneumatics and
+																									// reverse
 						m_ControlMethods.Stopclaw();
 						m_ControlMethods.Backwards(.75);
-					} else if (current_timer > 6.7 && current_timer < 6.9) { // stop robot
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.2) { // stop robot
 						m_ControlMethods.Stop();
 						m_ControlMethods.Lowerarm();
-					} else if (current_timer > 6.9 && current_timer < 7.1) { // stop arm and grabs cube
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.2) { // stop arm and grabs
+																									// cube
 						m_ControlMethods.Stoparm();
 						m_ControlMethods.Closeclaw();
-					} else if (current_timer > 7.1 && current_timer < 7.6) { // reverse robot and raise arm
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.5) { // reverse robot and
+																									// raise arm
 						m_ControlMethods.Raisearm();
 						m_ControlMethods.Backwards(.75);
-					} else if (current_timer > 7.6 && current_timer < 7.9) { // stop robot and arm
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.3) { // stop robot and arm
 						m_ControlMethods.Stop();
 						m_ControlMethods.Stoparm();
-					} else if (current_timer > 7.9 && current_timer < 8.2) { // opens claw
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.3) { // open claw
 						m_ControlMethods.Openclaw();
-					} else if (current_timer > 8.2 && current_timer < 8.9) { // stops claw
+						lastTimerValue = m_timer.get();
+					}
+					if (current_timer > lastTimerValue && current_timer < lastTimerValue + 0.7) { // stop claw
 						m_ControlMethods.Stopclaw();
+						lastTimerValue = m_timer.get();
 					}
 				} // END PATHID 11 CODE
 				else if (Pathid == "14") {
