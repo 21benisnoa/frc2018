@@ -186,81 +186,49 @@ public class Robot extends IterativeRobot {
 				} // END PATHID 11 CODE
 				else if (Pathid == "14") {
 					// System.out.println("location 1, pathid 14");
-					if (currentTimer > 0) {
-						if (currentTimer < 4) { // moves robot forward and grips cube
-							m_ControlMethods.Forwards(1);
+					if (currentTimer > 0 && currentTimer < 4) { // moves robot forward and grips cube
+							m_ControlMethods.Forwards(.75);
 							m_ControlMethods.Closeclaw();
 							m_ControlMethods.Raisearm();
-						}
-					} else if (currentTimer > 4) { // turns robot right
-						if (currentTimer < 4.3) {
+					} else if (currentTimer > 4 && currentTimer < 4.3) {// turns robot right
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
-						}
-					} else if (currentTimer > 4.3) { // moves robot forward
-						if (currentTimer < 6) {
-							m_ControlMethods.Forwards(1);
-						}
-					} else if (currentTimer > 6) { // turns robot right
-						if (currentTimer < 6.3) {
-							m_ControlMethods.Right(1);
-						}
-					} else if (currentTimer > 6.3) { // moves robot forward to switch and raises arm
-						if (currentTimer < 7) {
-							m_ControlMethods.Forwards(1);
+					} else if (currentTimer > 4.3 && currentTimer < 6) { // moves robot forward
+							m_ControlMethods.Forwards(.75);
+					} else if (currentTimer > 6 && currentTimer < 6.3) { // turns robot right
+							m_ControlMethods.Right(.75);
+					} else if (currentTimer > 6.3 && currentTimer < 7) { // moves robot forward to switch and raises arm
+							m_ControlMethods.Forwards(.75);
 							m_ControlMethods.Raisearm();
-						}
-					} else if (currentTimer > 7) { // stops robot at switch and opens claw
-						if (currentTimer < 7.5) {
+					} else if (currentTimer > 7 && currentTimer < 7.5) { // stops robot at switch and opens claw
 							m_ControlMethods.Openclaw();
 							m_ControlMethods.Stop();
 							m_ControlMethods.Stoparm();
-						}
-					} else if (currentTimer > 7.5) { // stops claw pneumatics and puts robot in reverse
-						if (currentTimer < 8) {
+					} else if (currentTimer > 7.5 && currentTimer < 8) {// stops claw pneumatics and puts robot in reverse
 							m_ControlMethods.Stopclaw();
-							m_ControlMethods.Backwards(-1);
-						}
-					} else if (currentTimer > 8) { // stops robot
-						if (currentTimer < 9) {
+							m_ControlMethods.Backwards(.75);
+					} else if (currentTimer > 8 && currentTimer < 9) { // stops robot
 							m_ControlMethods.Stop();
 							m_ControlMethods.Lowerarm();
-						}
-					} else if (currentTimer > 9) { // stops arm and grabs cube
-						if (currentTimer < 9.3) {
+					} else if (currentTimer > 9 && currentTimer < 9.3) { // stops arm and grabs cube
 							m_ControlMethods.Stoparm();
 							m_ControlMethods.Closeclaw();
-						}
-					} else if (currentTimer > 9.3) { // puts robot in reverse and starts raising arm
-						if (currentTimer < 10) {
+					} else if (currentTimer > 9.3 && currentTimer < 10) { // puts robot in reverse and starts raising arm
 							m_ControlMethods.Raisearm();
-							m_ControlMethods.Backwards(-1);
-						}
-					} else if (currentTimer > 10) { // turns robot left
-						if (currentTimer < 10.5) {
-							m_ControlMethods.Left(1);
-						}
-					} else if (currentTimer > 10.5) { // moves robot forward
-						if (currentTimer < 10.7) {
-							m_ControlMethods.Forwards(1);
-						}
-					} else if (currentTimer > 12) { // stops arm and turns robot right
-						if (currentTimer < 12.5) {
+							m_ControlMethods.Backwards(.75);
+					} else if (currentTimer > 10 && currentTimer < 10.5) { // turns robot left
+							m_ControlMethods.Left(.75);
+					} else if (currentTimer > 10.5 && currentTimer < 10.7) { // moves robot forward
+							m_ControlMethods.Forwards(.75);
+					} else if (currentTimer > 12 && currentTimer < 12.5) { // stops arm and turns robot right
 							m_ControlMethods.Stoparm();
-							m_ControlMethods.Right(1);
-						}
-					} else if (currentTimer > 12.5) { // moves robot backwards
-						if (currentTimer < 13.4) {
-							m_ControlMethods.Backwards(-1);
-						}
-					} else if (currentTimer > 13.4) { // opens claw
-						if (currentTimer < 13.6) {
+							m_ControlMethods.Right(.75);
+					} else if (currentTimer > 12.5 && currentTimer < 13.4) { // moves robot backwards
+							m_ControlMethods.Backwards(.75);
+					} else if (currentTimer > 13.4 && currentTimer < 13.6) { // opens claw
 							m_ControlMethods.Openclaw();
-						}
-					} else if (currentTimer > 13.6) { // stops claw
-						if (currentTimer < 13.8) {
+					} else if (currentTimer > 13.6 && currentTimer < 13.8) { // stops claw
 							m_ControlMethods.Stopclaw();
-						}
 					}
 				} // END PATHID 14 CODE
 				else if (Pathid == "22") {
