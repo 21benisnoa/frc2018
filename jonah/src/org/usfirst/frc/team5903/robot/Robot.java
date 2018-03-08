@@ -346,6 +346,118 @@ public class Robot extends IterativeRobot {
 			// 3 is Right
 			case kRight:
 				System.out.println("Position 1 selected, we are right side.");
+				if (Pathid == "11") {
+					if (currentTimer > 0 &&
+							currentTimer < 3.7) { // move forward and grip cube
+						m_ControlMethods.Forwards(.75);
+						m_ControlMethods.Closeclaw();
+						m_ControlMethods.Raisearm();
+					} else if (currentTimer > 3.7 &&
+							currentTimer < 4.1) { // turn left past the switch
+						m_ControlMethods.Stop();
+						m_ControlMethods.Stoparm();
+						m_ControlMethods.Left(.75);
+					} else if (currentTimer > 4.1 &&
+							currentTimer < 5.6) { // move forward
+						m_ControlMethods.Forwards(.75);
+					} else if (currentTimer > 5.6 &&
+							currentTimer < 7.2) { // turn left
+						m_ControlMethods.Left(.75);
+					} else if (currentTimer > 7.2 &&
+							currentTimer < 7.7) { // move forward to switch and raise arm
+						m_ControlMethods.Forwards(.75);
+						m_ControlMethods.Raisearm();
+					} else if (currentTimer > 7.7 &&
+							currentTimer < 8.0) { // stop robot at switch and open claw
+						m_ControlMethods.Openclaw();
+						m_ControlMethods.Stop();
+						m_ControlMethods.Stoparm();
+					}
+					else if (Pathid == "14") {
+						if (currentTimer > 0 &&
+								currentTimer < 3.7) { // move forward and grip cube
+							m_ControlMethods.Forwards(.75);
+							m_ControlMethods.Closeclaw();
+							m_ControlMethods.Raisearm();
+						} else if (currentTimer > 3.7 &&
+								currentTimer < 4.1) { // turn left past the switch
+							m_ControlMethods.Stop();
+							m_ControlMethods.Stoparm();
+							m_ControlMethods.Left(.75);
+						} else if (currentTimer > 4.1 &&
+								currentTimer < 5.6) { // move forward
+							m_ControlMethods.Forwards(.75);
+						} else if (currentTimer > 5.6 &&
+								currentTimer < 7.2) { // turn left
+							m_ControlMethods.Left(.75);
+						} else if (currentTimer > 7.2 &&
+								currentTimer < 7.7) { // move forward to switch and raise arm
+							m_ControlMethods.Forwards(.75);
+							m_ControlMethods.Raisearm();
+						} else if (currentTimer > 7.7 &&
+								currentTimer < 8.0) { // stop robot at switch and open claw
+							m_ControlMethods.Openclaw();
+							m_ControlMethods.Stop();
+							m_ControlMethods.Stoparm();
+						}
+					}
+					else if (Pathid == "22") {
+						if (currentTimer > 0 &&
+								currentTimer < 3.7) { // move forward and grip cube
+							m_ControlMethods.Forwards(.75);
+							m_ControlMethods.Closeclaw();
+							m_ControlMethods.Raisearm();
+						} else if (currentTimer > 3.7 &&
+								currentTimer < 4.1) { // turn left past the switch
+							m_ControlMethods.Stop();
+							m_ControlMethods.Stoparm();
+							m_ControlMethods.Left(.75);
+						} else if (currentTimer > 4.1 &&
+								currentTimer < 5.6) { // move forward
+							m_ControlMethods.Forwards(.75);
+						} else if (currentTimer > 6.2 &&
+								currentTimer < 7.2) { // turn left
+							m_ControlMethods.Left(.75);
+						} else if (currentTimer > 7.2 &&
+								currentTimer < 7.7) { // move forward to switch and raise arm
+							m_ControlMethods.Forwards(.75);
+							m_ControlMethods.Raisearm();
+						} else if (currentTimer > 7.7 &&
+								currentTimer < 8.0) { // stop robot at switch and open claw
+							m_ControlMethods.Openclaw();
+							m_ControlMethods.Stop();
+							m_ControlMethods.Stoparm();
+						}
+					}
+					else if (Pathid == "21") {
+						if (currentTimer > 0 &&
+								currentTimer < 3.7) { // move forward and grip cube
+							m_ControlMethods.Forwards(.75);
+							m_ControlMethods.Closeclaw();
+							m_ControlMethods.Raisearm();
+						} else if (currentTimer > 3.7 &&
+								currentTimer < 4.1) { // turn left past the switch
+							m_ControlMethods.Stop();
+							m_ControlMethods.Stoparm();
+							m_ControlMethods.Right(.75);
+						} else if (currentTimer > 4.1 &&
+								currentTimer < 4.6) { // move forward
+							m_ControlMethods.Forwards(.75);
+						} else if (currentTimer > 4.6 &&
+								currentTimer < 6.2) { // turn left
+							m_ControlMethods.Right(.7);
+						} else if (currentTimer > 6.2 &&
+								currentTimer < 6.7) { // move forward to switch and raise arm
+							m_ControlMethods.Forwards(.75);
+							m_ControlMethods.Raisearm();
+						} else if (currentTimer > 6.7 &&
+								currentTimer < 7.0) { // stop robot at switch and open claw
+							m_ControlMethods.Openclaw();
+							m_ControlMethods.Stop();
+							m_ControlMethods.Stoparm();
+						}
+					}
+				}
 				break;
 			case kDefault:
 			default:
