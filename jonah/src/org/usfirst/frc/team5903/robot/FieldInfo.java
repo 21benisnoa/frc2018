@@ -40,37 +40,3 @@ public class FieldInfo {
 		return Teamloc;
 	}
 }
-
-// public String processGameData(String TeamLoc) {
-//
-// if (TeamLoc.length() > 1) {
-// if (TeamLoc.charAt(1) == 'L') {
-// //left code here, ally switch
-// } else {
-// //right code here, switch
-// if (TeamLoc.length() > 2) {
-// if (TeamLoc.charAt(2) == 'R') {
-// //right code here, ally scale
-// } else {
-// if (TeamLoc.length() > 3) {
-// if (TeamLoc.charAt(3) == 'L') {
-// //left code here, scale
-// } else {
-// if (TeamLoc.length() > 3) {
-// if (TeamLoc.charAt(3) == 'R') {
-// //right code here, opposing switch
-// } else {
-// if (TeamLoc.length() >2){
-// if (TeamLoc.charAt(2) == 'L') {
-// //left code here, opposing switch
-// }
-// }
-// }
-// }
-// }
-// }
-// }
-// }
-// }
-// }
-// }
