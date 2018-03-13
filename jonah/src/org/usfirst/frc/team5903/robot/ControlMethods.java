@@ -62,7 +62,6 @@ public class ControlMethods {
 	}
 
 	public void Clawcontrol() {// declares the Clawcontrol method
-
 		if (m_stick.getRawButton(1)) {
 			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
 			System.out.println("Button A");
@@ -75,7 +74,6 @@ public class ControlMethods {
 		}
 		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
 			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
-
 	}
 
 	public void Climbcontrol() {
@@ -107,14 +105,14 @@ public class ControlMethods {
 	}
 
 	public void Openclaw() {
-		// m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public void Closeclaw() {
-		// m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void Stopclaw() {
-		// m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 	}
 }
