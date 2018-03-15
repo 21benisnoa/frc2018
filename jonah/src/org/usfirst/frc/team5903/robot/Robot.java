@@ -313,19 +313,49 @@ public class Robot extends IterativeRobot {
 			case kMiddle:
 				System.out.println("Position 2 selected, we are in the middle.");
 				if (Pathid == "11" || Pathid == "14") {
-					if (currentTimer > 0 && currentTimer < 2) {
-						m_ControlMethods.Forwards(.75);
-					} else if (currentTimer > 2 && currentTimer < 2.4) {
-						m_ControlMethods.Left(.75);
+					if (currentTimer > 0 && currentTimer < 0.7) {
+						m_ControlMethods.Forwards(.6);
+						m_ControlMethods.Closeclaw();
+						m_ControlMethods.Raisearm();
+					} else if (currentTimer > 0.7 && currentTimer < 1.3) {
+						m_ControlMethods.Left(.6);
+						m_ControlMethods.Stopclaw();
+					} else if (currentTimer > 1.3 && currentTimer < 2.7) {
+						m_ControlMethods.Forwards(0.7);
+						m_ControlMethods.Stoparm();
+					} else if (currentTimer > 2.7 && currentTimer < 3.2) {
+						m_ControlMethods.Right(0.7);
+					} else if (currentTimer > 3.2 && currentTimer < 3.5) {
+						m_ControlMethods.Forwards(.5);
+					} else if (currentTimer > 3.5 && currentTimer < 3.6) {
+						m_ControlMethods.Openclaw();
+					} else if (currentTimer > 3.6 && currentTimer < 3.7) {
+						m_ControlMethods.Stopclaw();
 					}
 				} else if (Pathid == "22" || Pathid == "23") {
-					if (currentTimer > 0 && currentTimer < 2) {
-						m_ControlMethods.Forwards(.75);
-					} else if (currentTimer > 2 && currentTimer < 2.4) {
-						m_ControlMethods.Right(.75);
+					System.out.println("Right Switch");
+					if (currentTimer > 0 && currentTimer < 0.7) {
+						m_ControlMethods.Forwards(.6);
+						m_ControlMethods.Closeclaw();
+						m_ControlMethods.Raisearm();
+					} else if (currentTimer > 0.7 && currentTimer < 1.3) {
+						m_ControlMethods.Right(.6);
+						m_ControlMethods.Stopclaw();
+					} else if (currentTimer > 1.3 && currentTimer < 2.7) {
+						m_ControlMethods.Forwards(0.7);
+						m_ControlMethods.Stoparm();
+					} else if (currentTimer > 2.7 && currentTimer < 3.2) {
+						m_ControlMethods.Left(0.7);
+					} else if (currentTimer > 3.2 && currentTimer < 3.5) {
+						m_ControlMethods.Forwards(.5);
+					} else if (currentTimer > 3.5 && currentTimer < 3.6) {
+						m_ControlMethods.Openclaw();
+					} else if (currentTimer > 3.6 && currentTimer < 3.7) {
+						m_ControlMethods.Stopclaw();
 					}
 				}
 				break;
+
 			/*
 			 * This is the code we used at Duluth as a simple "catchall" to move past the
 			 * 10-foot line.

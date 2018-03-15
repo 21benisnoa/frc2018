@@ -50,11 +50,11 @@ public class ControlMethods {
 	}
 
 	public void Raisearm() {// declares the Raisearm method
-		m_robotArm.setSpeed(1);
+		m_robotArm.setSpeed(.5);
 	}
 
 	public void Lowerarm() {// declares the Lowerarm method
-		m_robotArm.setSpeed(-1);
+		m_robotArm.setSpeed(-0.5);
 	}
 
 	public void Stoparm() {// declares the Stoparm method
