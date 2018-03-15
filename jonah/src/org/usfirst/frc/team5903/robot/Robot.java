@@ -467,7 +467,16 @@ public class Robot extends IterativeRobot {
 			 */
 			case kDefault:
 			default:
-				System.out.println("You messed up. Bad.");
+				System.out.println("You messed up, Bad. Going to backup path.");
+				if (currentTimer > 0 && currentTimer < 4) {
+					m_ControlMethods.Forwards(.7);
+					m_ControlMethods.Raisearm();
+					m_ControlMethods.Closeclaw();
+				} else if (currentTimer > 4 && currentTimer < 4.1) {
+					m_ControlMethods.Stop();
+					m_ControlMethods.Stoparm();
+					m_ControlMethods.Stopclaw();
+				}
 				break;
 			}
 		}
