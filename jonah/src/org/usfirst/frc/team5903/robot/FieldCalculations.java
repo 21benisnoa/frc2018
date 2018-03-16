@@ -28,10 +28,11 @@ public class FieldCalculations {
 				System.out.println("Right Scale");
 			}
 		} else if (Switch.equals("R")) {// check switch being R
-			System.out.println("Left Switch");
-			if (Scale == "L") {// check scale being L
+			System.out.println("Right Switch");
+			if (Scale.equals("L")) {// check scale being L
 				Path = "23";
 				System.out.print("Left Scale");
+				System.out.print(Path);
 			} else if (Scale.equals("R")) {// check scale being R
 				Path = "22";
 				System.out.println("Right Scale");
