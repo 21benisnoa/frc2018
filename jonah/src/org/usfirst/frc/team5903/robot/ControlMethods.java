@@ -18,8 +18,11 @@ public class ControlMethods {
 	// Creates the robot arm motor control.
 	private Joystick m_stick = new Joystick(0);
 	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0, 0, 1);
-
 	// Each method performs an action and is called to do that action as needed.
+
+	public void Disablesafety() {
+		m_robotDrive.setSafetyEnabled(false);
+	}
 
 	public void Forwards(double speed) {// Declares the Forwards method
 		if (speed > 0.0 && speed <= 1.0) {
@@ -50,11 +53,11 @@ public class ControlMethods {
 	}
 
 	public void Raisearm() {// declares the Raisearm method
-		m_robotArm.setSpeed(.5);
+		m_robotArm.setSpeed(-0.5);
 	}
 
 	public void Lowerarm() {// declares the Lowerarm method
-		m_robotArm.setSpeed(-0.5);
+		m_robotArm.setSpeed(0.5);
 	}
 
 	public void Stoparm() {// declares the Stoparm method
