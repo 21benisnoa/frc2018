@@ -100,54 +100,58 @@ public class Robot extends IterativeRobot {
 		switch (m_autoSelected) {
 		case kLeft:
 			 System.out.println("Position 1 selected, we are left side.");
-			if (Pathid == "11") {
+				if (Pathid == "11") {
+					// move forward and grip cube
+					Control.Forwards(.75);
+					Control.Closeclaw();
+					Control.Raisearm();
+					Timer.delay(1.3);
+					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Right(.7);
+					Control.Stopclaw();
+					Timer.delay(0.7);
+					Control.Stop();
+			} // END PATHID 11 CODE
+			else if (Pathid == "14") {
+					// move forward and grip cube
+					Control.Forwards(.75);
+					Control.Closeclaw();
+					Control.Raisearm();
+					Timer.delay(1.3);
+					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Right(.7);
+					Control.Stopclaw();
+					Timer.delay(0.7);
+					Control.Stop();
+			} // END PATHID 14
+			else if (Pathid == "22") {
 				// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
-				Control.Raisearm();
-				Timer.delay(3.5);
-				Control.Right(.7);
-				Control.Stoparm();
-				Control.Stopclaw();
-				Timer.delay(0.7);
-				Control.Stop();
-		}  //END PATHID 11 CODE
-		else if (Pathid == "14") {
+					Control.Forwards(.75);
+					Control.Closeclaw();
+					Control.Raisearm();
+					Timer.delay(1.3);
+					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Right(.7);
+					Control.Stopclaw();
+					Timer.delay(.7);
+					Control.Stop();
+			} // END PATHID 22 CODE
+			else if (Pathid == "23") {
 				// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
-				Control.Raisearm();
-				Timer.delay(3.5);
-				Control.Right(.7);
-				Control.Stoparm();
-				Control.Stopclaw();
-				Timer.delay(0.7);
-				Control.Stop();
-		} // END PATHID 14
-		else if (Pathid == "22") {
-			// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
-				Control.Raisearm();
-				Timer.delay(3.5);
-				Control.Right(.7);
-				Control.Stoparm();
-				Control.Stopclaw();
-				Timer.delay(.7);
-				Control.Stop();
-		} // END PATHID 22 CODE
-		else if (Pathid == "23") {
-			// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
-				Control.Raisearm();
-				Timer.delay(3.5 );
-				Control.Right(.7);
-				Control.Stoparm();
-				Control.Stopclaw();
-				Timer.delay(.7);
-				Control.Stop();
-		} // END PATHID 23 CODE
+					Control.Forwards(.75);
+					Control.Closeclaw();
+					Control.Raisearm();
+					Timer.delay(1.3);
+					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Right(.7);
+					Control.Stopclaw();
+					Timer.delay(.7);
+					Control.Stop();
+			} // END PATHID 23 CODE
 				// End LEFT position code
 			break;
 		case kMiddle:
@@ -178,7 +182,6 @@ public class Robot extends IterativeRobot {
 					Timer.delay(0.7);
 					Control.Right(.6);
 					Control.Stopclaw();
-					Control.Stoparm();
 					Timer.delay(0.6);
 					Control.Forwards(0.7);
 					Control.Stoparm();
@@ -210,9 +213,10 @@ public class Robot extends IterativeRobot {
 					Control.Forwards(.75);
 					Control.Closeclaw();
 					Control.Raisearm();
-					Timer.delay(3.5);
-					Control.Left(.7);
+					Timer.delay(1.3);
 					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Left(.7);
 					Control.Stopclaw();
 					Timer.delay(0.7);
 					Control.Stop();
@@ -222,9 +226,10 @@ public class Robot extends IterativeRobot {
 					Control.Forwards(.75);
 					Control.Closeclaw();
 					Control.Raisearm();
-					Timer.delay(3.5);
-					Control.Left(.7);
+					Timer.delay(1.3);
 					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Left(.7);
 					Control.Stopclaw();
 					Timer.delay(0.7);
 					Control.Stop();
@@ -234,9 +239,10 @@ public class Robot extends IterativeRobot {
 					Control.Forwards(.75);
 					Control.Closeclaw();
 					Control.Raisearm();
-					Timer.delay(3.5);
-					Control.Left(.7);
+					Timer.delay(1.3);
 					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Left(.7);
 					Control.Stopclaw();
 					Timer.delay(.7);
 					Control.Stop();
@@ -246,9 +252,10 @@ public class Robot extends IterativeRobot {
 					Control.Forwards(.75);
 					Control.Closeclaw();
 					Control.Raisearm();
-					Timer.delay(3.5 );
-					Control.Left(.7);
+					Timer.delay(1.3);
 					Control.Stoparm();
+					Timer.delay(2.2);
+					Control.Left(.7);
 					Control.Stopclaw();
 					Timer.delay(.7);
 					Control.Stop();
