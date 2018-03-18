@@ -53,11 +53,11 @@ public class ControlMethods {
 	}
 
 	public void Raisearm() {// declares the Raisearm method
-		m_robotArm.setSpeed(-0.5);
+		m_robotArm.setSpeed(-0.6);
 	}
 
 	public void Lowerarm() {// declares the Lowerarm method
-		m_robotArm.setSpeed(0.5);
+		m_robotArm.setSpeed(0.6);
 	}
 
 	public void Stoparm() {// declares the Stoparm method
@@ -108,11 +108,11 @@ public class ControlMethods {
 	}
 
 	public void Openclaw() {
-		m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
 	}
 
 	public void Closeclaw() {
-		m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
+		m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
 	}
 
 	public void Stopclaw() {

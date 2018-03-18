@@ -99,101 +99,103 @@ public class Robot extends IterativeRobot {
 
 		switch (m_autoSelected) {
 		case kLeft:
-			 System.out.println("Position 1 selected, we are left side.");
-				if (Pathid == "11") {
-					// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Right(.7);
-					Control.Stopclaw();
-					Timer.delay(0.7);
-					Control.Stop();
+			System.out.println("Position 1 selected, we are left side.");
+			if (Pathid == "11") {
+				// move forward and grip cube
+				Control.Forwards(.75);
+				Control.Closeclaw();
+				Control.Raisearm();
+				Timer.delay(1.3);
+				Control.Stoparm();
+				Timer.delay(2.2);
+				Control.Right(.7);
+				Control.Stopclaw();
+				Timer.delay(0.7);
+				Control.Stop();
 			} // END PATHID 11 CODE
 			else if (Pathid == "14") {
-					// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Right(.7);
-					Control.Stopclaw();
-					Timer.delay(0.7);
-					Control.Stop();
+				// move forward and grip cube
+				Control.Forwards(.75);
+				Control.Closeclaw();
+				Control.Raisearm();
+				Timer.delay(1.3);
+				Control.Stoparm();
+				Timer.delay(2.2);
+				Control.Right(.7);
+				Control.Stopclaw();
+				Timer.delay(0.7);
+				Control.Stop();
 			} // END PATHID 14
 			else if (Pathid == "22") {
 				// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Right(.7);
-					Control.Stopclaw();
-					Timer.delay(.7);
-					Control.Stop();
+				Control.Forwards(.75);
+				Control.Closeclaw();
+				Control.Raisearm();
+				Timer.delay(1.3);
+				Control.Stoparm();
+				Timer.delay(2.2);
+				Control.Right(.7);
+				Control.Stopclaw();
+				Timer.delay(.7);
+				Control.Stop();
 			} // END PATHID 22 CODE
 			else if (Pathid == "23") {
 				// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Right(.7);
-					Control.Stopclaw();
-					Timer.delay(.7);
-					Control.Stop();
+				Control.Forwards(.75);
+				Control.Closeclaw();
+				Control.Raisearm();
+				Timer.delay(1.3);
+				Control.Stoparm();
+				Timer.delay(2.2);
+				Control.Right(.7);
+				Control.Stopclaw();
+				Timer.delay(.7);
+				Control.Stop();
 			} // END PATHID 23 CODE
 				// End LEFT position code
 			break;
 		case kMiddle:
-			 System.out.println("Position 2 selected, we are in the middle.");
+			System.out.println("Position 2 selected, we are in the middle.");
 			if (Pathid == "11" || Pathid == "14") {
-					Control.Raisearm();
-					Control.Forwards(.6);
-					Control.Closeclaw();
-					Timer.delay(0.7);
-					Control.Left(.6);
-					Control.Stopclaw();
-					Timer.delay(0.6);
-					Control.Stoparm();
-					Control.Forwards(.7);
-					Timer.delay(1.4);
-					Control.Right(.7);
-					Timer.delay(0.5);
-					Control.Forwards(.6);
-					Timer.delay(0.3);
-					Control.Openclaw();
-					Timer.delay(.1);
-					Control.Stopclaw();
-					Control.Stop();
+				Control.Raisearm();
+				Control.Forwards(.6);
+				Control.Closeclaw();
+				Timer.delay(0.7);
+				Control.Left(.6);
+				Control.Stopclaw();
+				Timer.delay(0.6);
+				Control.Forwards(.7);
+				Timer.delay(1);
+				Control.Stoparm();
+				Timer.delay(0.4);
+				Control.Right(.7);
+				Timer.delay(0.6);
+				Control.Forwards(.6);
+				Timer.delay(0.3);
+				Control.Openclaw();
+				Timer.delay(.1);
+				Control.Stopclaw();
+				Control.Stop();
 			} else if (Pathid == "22" || Pathid == "23") {
-					Control.Forwards(.6);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(0.7);
-					Control.Right(.6);
-					Control.Stopclaw();
-					Timer.delay(0.6);
-					Control.Forwards(0.7);
-					Control.Stoparm();
-					Timer.delay(1.1);
-					Control.Left(0.7);
-					Timer.delay(0.3);
-					Control.Forwards(.6);
-					Timer.delay(0.3);
-					Control.Openclaw();
-					Timer.delay(0.1);
-					Control.Stopclaw();
-					Control.Stop();
+				Control.Forwards(.6);
+				Control.Closeclaw();
+				Control.Raisearm();
+				Timer.delay(0.7);
+				Control.Right(.6);
+				Control.Stopclaw();
+				Timer.delay(0.6);
+				Control.Forwards(.7);
+				Timer.delay(1);
+				Control.Stoparm();
+				Timer.delay(0.3);
+				Control.Left(0.7);
+				Timer.delay(0.4);
+				Control.Forwards(.6);
+				Timer.delay(0.3);
+				Control.Openclaw();
+				Timer.delay(0.1);
+				Control.Stopclaw();
+				Control.Stop();
 			}
 			break;
 
@@ -209,69 +211,111 @@ public class Robot extends IterativeRobot {
 		case kRight:
 			System.out.println("Position 3 selected, we are right side.");
 			if (Pathid == "11") {
-					// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Left(.7);
-					Control.Stopclaw();
-					Timer.delay(0.7);
-					Control.Stop();
+				// move forward and grip cube
+				Control.Raisearm();
+				Control.Closeclaw();
+				Timer.delay(1);
+				Control.Forwards(.75);
+				Timer.delay(1.9);
+				Control.Right(.6);
+				Timer.delay(0.4);
+				Control.Forwards(0.75);
+				Timer.delay(1);
+				Control.Stoparm();
+				Control.Left(.7);
+				Control.Stopclaw();
+				Timer.delay(1.3);
+				Control.Forwards(.6);
+				Timer.delay(1.5);
+				Control.Right(.7);
+				Timer.delay(.1);
+				Control.Forwards(.6);
+				Timer.delay(1.5);
+				Control.Stop();
 			} // END PATHID 11 CODE
 			else if (Pathid == "14") {
-					// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Left(.7);
-					Control.Stopclaw();
-					Timer.delay(0.7);
-					Control.Stop();
+				// move forward and grip cube
+				Control.Raisearm();
+				Control.Closeclaw();
+				Timer.delay(1);
+				Control.Forwards(.75);
+				Timer.delay(1.9);
+				Control.Right(.6);
+				Timer.delay(0.4);
+				Control.Forwards(0.75);
+				Timer.delay(1.7);
+				Control.Stoparm();
+				Timer.delay(0.4);
+				Control.Left(.7);
+				Control.Stopclaw();
+				Timer.delay(1);
+				Control.Forwards(.7);
+				Timer.delay(0.4);
+				Control.Stop();
+				Timer.delay(.3);
+				Control.Openclaw();
+				Timer.delay(0.1);
+				Control.Backwards(.7);
+				Timer.delay(.4);
+				Control.Stop();
 			} // END PATHID 14
 			else if (Pathid == "22") {
 				// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Left(.7);
-					Control.Stopclaw();
-					Timer.delay(.7);
-					Control.Stop();
+				Control.Raisearm();
+				Control.Closeclaw();
+				Timer.delay(1);
+				Control.Forwards(.75);
+				Timer.delay(1.9);
+				Control.Right(.6);
+				Timer.delay(0.4);
+				Control.Forwards(0.75);
+				Timer.delay(1.7);
+				Control.Stoparm();
+				Timer.delay(0.4);
+				Control.Left(.7);
+				Control.Stopclaw();
+				Timer.delay(1);
+				Control.Forwards(.7);
+				Timer.delay(0.4);
+				Control.Stop();
+				Timer.delay(.3);
+				Control.Openclaw();
+				Timer.delay(0.1);
+				Control.Backwards(.7);
+				Timer.delay(.4);
+				Control.Stop();
 			} // END PATHID 22 CODE
 			else if (Pathid == "23") {
 				// move forward and grip cube
-					Control.Forwards(.75);
-					Control.Closeclaw();
-					Control.Raisearm();
-					Timer.delay(1.3);
-					Control.Stoparm();
-					Timer.delay(2.2);
-					Control.Left(.7);
-					Control.Stopclaw();
-					Timer.delay(.7);
-					Control.Stop();
+				Control.Raisearm();
+				Control.Closeclaw();
+				Timer.delay(1);
+				Control.Forwards(.75);
+				Timer.delay(1.9);
+				Control.Right(.6);
+				Timer.delay(0.4);
+				Control.Forwards(0.75);
+				Timer.delay(.7);
+				Control.Stoparm();
+				Control.Left(.7);
+				Control.Stopclaw();
+				Timer.delay(1);
+				Control.Forwards(.6);
+				Timer.delay(1);
+				Control.Stop();
 			} // END PATHID 23 CODE
 				// End RIGHT position code
 			break;
 		case kDefault:
 		default:
 			System.out.println("You messed up, Bad. Going to backup path.");
-				Control.Forwards(.7);
-				Control.Raisearm();
-				Control.Closeclaw();
-				Timer.delay(4);
-				Control.Stop();
-				Control.Stoparm();
-				Control.Stopclaw();
+			Control.Forwards(.7);
+			Control.Raisearm();
+			Control.Closeclaw();
+			Timer.delay(4);
+			Control.Stop();
+			Control.Stoparm();
+			Control.Stopclaw();
 			break;
 		}
 	}
