@@ -258,15 +258,13 @@ public class Robot extends IterativeRobot {
 		case kDefault:
 		default:
 			System.out.println("You messed up, Bad. Going to backup path.");
-			if (currentTimer > 0 && currentTimer < 4) {
 				Control.Forwards(.7);
 				Control.Raisearm();
 				Control.Closeclaw();
-			} else if (currentTimer > 4 && currentTimer < 4.1) {
+				Timer.delay(4);
 				Control.Stop();
 				Control.Stoparm();
 				Control.Stopclaw();
-			}
 			break;
 		}
 	}
