@@ -73,7 +73,6 @@ public class Robot extends IterativeRobot {
 		// Starts camera feeds
 		cam0 = CameraServer.getInstance().startAutomaticCapture(0);
 		cam1 = CameraServer.getInstance().startAutomaticCapture(1);
-		Control.Disablesafety();
 	}
 
 	/**
@@ -88,7 +87,12 @@ public class Robot extends IterativeRobot {
 		System.out.println("I'm in autonomous: Alliance color: " + m_teamLoc.charAt(0)
 				+ " Plate Locations: Near switch: " + m_teamLoc.charAt(1) + " Scale: " + m_teamLoc.charAt(2)
 				+ " Far switch: " + m_teamLoc.charAt(3));
-		m_autoSelected = chooser.getSelected(); // Get our field position from the Shuffleboard Network Tables
+		try {
+			m_autoSelected = chooser.getSelected(); // Get our field position from the Shuffleboard Network Tables
+		} catch (Exception e) {
+			m_autoSelected = kDefault;
+			System.out.println("Shuffleboard error, did you forget to start the shuffleboard?");
+		}
 		System.out.println("autonomous init: auto selected is: " + m_autoSelected);
 		HasLoc = 1; // sets HasLoc to one because we have retrieved the location from the
 		// smartdashboard by now.
@@ -96,67 +100,65 @@ public class Robot extends IterativeRobot {
 		// Let's go!
 		Timer.reset();
 		Timer.start();
+		Control.Setsafety(false);
 
 		switch (m_autoSelected) {
 		case kLeft:
 			System.out.println("Position 1 selected, we are left side.");
-			if (Pathid == "11") {
-				// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
+			if (Pathid == "11" || Pathid == "21") {
+				System.out.println("Path ID 11 confirmed, the Switch and Scale are Left.");
 				Control.Raisearm();
-				Timer.delay(1.3);
+				Control.Closeclaw();
+				Timer.delay(1); // Raises arm for a second
+				Control.Forwards(.75);
+				Timer.delay(1.9); // moves robot forwards until it drifts
+				Control.Right(.6);
+				Timer.delay(0.4);// counters drift
+				Control.Forwards(0.75);
+				Timer.delay(1.7);// moves robot forwards again
 				Control.Stoparm();
-				Timer.delay(2.2);
+				Timer.delay(0.4); // stops arm so it doesnt raise too high
 				Control.Right(.7);
 				Control.Stopclaw();
-				Timer.delay(0.7);
+				Timer.delay(1);// turns robot right so we can put a cube on the scale
+				Control.Forwards(.7);
+				Timer.delay(0.4);// moves robot forwards so the cube is above the scale
+				Control.Stop();
+				Timer.delay(.3);// stops robot so we don't run into the scale
+				Control.Openclaw();
+				Timer.delay(0.1);// opens the claw to drop the cube
+				Control.Backwards(.7);
+				Timer.delay(.4);// moves robot backwards so we don't end up stuck on the scale
 				Control.Stop();
 			} // END PATHID 11 CODE
-			else if (Pathid == "14") {
-				// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
+			else if (Pathid == "12" || Pathid == "22") {
+				System.out.println("Path ID 14 confirmed, the Switch is Left and the Scale is Right.");
 				Control.Raisearm();
-				Timer.delay(1.3);
+				Control.Closeclaw();
+				Timer.delay(1);
+				Control.Forwards(.75);
+				Timer.delay(1.9);
+				Control.Right(.6);
+				Timer.delay(0.4);
+				Control.Forwards(0.75);
+				Timer.delay(1);
 				Control.Stoparm();
-				Timer.delay(2.2);
 				Control.Right(.7);
 				Control.Stopclaw();
-				Timer.delay(0.7);
+				Timer.delay(1.3);
+				Control.Forwards(.6);
+				Timer.delay(1.5);
+				Control.Right(.7);
+				Timer.delay(.1);
+				Control.Forwards(.6);
+				Timer.delay(1.5);
 				Control.Stop();
 			} // END PATHID 14
-			else if (Pathid == "22") {
-				// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
-				Control.Raisearm();
-				Timer.delay(1.3);
-				Control.Stoparm();
-				Timer.delay(2.2);
-				Control.Right(.7);
-				Control.Stopclaw();
-				Timer.delay(.7);
-				Control.Stop();
-			} // END PATHID 22 CODE
-			else if (Pathid == "23") {
-				// move forward and grip cube
-				Control.Forwards(.75);
-				Control.Closeclaw();
-				Control.Raisearm();
-				Timer.delay(1.3);
-				Control.Stoparm();
-				Timer.delay(2.2);
-				Control.Right(.7);
-				Control.Stopclaw();
-				Timer.delay(.7);
-				Control.Stop();
-			} // END PATHID 23 CODE
 				// End LEFT position code
 			break;
 		case kMiddle:
 			System.out.println("Position 2 selected, we are in the middle.");
-			if (Pathid == "11" || Pathid == "14") {
+			if (Pathid == "11" || Pathid == "12") {
 				Control.Raisearm();
 				Control.Forwards(.6);
 				Control.Closeclaw();
@@ -176,7 +178,7 @@ public class Robot extends IterativeRobot {
 				Timer.delay(.1);
 				Control.Stopclaw();
 				Control.Stop();
-			} else if (Pathid == "22" || Pathid == "23") {
+			} else if (Pathid == "22" || Pathid == "21") {
 				Control.Forwards(.6);
 				Control.Closeclaw();
 				Control.Raisearm();
@@ -210,7 +212,7 @@ public class Robot extends IterativeRobot {
 		 */
 		case kRight:
 			System.out.println("Position 3 selected, we are right side.");
-			if (Pathid == "11") {
+			if (Pathid == "11" || Pathid == "21") {
 				// move forward and grip cube
 				Control.Raisearm();
 				Control.Closeclaw();
@@ -233,7 +235,7 @@ public class Robot extends IterativeRobot {
 				Timer.delay(1.5);
 				Control.Stop();
 			} // END PATHID 11 CODE
-			else if (Pathid == "14") {
+			else if (Pathid == "12" || Pathid == "22") {
 				// move forward and grip cube
 				Control.Raisearm();
 				Control.Closeclaw();
@@ -259,51 +261,6 @@ public class Robot extends IterativeRobot {
 				Timer.delay(.4);
 				Control.Stop();
 			} // END PATHID 14
-			else if (Pathid == "22") {
-				// move forward and grip cube
-				Control.Raisearm();
-				Control.Closeclaw();
-				Timer.delay(1);
-				Control.Forwards(.75);
-				Timer.delay(1.9);
-				Control.Right(.6);
-				Timer.delay(0.4);
-				Control.Forwards(0.75);
-				Timer.delay(1.7);
-				Control.Stoparm();
-				Timer.delay(0.4);
-				Control.Left(.7);
-				Control.Stopclaw();
-				Timer.delay(1);
-				Control.Forwards(.7);
-				Timer.delay(0.4);
-				Control.Stop();
-				Timer.delay(.3);
-				Control.Openclaw();
-				Timer.delay(0.1);
-				Control.Backwards(.7);
-				Timer.delay(.4);
-				Control.Stop();
-			} // END PATHID 22 CODE
-			else if (Pathid == "23") {
-				// move forward and grip cube
-				Control.Raisearm();
-				Control.Closeclaw();
-				Timer.delay(1);
-				Control.Forwards(.75);
-				Timer.delay(1.9);
-				Control.Right(.6);
-				Timer.delay(0.4);
-				Control.Forwards(0.75);
-				Timer.delay(.7);
-				Control.Stoparm();
-				Control.Left(.7);
-				Control.Stopclaw();
-				Timer.delay(1);
-				Control.Forwards(.6);
-				Timer.delay(1);
-				Control.Stop();
-			} // END PATHID 23 CODE
 				// End RIGHT position code
 			break;
 		case kDefault:
@@ -312,7 +269,7 @@ public class Robot extends IterativeRobot {
 			Control.Forwards(.7);
 			Control.Raisearm();
 			Control.Closeclaw();
-			Timer.delay(4);
+			Timer.delay(2);
 			Control.Stop();
 			Control.Stoparm();
 			Control.Stopclaw();
@@ -338,6 +295,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		System.out.println("I'm in teleop");
+		Control.Setsafety(true);
 	}
 
 	/**

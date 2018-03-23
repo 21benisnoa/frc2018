@@ -24,13 +24,13 @@ public class FieldCalculations {
 				Path = "11";
 				System.out.println("Left Scale");
 			} else if (Scale.equals("R")) {// check scale being R
-				Path = "14";
+				Path = "12";
 				System.out.println("Right Scale");
 			}
 		} else if (Switch.equals("R")) {// check switch being R
 			System.out.println("Right Switch");
 			if (Scale.equals("L")) {// check scale being L
-				Path = "23";
+				Path = "21";
 				System.out.print("Left Scale");
 				System.out.print(Path);
 			} else if (Scale.equals("R")) {// check scale being R

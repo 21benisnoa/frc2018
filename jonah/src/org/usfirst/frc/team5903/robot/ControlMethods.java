@@ -20,8 +20,8 @@ public class ControlMethods {
 	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0, 0, 1);
 	// Each method performs an action and is called to do that action as needed.
 
-	public void Disablesafety() {
-		m_robotDrive.setSafetyEnabled(false);
+	public void Setsafety(boolean state) {
+		m_robotDrive.setSafetyEnabled(state);
 	}
 
 	public void Forwards(double speed) {// Declares the Forwards method
