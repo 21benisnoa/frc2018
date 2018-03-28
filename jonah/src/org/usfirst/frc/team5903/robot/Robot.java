@@ -135,23 +135,27 @@ public class Robot extends IterativeRobot {
 				System.out.println("Path ID 14 confirmed, the Switch is Left and the Scale is Right.");
 				Control.Raisearm();
 				Control.Closeclaw();
-				Timer.delay(1);
+				Timer.delay(1);// Raises arm for a second before we start moving, so that it doesn't drag on
+								// the floor
 				Control.Forwards(.75);
-				Timer.delay(1.9);
+				Timer.delay(1.9);// Moves the robot forwards for 1.9 seconds, until the robot drifts too far to
+									// the left and we have to correct.
 				Control.Right(.6);
-				Timer.delay(0.4);
+				Timer.delay(0.4);// turns the robot right for .4 seconds, this is to correct for the drift
 				Control.Forwards(0.75);
-				Timer.delay(1);
+				Timer.delay(1);// moves the robot forwards again
 				Control.Stoparm();
 				Control.Right(.7);
 				Control.Stopclaw();
-				Timer.delay(1.3);
+				Timer.delay(1.3);// turns the robot right so we can push cubes,also stops the arm so it doesn't
+									// raise too high
 				Control.Forwards(.6);
-				Timer.delay(1.5);
+				Timer.delay(1.5);// moves the robot forwards so we can push cubes, until it drifts too far to the
+									// left again.
 				Control.Right(.7);
-				Timer.delay(.1);
+				Timer.delay(.1);// turns the robot right to counter drift again
 				Control.Forwards(.6);
-				Timer.delay(1.5);
+				Timer.delay(1.5);// moves the robot forwards once more and then brings it to a stop
 				Control.Stop();
 			} // END PATHID 14
 				// End LEFT position code
@@ -303,10 +307,11 @@ public class Robot extends IterativeRobot {
 	 */
 	@Override
 	public void teleopPeriodic() {
-		Control.Joystickcontrol();
+		Control.Drivecontrol();
 		Control.Triggercontrol();
 		Control.Clawcontrol();
 		Control.Climbcontrol();
+		Control.Grabbercontrol();
 	}
 
 	@Override

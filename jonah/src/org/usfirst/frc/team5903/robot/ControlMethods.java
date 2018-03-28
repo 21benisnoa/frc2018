@@ -1,8 +1,9 @@
 package org.usfirst.frc.team5903.robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
-import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 /**
@@ -15,10 +16,25 @@ public class ControlMethods {
 	// SpeedController m_robotArm = new Spark(2);
 	private Spark m_robotArm = new Spark(2);
 	private Spark m_backMotor = new Spark(4);
+	private Spark Claw = new Spark(5);
+
 	// Creates the robot arm motor control.
-	private Joystick m_stick = new Joystick(0);
+	// swapped out in favor of the XboxController object//private Joystick m_stick =
+	// new Joystick(1);
+	private XboxController xb = new XboxController(0);
 	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0, 0, 1);
 	// Each method performs an action and is called to do that action as needed.
+
+	public void Grab(double speed) {
+		Claw.set(speed);
+	}
+
+	public void Release(double speed) {
+		Claw.set(-speed);
+	}
+
+	public void Teleopclaw() {
+	}
 
 	public void Setsafety(boolean state) {
 		m_robotDrive.setSafetyEnabled(state);
@@ -65,24 +81,20 @@ public class ControlMethods {
 	}
 
 	public void Clawcontrol() {// declares the Clawcontrol method
-		if (m_stick.getRawButton(1)) {
+		if (xb.getAButtonPressed()) {
 			m_doublesolenoid.set(DoubleSolenoid.Value.kForward);
 			System.out.println("Button A");
-		} else {
-			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 		}
-		if (m_stick.getRawButton(2)) {
+		if (xb.getBButtonPressed()) {
 			m_doublesolenoid.set(DoubleSolenoid.Value.kReverse);
 			System.out.println("Button B");
 		}
-		if (m_stick.getRawButton(1) && m_stick.getRawButton(2))
-			m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
 	}
 
 	public void Climbcontrol() {
-		if (m_stick.getRawButton(5)) {// left bumper
+		if (xb.getBumper(Hand.kLeft)) {
 			m_backMotor.set(1.0);
-		} else if (m_stick.getRawButton(6)) {// right bumper
+		} else if (xb.getBumper(Hand.kRight)) {// right bumper
 			m_backMotor.set(-1.0);
 		} else {
 			m_backMotor.set(0);
@@ -90,19 +102,23 @@ public class ControlMethods {
 		}
 	}
 
-	public void Joystickcontrol() {
-		m_robotDrive.arcadeDrive(m_stick.getY(), m_stick.getX()); // get joystick axis and set the motors to that
-																	// speed
+	public void Drivecontrol() {
+		m_robotDrive.arcadeDrive(xb.getY(Hand.kLeft), xb.getX(Hand.kLeft)); // get joystick axis and set the
+																			// motors to that speed
+	}
+
+	public void Grabbercontrol() {
+		Claw.set(xb.getY(Hand.kRight));
 	}
 
 	public void Triggercontrol() {
-		if (m_stick.getRawAxis(2) > 0.0 && m_stick.getRawAxis(3) <= 0) {
-			m_robotArm.setSpeed(m_stick.getRawAxis(2));// Trigger Controls
+		if (xb.getTriggerAxis(Hand.kLeft) > 0.0 && xb.getTriggerAxis(Hand.kRight) <= 0) {
+			m_robotArm.setSpeed(xb.getTriggerAxis(Hand.kLeft));// Trigger Controls
 		}
-		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) > 0) {
-			m_robotArm.setSpeed(-m_stick.getRawAxis(3));
+		if (xb.getTriggerAxis(Hand.kLeft) <= 0 && xb.getTriggerAxis(Hand.kRight) > 0) {
+			m_robotArm.setSpeed(-xb.getTriggerAxis(Hand.kRight));
 		}
-		if (m_stick.getRawAxis(2) <= 0 && m_stick.getRawAxis(3) <= 0) {
+		if (xb.getTriggerAxis(Hand.kLeft) <= 0 && xb.getTriggerAxis(Hand.kRight) <= 0) {
 			m_robotArm.setSpeed(0.0);
 		}
 	}
