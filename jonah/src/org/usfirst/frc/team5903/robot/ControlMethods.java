@@ -3,6 +3,7 @@ package org.usfirst.frc.team5903.robot;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
@@ -12,11 +13,10 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
  */
 public class ControlMethods {
 
-	private DifferentialDrive m_robotDrive = new DifferentialDrive(new Spark(0), new Spark(1));
-	// SpeedController m_robotArm = new Spark(2);
+	private DifferentialDrive m_robotDrive = new DifferentialDrive(new VictorSP(0), new VictorSP(1));
 	private Spark m_robotArm = new Spark(2);
 	private Spark m_backMotor = new Spark(4);
-	private Spark Claw = new Spark(5);
+	private VictorSP Claw = new VictorSP(3);
 
 	// Creates the robot arm motor control.
 	// swapped out in favor of the XboxController object//private Joystick m_stick =

@@ -309,7 +309,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		System.out.println("I'm in teleop");
-		Control.Setsafety(true);
+		Control.Setsafety(false);
 	}
 
 	/**
