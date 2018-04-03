@@ -23,6 +23,7 @@ public class ControlMethods {
 	// new Joystick(1);
 	private XboxController xb = new XboxController(0);
 	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0, 0, 1);
+
 	// Each method performs an action and is called to do that action as needed.
 
 	public void Grab(double speed) {

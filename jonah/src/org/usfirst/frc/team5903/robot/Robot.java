@@ -53,12 +53,12 @@ public class Robot extends IterativeRobot {
 	private static final String kMiddle = "Auto mode for middle position";
 	private static final String kRight = "Auto mode for right position";
 	private String Pathid;
-	private double lastTimerValue;
 
 	/**
 	 * This function is run when the robot is first started up and should be used
 	 * for any initialization code.
 	 */
+	@SuppressWarnings("unused")
 	@Override
 	public void robotInit() {
 		UsbCamera cam0;
@@ -78,6 +78,7 @@ public class Robot extends IterativeRobot {
 	/**
 	 * This function is run once each time the robot enters autonomous mode.
 	 */
+	@SuppressWarnings("static-access")
 	@Override
 	public void autonomousInit() {
 		// Get information from the Field Management System (FMS)
