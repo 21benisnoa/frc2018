@@ -126,10 +126,12 @@ public class Robot extends IterativeRobot {
 				Control.Stop();
 				Timer.delay(.3);// stops robot so we don't run into the scale
 				Control.Openclaw();
+				Control.Release(1);
 				Timer.delay(0.1);// opens the claw to drop the cube
 				Control.Backwards(.7);
 				Timer.delay(.4);// moves robot backwards so we don't end up stuck on the scale
 				Control.Stop();
+				Control.StopGrabber();
 			} // END PATHID 11 CODE
 			else if (Pathid == "12" || Pathid == "22") {
 				System.out.println("Path ID 14 confirmed, the Switch is Left and the Scale is Right.");
@@ -179,9 +181,12 @@ public class Robot extends IterativeRobot {
 				Control.Forwards(.6);
 				Timer.delay(0.3);
 				Control.Openclaw();
+				Control.Release(.5);
 				Timer.delay(.1);
 				Control.Stopclaw();
+				Control.StopGrabber();
 				Control.Stop();
+				Control.StopGrabber();
 			} else if (Pathid == "22" || Pathid == "21") {
 				Control.Forwards(.6);
 				Control.Closeclaw();
@@ -199,9 +204,11 @@ public class Robot extends IterativeRobot {
 				Control.Forwards(.6);
 				Timer.delay(0.3);
 				Control.Openclaw();
+				Control.Release(.5);
 				Timer.delay(0.1);
 				Control.Stopclaw();
 				Control.Stop();
+				Control.StopGrabber();
 			}
 			break;
 
@@ -260,10 +267,12 @@ public class Robot extends IterativeRobot {
 				Control.Stop();
 				Timer.delay(.3);
 				Control.Openclaw();
+				Control.Release(1);
 				Timer.delay(0.1);
 				Control.Backwards(.7);
 				Timer.delay(.4);
 				Control.Stop();
+				Control.StopGrabber();
 			} // END PATHID 14
 				// End RIGHT position code
 			break;

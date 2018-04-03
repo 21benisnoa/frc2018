@@ -33,11 +33,16 @@ public class ControlMethods {
 		Claw.set(-speed);
 	}
 
+	public void StopGrabber() {
+		Claw.stopMotor();
+	}
+
 	public void Teleopclaw() {
 	}
 
 	public void Setsafety(boolean state) {
 		m_robotDrive.setSafetyEnabled(state);
+		Claw.setSafetyEnabled(state);
 	}
 
 	public void Forwards(double speed) {// Declares the Forwards method
