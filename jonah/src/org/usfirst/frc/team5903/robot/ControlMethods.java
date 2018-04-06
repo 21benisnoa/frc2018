@@ -23,6 +23,15 @@ public class ControlMethods {
 	// new Joystick(1);
 	private XboxController xb = new XboxController(0);
 	private DoubleSolenoid m_doublesolenoid = new DoubleSolenoid(0, 0, 1);
+	private DoubleSolenoid puncher = new DoubleSolenoid(0,3,2);
+	
+	/*
+	 * Constructor
+	 */
+	public ControlMethods( ) {
+		System.out.println("instantiating ControlMethods");
+		Claw.enableDeadbandElimination(true);
+	}
 
 	// Each method performs an action and is called to do that action as needed.
 
@@ -98,9 +107,11 @@ public class ControlMethods {
 	}
 
 	public void Climbcontrol() {
-		if (xb.getBumper(Hand.kLeft)) {
+	/*	if (xb.getBumper(Hand.kLeft)) {
 			m_backMotor.set(1.0);
-		} else if (xb.getBumper(Hand.kRight)) {// right bumper
+		} else*/ 
+		
+		if (xb.getBumper(Hand.kRight)) {// right bumper
 			m_backMotor.set(-1.0);
 		} else {
 			m_backMotor.set(0);
@@ -139,5 +150,16 @@ public class ControlMethods {
 
 	public void Stopclaw() {
 		m_doublesolenoid.set(DoubleSolenoid.Value.kOff);
+	}
+	public void Punch() {
+		if (xb.getYButton()) {
+			System.out.println("Button Pressed");
+			puncher.set(DoubleSolenoid.Value.kForward);
+		} else if (!xb.getYButton()) {
+			System.out.println("Button Not Pressed");
+			puncher.set(DoubleSolenoid.Value.kReverse);
+			//puncher.set(DoubleSolenoid.Value.kOff);
+		}
+		//puncher.set(DoubleSolenoid.Value.kOff);
 	}
 }
