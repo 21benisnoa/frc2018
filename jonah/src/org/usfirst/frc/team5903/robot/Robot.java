@@ -128,15 +128,14 @@ public class Robot extends IterativeRobot {
 				Timer.delay(.2);
 				Control.Raisearm();
 				Control.Closeclaw();
-				Timer.delay(.6); // Raises arm for a second
+				Timer.delay(.7); // Raises arm for a second
 				Control.Forwards(.75);
 				Timer.delay(1.9); // moves robot forwards until it drifts
 				Control.Right(.6);
-				Control.Stoparm(); 
 				Timer.delay(0.4);// counters drift
 				Control.Forwards(0.75);
 				Timer.delay(1.7);// moves robot forwards again
-//stop arm was here
+				Control.Stoparm();
 				Timer.delay(0.4); // stops arm so it doesnt raise too high
 				Control.Right(.7);
 				Control.Stopclaw();
@@ -159,13 +158,12 @@ public class Robot extends IterativeRobot {
 				Timer.delay(.2);
 				Control.Raisearm();
 				Control.Closeclaw();
-				Timer.delay(.6); // Raises arm for a second
+				Timer.delay(.7); // Raises arm for a second
 				Control.Forwards(.75);
 				Timer.delay(1.9); // moves robot forwards until it drifts
 				Control.Right(.6);
 				Timer.delay(0.4);// counters drift
 				Control.Forwards(0.75);
-				Control.Stoparm();
 				Timer.delay(1.7);// moves robot forwards again
 				switch (Herd) {
 				case kYes:
@@ -203,7 +201,7 @@ public class Robot extends IterativeRobot {
 				Control.Forwards(.6);
 				Control.Closeclaw();
 				System.out.println("Moving forwards...");
-				Timer.delay(0.6);
+				Timer.delay(0.7);
 				Control.Left(.6);
 				Control.Stopclaw();
 				System.out.println("Turning Left...");
@@ -231,7 +229,7 @@ public class Robot extends IterativeRobot {
 				Control.Closeclaw();
 				Control.Raisearm();
 				System.out.println("Moving forwards...");
-				Timer.delay(0.6);
+				Timer.delay(0.7);
 				Control.Right(.6);
 				Control.Stopclaw();
 				System.out.println("Turning right...");
@@ -274,7 +272,7 @@ public class Robot extends IterativeRobot {
 				Timer.delay(.2);
 				Control.Raisearm();
 				Control.Closeclaw();
-				Timer.delay(.6); // Raises arm for a second
+				Timer.delay(.7); // Raises arm for a second
 				Control.Forwards(.75);
 				Timer.delay(1.9); // moves robot forwards until it drifts
 				Control.Right(.6);
@@ -321,15 +319,14 @@ public class Robot extends IterativeRobot {
 				Timer.delay(.2);
 				Control.Raisearm();
 				Control.Closeclaw();
-				Timer.delay(.6); // Raises arm for a second
+				Timer.delay(.7); // Raises arm for a second
 				Control.Forwards(.75);
 				Timer.delay(1.9); // moves robot forwards until it drifts
 				Control.Right(.6);
-				Control.Stoparm();
 				Timer.delay(0.4);// counters drift
 				Control.Forwards(0.75);
 				Timer.delay(1.7);// moves robot forwards again
-				//StopArm was here
+				Control.Stoparm();
 				Timer.delay(0.4); // stops arm so it doesnt raise too high
 				Control.Left(.7);
 				Control.Stopclaw();
@@ -349,9 +346,8 @@ public class Robot extends IterativeRobot {
 		case kDefault:
 		default:
 			System.out.println("You messed up, Bad. Going to backup path.");
-			Control.Raisearm();
-			Timer.delay(.6);
 			Control.Forwards(.7);
+			Control.Raisearm();
 			Control.Closeclaw();
 			Timer.delay(2);
 			Control.Stop();
